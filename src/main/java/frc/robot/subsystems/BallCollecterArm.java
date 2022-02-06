@@ -12,9 +12,17 @@ import com.ctre.phoenix.motorcontrol.can.*;
 
 public class BallCollecterArm extends SubsystemBase {
 
-  //figure out mechasism (limit switch, encoder, hall effect, etc)
+  // figure out mechanism (limit switch, encoder, hall effect, etc)
 
-  WPI_TalonSRX ballCollecterArmTalonSRX = new WPI_TalonSRX(Constants.ballCollecterArmTalonSRX);
+  WPI_TalonSRX ballCollecterArmTalonSRX = new WPI_TalonSRX(Constants.CollecterConstants.ballCollecterArmTalonSRX);
+
+  public WPI_TalonSRX getBallCollecterArmTalonSRX() {
+    return ballCollecterArmTalonSRX;
+  }
+
+  public void setCollecterArmSpeed(double speed) {
+    ballCollecterArmTalonSRX.set(speed);
+  }
 
   /** Creates a new BallCollecterArm. */
   public BallCollecterArm() {
