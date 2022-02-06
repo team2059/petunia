@@ -5,45 +5,50 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.*;
-
+import frc.robot.Constants.ShooterConstants;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.DigitalInput;
+
 public class Shooter extends SubsystemBase {
-  //Change constant 
-  WPI_TalonSRX ballShooter = new WPI_TalonSRX(0);
-  WPI_TalonSRX indexMotor = new WPI_TalonSRX(0);
-  DigitalInput testHFX = new DigitalInput(0);
+  WPI_TalonSRX ballShooter = new WPI_TalonSRX(ShooterConstants.kBallShooterPort);
+  WPI_TalonSRX indexMotor = new WPI_TalonSRX(ShooterConstants.kIndexMotorPort);
+  // TODO change port
+  DigitalInput chamberPhotoElectricSensor = new DigitalInput(1);
+
   /** Creates a new Shooter. */
   public Shooter() {
     ballShooter.configFactoryDefault();
     ballShooter.setSensorPhase(true);
-    //set constant timeout
-    ballShooter.configNominalOutputForward(0,30);
-    ballShooter.configNominalOutputReverse(0,30);
-    ballShooter.configPeakOutputForward(1,30);
-    ballShooter.configPeakOutputReverse(-1,30);
-    ballShooter.selectProfileSlot(0, 0);
-    
+    // set constant timeout
+    ballShooter.configNominalOutputForward(0, ShooterConstants.kCtreTimeoutMs);
+    ballShooter.configNominalOutputReverse(0, ShooterConstants.kCtreTimeoutMs);
+    ballShooter.configPeakOutputForward(1, ShooterConstants.kCtreTimeoutMs);
+    ballShooter.configPeakOutputReverse(-1, ShooterConstants.kCtreTimeoutMs);
+    ballShooter.selectProfileSlot(ShooterConstants.kMotorSlotIdx, ShooterConstants.kLoopIdx);
+
     indexMotor.configFactoryDefault();
     indexMotor.setSensorPhase(true);
-    //set constant timeout
-    indexMotor.configNominalOutputForward(0,30);
-    indexMotor.configNominalOutputReverse(0,30);
-    indexMotor.configPeakOutputForward(1,30);
-    indexMotor.configPeakOutputReverse(-1,30);
+    // set constant timeout
+    indexMotor.configNominalOutputForward(0, ShooterConstants.kCtreTimeoutMs);
+    indexMotor.configNominalOutputReverse(0, ShooterConstants.kCtreTimeoutMs);
+    indexMotor.configPeakOutputForward(1, ShooterConstants.kCtreTimeoutMs);
+    indexMotor.configPeakOutputReverse(-1, ShooterConstants.kCtreTimeoutMs);
+    //Check about this line
     indexMotor.selectProfileSlot(0, 0);
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    SmartDashboard.putNumber("Ball Shooter Velocity",ballShooter.getSelectedSensorVelocity());
+    SmartDashboard.putNumber("Ball Shooter Velocity", ballShooter.getSelectedSensorVelocity());
   }
-  public double getShooterVelocity(){
+
+  public double getShooterVelocity() {
     return ballShooter.getSelectedSensorVelocity();
   }
-  public void setShooterVelocity(){
+
+  public void setShooterVelocity() {
 
   }
 }
