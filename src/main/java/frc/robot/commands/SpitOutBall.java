@@ -7,13 +7,13 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.BallCollecter;
 
-public class IntakeBall extends CommandBase {
+public class SpitOutBall extends CommandBase {
 
   private final BallCollecter ballCollecter;
   private double speed;
 
   /** Creates a new IntakeBallCmd. */
-  public IntakeBall(BallCollecter subsystem, double speed) {
+  public SpitOutBall(BallCollecter subsystem, double speed) {
     this.ballCollecter = subsystem;
     this.speed = speed;
     addRequirements(subsystem);
@@ -29,8 +29,9 @@ public class IntakeBall extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // TODO spit out ball -> could I just set a negative speed
-    ballCollecter.setCollectorMotorSpeed(speed);
+
+    // TODO spit out ball -> just set a negative speed
+    ballCollecter.setCollectorMotorSpeed(-speed);
   }
 
   // Called once the command ends or is interrupted.

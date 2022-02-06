@@ -59,14 +59,16 @@ public final class Constants {
 
         // 21.75 inches equals 0.57785. trackwidth is horizontal distance between the
         // wheels
-        public static final double kTrackwidthMeters = Units.inchesToMeters(21.75);
+        public static final double kTrackwidthMeters = Units.inchesToMeters(22.75);
         // DifferentialDriveKinematics allows us to use the trackwidth to convert from
         // chassis speeds to wheel speeds. As elsewhere, we keep our units in meters.
         public static final DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(
                 kTrackwidthMeters);
     }
 
-    public static final int ballCollecterArmTalonSRX = 0;
-    public static final int collectorMotorTalonSRX = 0;
+    public static final class CollecterConstants {
+        public static final int ballCollecterArmTalonSRX = 5;
+        public static final int collectorMotorTalonSRX = 6;
+    }
 
 }

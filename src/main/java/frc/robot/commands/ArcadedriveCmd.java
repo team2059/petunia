@@ -17,7 +17,6 @@ public class ArcadedriveCmd extends CommandBase {
     // Use addRequirements() here to declare subsystem dependencies.
     this.drivetrainSubsystem = subsystem;
     addRequirements(subsystem);
-
   }
 
   // Called when the command is initially scheduled.
