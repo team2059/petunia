@@ -5,16 +5,16 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.BallCollecter;
+import frc.robot.subsystems.ClimberSubsystem;
 
-public class SpitOutBall extends CommandBase {
+public class ExtendClimberCmd extends CommandBase {
+  /** Creates a new ExtendClimberCmd. */
 
-  private final BallCollecter ballCollecter;
+  private final ClimberSubsystem climberSubsystem;
   private double speed;
 
-  /** Creates a new IntakeBallCmd. */
-  public SpitOutBall(BallCollecter subsystem, double speed) {
-    this.ballCollecter = subsystem;
+  public ExtendClimberCmd(ClimberSubsystem subsystem, double speed) {
+    climberSubsystem = subsystem;
     this.speed = speed;
     addRequirements(subsystem);
     // Use addRequirements() here to declare subsystem dependencies.
@@ -22,22 +22,18 @@ public class SpitOutBall extends CommandBase {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-
-    // TODO spit out ball -> just set a negative speed
-    ballCollecter.setCollectorMotorSpeed(-speed);
+    climberSubsystem.setExtenderMotorSpeed(speed);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    ballCollecter.setCollectorMotorSpeed(0);
+    climberSubsystem.setExtenderMotorSpeed(0);
   }
 
   // Returns true when the command should end.

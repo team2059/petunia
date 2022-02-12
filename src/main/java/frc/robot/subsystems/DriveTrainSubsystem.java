@@ -14,7 +14,8 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
-
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
@@ -23,28 +24,28 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMax.IdleMode;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
 
-public class DrivebaseSubsystem extends SubsystemBase {
+public class DriveTrainSubsystem extends SubsystemBase {
 
   static CANSparkMax leftFrontCANSparkMax = new CANSparkMax(DriveConstants.leftFrontCANSparkMaxCANId,
       CANSparkMaxLowLevel.MotorType.kBrushless);
-
   CANSparkMax leftBackCANSparkMax = new CANSparkMax(DriveConstants.leftbackCANSparkMaxCANId,
       CANSparkMaxLowLevel.MotorType.kBrushless);
-
   static CANSparkMax rightFrontCANSparkMax = new CANSparkMax(DriveConstants.rightFrontCANSparkMaxCANId,
       CANSparkMaxLowLevel.MotorType.kBrushless);
-
   CANSparkMax rightBackCANSparkMax = new CANSparkMax(DriveConstants.rightBackCANSparkMaxCANId,
       CANSparkMaxLowLevel.MotorType.kBrushless);
+
+  WPI_TalonSRX testTalon = new WPI_TalonSRX(0);
 
   // using built in encoders in NEO motors
   private final static RelativeEncoder leftRelativeEncoder = leftFrontCANSparkMax.getEncoder();
 
-  // NEGATIVE one ENCODER VALUE!!!!!!!!!!!
+  // NEGATIVE RIGHT ENCODER VALUE!!!!!!!!!!!
   public final static RelativeEncoder rightRelativeEncoder = rightFrontCANSparkMax.getEncoder();
 
   private final MotorControllerGroup leftMotorControllerGroup = new MotorControllerGroup(leftFrontCANSparkMax,
@@ -62,21 +63,21 @@ public class DrivebaseSubsystem extends SubsystemBase {
   }
 
   /** Creates a new DriveTrain. */
-  public DrivebaseSubsystem() {
+  public DriveTrainSubsystem() {
 
     SmartDashboard.putData("Field", m_field);
 
     leftRelativeEncoder.setPosition(0);
     rightRelativeEncoder.setPosition(0);
-    navX.reset();
-    navX.calibrate();
 
-    rightMotorControllerGroup.setInverted(true);
+    leftBackCANSparkMax.follow(leftFrontCANSparkMax);
+    rightBackCANSparkMax.follow(rightFrontCANSparkMax);
+
+    // Inverted
+    rightMotorControllerGroup.setInverted(false);
+    leftMotorControllerGroup.setInverted(true);
     // leftMotorControllerGroup.setInverted(true);
     // leftMotorControllerGroup.setInverted(true);
-
-    // TODO: check if right and left encoders need to be inverted. forward makes
-    // left encoder go postive while right goes negative.
 
     leftBackCANSparkMax.restoreFactoryDefaults();
     leftFrontCANSparkMax.restoreFactoryDefaults();
@@ -99,13 +100,35 @@ public class DrivebaseSubsystem extends SubsystemBase {
     rightRelativeEncoder.setVelocityConversionFactor(DriveConstants.kLinearDistancePerMotorRotation / 60);
     leftRelativeEncoder.setVelocityConversionFactor(DriveConstants.kLinearDistancePerMotorRotation / 60);
 
+    navX.reset();
+    navX.calibrate();
     resetEncoders();
+
+    // navX.getRotation2d().minus(navX.getRotation2d()).minus(navX.getRotation2d());
+
     m_odometry = new DifferentialDriveOdometry(navX.getRotation2d());
+    m_odometry.resetPosition(new Pose2d(), navX.getRotation2d());
   }
+
+  NetworkTableEntry m_xEntry = NetworkTableInstance.getDefault().getTable("troubleshooting").getEntry("X");
+  NetworkTableEntry m_yEntry = NetworkTableInstance.getDefault().getTable("troubleshooting").getEntry("Y");
 
   @Override
   public void periodic() {
     m_field.setRobotPose(m_odometry.getPoseMeters());
+
+    // Update the odometry in the periodic block
+    m_odometry.update(Rotation2d.fromDegrees(getHeading()), getLeftEncoderPosition(),
+        getRightEncoderPosition());
+
+    var translation = m_odometry.getPoseMeters().getTranslation();
+    m_xEntry.setNumber(translation.getX());
+    m_yEntry.setNumber(translation.getY());
+
+    SmartDashboard.putNumber("x pose", m_odometry.getPoseMeters().getX());
+    SmartDashboard.putNumber("y pose", m_odometry.getPoseMeters().getY());
+
+    SmartDashboard.putNumber("theta pose", m_odometry.getPoseMeters().getRotation().getDegrees());
 
     // This method will be called once per scheduler run
     SmartDashboard.putNumber("Left encoder value in meters", getLeftEncoderPosition());
@@ -119,25 +142,28 @@ public class DrivebaseSubsystem extends SubsystemBase {
 
   }
 
+  public DifferentialDriveOdometry getOdometry() {
+    return m_odometry;
+  }
+
   public MotorControllerGroup getLeftMotorControllerGroup() {
     return leftMotorControllerGroup;
   }
 
-  // NEGATE RIGHT ENCODER VALUE!!!!!!!!!!!
   public double getRightEncoderPosition() {
-    return rightRelativeEncoder.getPosition();
+    return -rightRelativeEncoder.getPosition();
   }
 
   public double getLeftEncoderPosition() {
-    return -leftRelativeEncoder.getPosition();
+    return leftRelativeEncoder.getPosition();
   }
 
   public double getRightEncoderVelocity() {
-    return rightRelativeEncoder.getVelocity();
+    return -rightRelativeEncoder.getVelocity();
   }
 
   public double getLeftEncoderVelocity() {
-    return -leftRelativeEncoder.getVelocity();
+    return leftRelativeEncoder.getVelocity();
   }
 
   public DifferentialDrive getDifferentialDrive() {
@@ -145,7 +171,7 @@ public class DrivebaseSubsystem extends SubsystemBase {
   }
 
   // The gyro sensor
-  private final static Gyro navX = new AHRS(SPI.Port.kMXP);
+  public final static Gyro navX = new AHRS(SPI.Port.kMXP);
   // private final static Gyro navX = new ADXRS450_Gyro(SPI.Port.kOnboardCS0);
 
   public Gyro getGyro() {
@@ -173,8 +199,8 @@ public class DrivebaseSubsystem extends SubsystemBase {
 
   public void resetOdometry(Pose2d pose) {
     resetEncoders();
-    zeroHeading();
-    m_odometry.resetPosition(pose, Rotation2d.fromDegrees(getHeading()));
+    // zeroHeading();
+    m_odometry.resetPosition(pose, navX.getRotation2d());
   }
 
   /**
@@ -219,6 +245,7 @@ public class DrivebaseSubsystem extends SubsystemBase {
    * @param leftVolts  the commanded left output
    * @param rightVolts the commanded right output
    */
+
   public void tankDriveVolts(double leftVolts, double rightVolts) {
     leftMotorControllerGroup.setVoltage(-leftVolts);
     rightMotorControllerGroup.setVoltage(-rightVolts);
@@ -314,7 +341,7 @@ public class DrivebaseSubsystem extends SubsystemBase {
    * @return the robot's heading in degrees, from -180 to 180
    */
   public static double getHeading() {
-
+    // return 0;
     return navX.getRotation2d().getDegrees();
   }
 

@@ -10,7 +10,7 @@ import frc.robot.Constants.DriveConstants;
 
 import com.ctre.phoenix.motorcontrol.can.*;
 
-public class BallCollecterArm extends SubsystemBase {
+public class BallCollecterArmSubsystem extends SubsystemBase {
 
   // figure out mechanism (limit switch, encoder, hall effect, etc)
 
@@ -25,7 +25,7 @@ public class BallCollecterArm extends SubsystemBase {
   }
 
   /** Creates a new BallCollecterArm. */
-  public BallCollecterArm() {
+  public BallCollecterArmSubsystem() {
   }
 
   @Override

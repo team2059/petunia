@@ -8,13 +8,15 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import com.ctre.phoenix.motorcontrol.can.*;
 
-public class BallCollecter extends SubsystemBase {
+public class BallCollecterSubsystem extends SubsystemBase {
 
   WPI_TalonSRX collectorMotor = new WPI_TalonSRX(Constants.CollecterConstants.collectorMotorTalonSRX);
 
   /** Creates a new BallCollecter. */
-  public BallCollecter() {
+  public BallCollecterSubsystem() {
     // TODO figure out why we use super("BallCollecter");
+    // TODO set motor inversion
+    collectorMotor.setInverted(false);
 
   }
 
@@ -23,7 +25,7 @@ public class BallCollecter extends SubsystemBase {
     // This method will be called once per scheduler run
   }
 
-  public void setCollectorMotorSpeed(double speed) {
+  public void setSpeed(double speed) {
     collectorMotor.set(speed);
   }
 
