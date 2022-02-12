@@ -42,15 +42,15 @@ public final class Constants {
 
         //
         // ratio*2*pi*Units.inchesToMeters(wheel raidus)
-        public static final double kBaubeGearRatio = 0;
-        public static final double kBaubeWheelRadiusInches = 0;
+        public static final double kPetuniaGearRatio = 10.71;
+        public static final double kPetuniaWheelRadiusInches = 3;
 
         // If we get the number of ticks, say 10000, we want to multiply that times
         // 1/kLinearDistancePerMotorRotation to get number of inches, not 10000 times
         // kLinearDistancePerMotorRotation
         public static final double kLinearDistancePerMotorRotation = (Units
-                .inchesToMeters(1 / (kBaubeGearRatio * 2 * Math.PI
-                        * Units.inchesToMeters(kBaubeWheelRadiusInches)) * 10));
+                .inchesToMeters(1 / (kPetuniaGearRatio * 2 * Math.PI
+                        * Units.inchesToMeters(kPetuniaWheelRadiusInches)) * 10));
 
         public static final double ksVolts = 0;
         public static final double kvVoltSecondsPerMeter = 0;
@@ -59,7 +59,7 @@ public final class Constants {
 
         // 21.75 inches equals 0.57785. trackwidth is horizontal distance between the
         // wheels
-        public static final double kTrackwidthMeters = Units.inchesToMeters(22.75);
+        public static final double kTrackwidthMeters = Units.inchesToMeters(22.25);
         // DifferentialDriveKinematics allows us to use the trackwidth to convert from
         // chassis speeds to wheel speeds. As elsewhere, we keep our units in meters.
         public static final DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(
@@ -67,8 +67,42 @@ public final class Constants {
     }
 
     public static final class CollecterConstants {
+        // 7:1 bag
         public static final int ballCollecterArmTalonSRX = 5;
         public static final int collectorMotorTalonSRX = 6;
+    }
+
+    public static final class ClimberConstants {
+        // 100:1 775pro
+        public static final int climberExtenderTalonSRX = 9;
+        public static final int climberAngleTalonSRX = 10;
+    }
+
+    public static final class ShooterConstants {
+        // 40:1 bag
+        public static final int intakeIndexerTalonSRX = 7;
+        // 40:1 775pro
+        public static final int shooterMotorTalonSRX = 8;
+
+
+
+        //Characterization stuff
+        public static final double ksVolts = 0;
+        public static final double kvVoltSecondsPerMeter = 0;
+        public static final double kaVoltSecondsSquaredPerMeter = 0;
+
+        //Base PID settings
+        public static final double kBallShooterkF = 0;
+        public static final double kBallShooterkP = 0;
+        public static final double kBallShooterkI = 0;
+        public static final double kBallShooterkD = 0;
+        //These are for different PID configurations --> Set in Motion Magic
+        //kSlotIdx sets the PID profile that the motor will pull from (ranges from 1,2,3)
+        public static final int kSlotIdx = 0;
+        //kPIDLoopIdx sets profile for either Cascading PID loops (1) or non-Cascading PID loops (0)
+        public static final int kPIDLoopIdx = 0;
+    
+        public static final int kCtreTimeoutMs = 30;
     }
 
 }

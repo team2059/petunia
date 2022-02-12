@@ -4,16 +4,12 @@
 
 package frc.robot;
 
-import java.io.IOException;
-import java.nio.file.Path;
-
-import edu.wpi.first.math.trajectory.Trajectory;
-import edu.wpi.first.math.trajectory.TrajectoryUtil;
-import edu.wpi.first.wpilibj.Filesystem;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.subsystems.DrivebaseSubsystem;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -28,7 +24,7 @@ public class Robot extends TimedRobot {
 
   private Command m_autonomousCommand;
   private RobotContainer m_robotContainer;
-  private DrivebaseSubsystem DrivebaseSubsystem;
+  // private DriveTrainSubsystem driveTrainSubsystem;
 
   /**
    * This function is run when the robot is first started up and should be used
@@ -37,10 +33,12 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
+
     // Instantiate our RobotContainer. This will perform all our button bindings,
     // and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
+
   }
 
   /**
@@ -69,8 +67,11 @@ public class Robot extends TimedRobot {
   /** This function is called once each time the robot enters Disabled mode. */
   @Override
   public void disabledInit() {
-    DrivebaseSubsystem.zeroHeading();
-    DrivebaseSubsystem.resetEncoders();
+    m_robotContainer.getDriveTrainSubsystem().zeroHeading();
+    m_robotContainer.getDriveTrainSubsystem().resetEncoders();
+
+    // m_robotContainer.getDriveTrainSubsystem().zeroHeading();
+    // m_robotContainer.getDriveTrainSubsystem().resetEncoders();
 
   }
 
@@ -85,15 +86,10 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
 
-    DrivebaseSubsystem.zeroHeading();
-    DrivebaseSubsystem.resetEncoders();
+    m_robotContainer.getDriveTrainSubsystem().zeroHeading();
+    m_robotContainer.getDriveTrainSubsystem().resetEncoders();
 
-    try {
-      m_autonomousCommand = m_robotContainer.getAutonomousCommand();
-    } catch (IOException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    }
+    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
@@ -105,19 +101,21 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousPeriodic() {
 
-    if (DrivebaseSubsystem.getHeading() != 0) {
-      DrivebaseSubsystem.zeroHeading();
-    }
+    // if (driveTrainSubsystem.getHeading() != 0) {
+    // driveTrainSubsystem.zeroHeading();
+    // }
+
   }
 
   @Override
   public void teleopInit() {
-    DrivebaseSubsystem.zeroHeading();
-    DrivebaseSubsystem.resetEncoders();
-    // This makes sure that the autonomous stops running when
-    // teleop starts running. If you want the autonomous to
-    // continue until interrupted by another command, remove
-    // this line or comment it out.
+    m_robotContainer.getDriveTrainSubsystem().zeroHeading();
+    m_robotContainer.getDriveTrainSubsystem().resetEncoders();
+
+    Rotation2d thetaPose = m_robotContainer.getDriveTrainSubsystem().navX.getRotation2d();
+    DifferentialDriveOdometry myDriveOdometry = m_robotContainer.getDriveTrainSubsystem().getOdometry();
+    myDriveOdometry.resetPosition(new Pose2d(), thetaPose);
+
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }

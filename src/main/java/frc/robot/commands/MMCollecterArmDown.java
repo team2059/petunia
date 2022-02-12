@@ -5,14 +5,14 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.BallCollecterArm;
+import frc.robot.subsystems.BallCollecterArmSubsystem;
 
-public class CollecterArmUp extends CommandBase {
-  private final BallCollecterArm ballCollecterArm;
+public class MMCollecterArmDownCmd extends CommandBase {
+  private final BallCollecterArmSubsystem ballCollecterArm;
   private double speed;
 
   /** Creates a new CollecterArmUp. */
-  public CollecterArmUp(BallCollecterArm subsystem, double speed) {
+  public MMCollecterArmDownCmd(BallCollecterArmSubsystem subsystem, double speed) {
 
     this.ballCollecterArm = subsystem;
     this.speed = speed;

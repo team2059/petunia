@@ -6,33 +6,37 @@ package frc.robot;
 
 import java.io.IOException;
 import java.nio.file.Path;
-import java.util.List;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.RamseteController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Transform2d;
-import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.math.trajectory.TrajectoryUtil;
 import edu.wpi.first.math.trajectory.constraint.DifferentialDriveVoltageConstraint;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
-import frc.robot.commands.ArcadedriveCmd;
-import frc.robot.subsystems.BallCollecter;
-import frc.robot.subsystems.BallCollecterArm;
-import frc.robot.subsystems.DrivebaseSubsystem;
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import frc.robot.commands.ArcadeDriveCmd;
+import frc.robot.commands.ExtendClimberCmd;
+import frc.robot.subsystems.DriveTrainSubsystem;
+import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.subsystems.BallCollecterArmSubsystem;
+import frc.robot.subsystems.BallCollecterSubsystem;
+import frc.robot.subsystems.ClimberSubsystem;
+import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.XboxController.Button;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -46,134 +50,119 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class RobotContainer {
 
-    // The robot's subsystems and commands are defined here...
-    public static Joystick joyStick = new Joystick(0);
-    private final DrivebaseSubsystem drivebaseSubsystem = new DrivebaseSubsystem();
-    private final ArcadedriveCmd arcadedriveCmd = new ArcadedriveCmd(drivebaseSubsystem);
+        // The robot's subsystems and commands are defined here...
+        public static XboxController xboxController = new XboxController(3);
 
-    private static BallCollecterArm ballCollecterArm = new BallCollecterArm();
-    private static BallCollecter ballCollecter = new BallCollecter();
+        private final DriveTrainSubsystem driveTrainSubsystem = new DriveTrainSubsystem();
+        private final ClimberSubsystem climberSubsystem = new ClimberSubsystem();
+        private final BallCollecterSubsystem ballCollecterSubsystem = new BallCollecterSubsystem();
+        private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
+        private final BallCollecterArmSubsystem ballCollecterArmSubsystem = new BallCollecterArmSubsystem();
 
-    // private final TeleopDriveCommand teleopDriveCommand = new
-    // TeleopDriveCommand(drivebaseSubsystem);
+        Command autonomousCommand;
 
-    Command autonomousCommand;
+        // A chooser for autonomous commands
+        SendableChooser<Command> m_chooser = new SendableChooser<>();
 
-    /**
-     * The container for the robot. Contains subsystems, OI devices, and commands.
-     */
-    public RobotContainer() {
-        // Configure the button bindings
-        configureButtonBindings();
-        drivebaseSubsystem.setDefaultCommand(new ArcadedriveCmd(drivebaseSubsystem));
-    }
+        /**
+         * The container for the robot. Contains subsystems, OI devices, and commands.
+         */
+        public RobotContainer() {
+                // Configure the button bindings
+                configureButtonBindings();
+                driveTrainSubsystem.setDefaultCommand(new ArcadeDriveCmd(driveTrainSubsystem));
 
-    /**
-     * Use this method to define your button->command mappings. Buttons can be
-     * created by
-     * instantiating a {@link GenericHID} or one of its subclasses ({@link
-     * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing
-     * it to a {@link
-     * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
-     */
-    private void configureButtonBindings() {
-        new JoystickButton(joyStick, 2).whenPressed(() -> ballCollecterArm.setCollecterArmSpeed(0.1));
+                // Add commands to the autonomous command chooser
 
-        new JoystickButton(joyStick, 3).whenPressed(() -> ballCollecter.setCollectorMotorSpeed(0.1));
+                boolean isReset = true;
 
-        new JoystickButton(joyStick, 3).whenPressed(() -> ballCollecter.setCollectorMotorSpeed(-0.1));
+                m_chooser.addOption("Path forward Auto",
+                                loadPathWeaverTrajectoryCommand("pathplanner/generatedJSON/Forward.wpilib.json",
+                                                isReset));
+                m_chooser.addOption("Complex Auto",
+                                loadPathWeaverTrajectoryCommand("pathplanner/generatedJSON/Turn.wpilib.json", isReset));
 
-    }
+                // Put the chooser on the dashboard
+                Shuffleboard.getTab("Autonomous").add(m_chooser);
 
-    /**
-     * Use this to pass the autonomous command to the main {@link Robot} class.
-     *
-     * @return the command to run in autonomous
-     * @throws IOException
-     */
+        }
 
-    public Command getAutonomousCommand() throws IOException {
+        /**
+         * Use this method to define your button->command mappings. Buttons can be
+         * created by
+         * instantiating a {@link GenericHID} or one of its subclasses ({@link
+         * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing
+         * it to a {@link
+         * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
+         */
+        private void configureButtonBindings() {
 
-        // set left to inverted so motors go in same direction
-        // drivebaseSubsystem.getLeftMotorControllerGroup().setInverted(true);
-        // drivebaseSubsystem.resetEncoders();
-        // drivebaseSubsystem.zeroHeading();
+                // collect - A
+                new JoystickButton(xboxController, Button.kA.value).whileHeld(() -> ballCollecterSubsystem.setSpeed(1))
+                                .whenReleased(() -> ballCollecterSubsystem.setSpeed(0));
 
-        // Create a voltage constraint to ensure we don't accelerate too fast
-        var autoVoltageConstraint = new DifferentialDriveVoltageConstraint(
-                new SimpleMotorFeedforward(
-                        DriveConstants.ksVolts,
-                        DriveConstants.kvVoltSecondsPerMeter,
-                        DriveConstants.kaVoltSecondsSquaredPerMeter),
-                DriveConstants.kDriveKinematics,
-                10);
+                // spit out - Y
+                new JoystickButton(xboxController, Button.kY.value).whileHeld(() -> ballCollecterSubsystem.setSpeed(-1))
+                                .whenReleased(() -> ballCollecterSubsystem.setSpeed(0));
 
-        // Create config for trajectory
-        TrajectoryConfig config = new TrajectoryConfig(
-                AutoConstants.kMaxSpeedMetersPerSecond,
-                AutoConstants.kMaxAccelerationMetersPerSecondSquared)
-                        // Add kinematics to ensure max speed is actually obeyed
-                        .setKinematics(DriveConstants.kDriveKinematics)
-                        // Apply the voltage constraint
-                        .addConstraint(autoVoltageConstraint);
+                new JoystickButton(xboxController, Button.kB.value)
+                                .whileHeld(() -> new ExtendClimberCmd(climberSubsystem, 1)).whenReleased(() -> new ExtendC);
+        }
 
-        // An example trajectory to follow. All units in meters.
-        Trajectory exampleTrajectory = TrajectoryGenerator.generateTrajectory(
-                // Start at the origin facing the +X direction
-                new Pose2d(0, 0, new Rotation2d(0)),
-                // Pass through these two interior waypoints, making an 's' curve path
-                List.of(new Translation2d(1, 0), new Translation2d(1.5, 0)),
-                // End 3 meters straight ahead of where we started, facing forward
-                new Pose2d(2, 0, new Rotation2d(0)),
-                // Pass config
-                config);
+        public Command loadPathWeaverTrajectoryCommand(String filename, boolean resetOdometry) {
 
-        Path trajectoryPath = Filesystem.getDeployDirectory().toPath()
-                .resolve("pathplanner/generatedJSON/forward2.wpilib.json");
-        Trajectory trajectory = new Trajectory();
-        trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
+                Trajectory trajectory;
+                try {
+                        Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(filename);
+                        trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
+                } catch (IOException ex) {
+                        DriverStation.reportError("Unable to open trajectory: " + filename, ex.getStackTrace());
+                        System.out.println("Unable to read from file " + filename);
+                        return new InstantCommand();
+                }
 
-        // drivebaseSubsystem.resetOdometry(trajectory.getInitialPose());
-        // drivebaseSubsystem.getField().getObject("Pose").setTrajectory(trajectory);
-        // Rotation2d rotation2d =
-        // drivebaseSubsystem.getPose().minus(trajectory.getInitialPose());
+                Command ramseteCommand = new RamseteCommand(
+                                trajectory,
+                                driveTrainSubsystem::getPose,
+                                new RamseteController(AutoConstants.kRamseteB, AutoConstants.kRamseteZeta),
+                                new SimpleMotorFeedforward(
+                                                DriveConstants.ksVolts,
+                                                DriveConstants.kvVoltSecondsPerMeter,
+                                                DriveConstants.kaVoltSecondsSquaredPerMeter),
+                                DriveConstants.kDriveKinematics,
+                                driveTrainSubsystem::getWheelSpeeds,
+                                new PIDController(DriveConstants.kPDriveVel, 0, 0),
+                                new PIDController(DriveConstants.kPDriveVel, 0, 0),
+                                // RamseteCommand passes volts to the callback
+                                driveTrainSubsystem::tankDriveVolts,
+                                driveTrainSubsystem);
 
-        // Transform2d rotate90 = new Pose2d(0, 0, Rotation2d.fromDegrees(90));
-        // trajectory = trajectory.transformBy(new Transform2d(new Translation2d(0.0,
-        // 0.0), Rotation2d.fromDegrees(110)));
+                // Run path following command, then stop at the end.
+                // If told to reset odometry, reset odometry before running path.
+                if (resetOdometry) {
+                        return new SequentialCommandGroup(
+                                        new InstantCommand(() -> driveTrainSubsystem
+                                                        .resetOdometry(trajectory.getInitialPose())),
+                                        ramseteCommand);
+                } else {
+                        return ramseteCommand;
+                }
 
-        // drivebaseSubsystem.resetOdometry(trajectory.getInitialPose());
+        }
 
-        // drivebaseSubsystem.differentialDrive.resetOdometry(trajectory.getInitialPose());
-        // transforming the PathWeaver trajectory to match your current pose
-        // var transform =
-        // drivebaseSubsystem.getPose().minus(trajectory.getInitialPose());
-        // straightTrajectory = trajectory.transformBy(transform);
+        /**
+         * Use this to pass the autonomous command to the main {@link Robot} class.
+         *
+         * @return the command to run in autonomous
+         * @throws IOException
+         */
 
-        RamseteCommand ramseteCommand = new RamseteCommand(
-                trajectory,
-                drivebaseSubsystem::getPose,
-                new RamseteController(AutoConstants.kRamseteB, AutoConstants.kRamseteZeta),
-                new SimpleMotorFeedforward(
-                        DriveConstants.ksVolts,
-                        DriveConstants.kvVoltSecondsPerMeter,
-                        DriveConstants.kaVoltSecondsSquaredPerMeter),
-                DriveConstants.kDriveKinematics,
-                drivebaseSubsystem::getWheelSpeeds,
-                new PIDController(DriveConstants.kPDriveVel, 0, 0),
-                new PIDController(DriveConstants.kPDriveVel, 0, 0),
-                // RamseteCommand passes volts to the callback
-                drivebaseSubsystem::tankDriveVolts,
-                drivebaseSubsystem);
+        public Command getAutonomousCommand() {
+                return m_chooser.getSelected();
+        }
 
-        // Reset odometry to the starting pose of the trajectory.
-        // drivebaseSubsystem.resetOdometry(trajectory.getInitialPose());
-        drivebaseSubsystem.resetOdometry(trajectory.getInitialPose());
-        // Run path following command, then stop at the end via break mode to ensure no
-        // voltage and then set motors to idle mode for teleOp.
-        return ramseteCommand.andThen(() -> drivebaseSubsystem.setBreakMode())
-                .andThen(() -> drivebaseSubsystem.setIdleMode());
-
-    }
+        public DriveTrainSubsystem getDriveTrainSubsystem() {
+                return driveTrainSubsystem;
+        }
 
 }
