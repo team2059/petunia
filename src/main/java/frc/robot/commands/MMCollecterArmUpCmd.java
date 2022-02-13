@@ -5,6 +5,7 @@
 package frc.robot.commands;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.BallCollecterArmSubsystem;
@@ -25,6 +26,7 @@ public class MMCollecterArmUpCmd extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+   
 
   }
 
@@ -36,6 +38,7 @@ public class MMCollecterArmUpCmd extends CommandBase {
     /* 4096 ticks/rev * 10 Rotations in either direction */
     // double targetPos = targetMin;
     // * 4096 * 10.0;
+
     BallCollecterArmSubsystem.getBallCollecterArmTalonSRX().set(ControlMode.MotionMagic, targetMax);
 
   }
@@ -47,6 +50,7 @@ public class MMCollecterArmUpCmd extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+
   }
 
   // Returns true when the command should end.

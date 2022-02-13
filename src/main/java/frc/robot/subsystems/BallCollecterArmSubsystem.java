@@ -8,7 +8,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import com.ctre.phoenix.motorcontrol.can.*;
 
@@ -32,6 +34,7 @@ public class BallCollecterArmSubsystem extends SubsystemBase {
 
     /* Factory default hardware to prevent unexpected behavior */
     ballCollecterArmTalonSRX.configFactoryDefault();
+    
 
     /* Configure Sensor Source for Pirmary PID */
     ballCollecterArmTalonSRX.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder,
@@ -97,6 +100,8 @@ public class BallCollecterArmSubsystem extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     SmartDashboard.putNumber("talon encoder value", ballCollecterArmTalonSRX.getSelectedSensorPosition());
+
+    
 
   }
 }
