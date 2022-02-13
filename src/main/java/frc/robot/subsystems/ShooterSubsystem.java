@@ -35,10 +35,16 @@ public class ShooterSubsystem extends SubsystemBase {
     ballShooter.selectProfileSlot(ShooterConstants.kSlotIdx, ShooterConstants.kPIDLoopIdx);
 
     // TODO Configure Gain PID stuff (then uncomment)
-   /*  ballShooter.config_kP(ShooterConstants.kPIDLoopIdx, ShooterConstants.kGains.kP, ShooterConstants.kCtreTimeoutMs);
-    ballShooter.config_kI(ShooterConstants.kPIDLoopIdx, ShooterConstants.kGains.kI, ShooterConstants.kCtreTimeoutMs);
-    ballShooter.config_kD(ShooterConstants.kPIDLoopIdx, ShooterConstants.kGains.kD, ShooterConstants.kCtreTimeoutMs);
-    ballShooter.config_kF(ShooterConstants.kPIDLoopIdx, ShooterConstants.kGains.kF, ShooterConstants.kCtreTimeoutMs); */
+    /*
+     * ballShooter.config_kP(ShooterConstants.kPIDLoopIdx,
+     * ShooterConstants.kGains.kP, ShooterConstants.kCtreTimeoutMs);
+     * ballShooter.config_kI(ShooterConstants.kPIDLoopIdx,
+     * ShooterConstants.kGains.kI, ShooterConstants.kCtreTimeoutMs);
+     * ballShooter.config_kD(ShooterConstants.kPIDLoopIdx,
+     * ShooterConstants.kGains.kD, ShooterConstants.kCtreTimeoutMs);
+     * ballShooter.config_kF(ShooterConstants.kPIDLoopIdx,
+     * ShooterConstants.kGains.kF, ShooterConstants.kCtreTimeoutMs);
+     */
     indexMotor.configFactoryDefault();
 
     indexMotor.configNominalOutputForward(0, ShooterConstants.kCtreTimeoutMs);

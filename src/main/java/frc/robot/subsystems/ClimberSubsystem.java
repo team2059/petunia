@@ -14,7 +14,8 @@ public class ClimberSubsystem extends SubsystemBase {
   WPI_TalonSRX extenderTalonSRX = new WPI_TalonSRX(ClimberConstants.climberExtenderTalonSRX);
   WPI_TalonSRX angleTalonSRX = new WPI_TalonSRX(ClimberConstants.climberAngleTalonSRX);
 
-  public ClimberSubsystem() {}
+  public ClimberSubsystem() {
+  }
 
   @Override
   public void periodic() {

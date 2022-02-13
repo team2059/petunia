@@ -68,8 +68,8 @@ public final class Constants {
 
     public static final class CollecterConstants {
         // 7:1 bag
-        public static final int ballCollecterArmTalonSRX = 5;
-        public static final int collectorMotorTalonSRX = 6;
+        public static final int ballCollecterArmTalonSRX = 5; // should be 5
+        public static final int collectorMotorTalonSRX = 6; // should be 6
     }
 
     public static final class ClimberConstants {
@@ -84,25 +84,52 @@ public final class Constants {
         // 40:1 775pro
         public static final int shooterMotorTalonSRX = 8;
 
-
-
-        //Characterization stuff
+        // Characterization stuff
         public static final double ksVolts = 0;
         public static final double kvVoltSecondsPerMeter = 0;
         public static final double kaVoltSecondsSquaredPerMeter = 0;
 
-        //Base PID settings
+        // Base PID settings
         public static final double kBallShooterkF = 0;
         public static final double kBallShooterkP = 0;
         public static final double kBallShooterkI = 0;
         public static final double kBallShooterkD = 0;
-        //These are for different PID configurations --> Set in Motion Magic
-        //kSlotIdx sets the PID profile that the motor will pull from (ranges from 1,2,3)
+        // These are for different PID configurations --> Set in Motion Magic
+        // kSlotIdx sets the PID profile that the motor will pull from (ranges from
+        // 1,2,3)
         public static final int kSlotIdx = 0;
-        //kPIDLoopIdx sets profile for either Cascading PID loops (1) or non-Cascading PID loops (0)
+        // kPIDLoopIdx sets profile for either Cascading PID loops (1) or non-Cascading
+        // PID loops (0)
         public static final int kPIDLoopIdx = 0;
-    
+
         public static final int kCtreTimeoutMs = 30;
+    }
+
+    public static final class CollecterArmConstants {
+        /**
+         * Which PID slot to pull gains from. Starting 2018, you can choose from
+         * 0,1,2 or 3. Only the first two (0,1) are visible in web-based
+         * configuration.
+         */
+        public static final int kSlotIdx = 0;
+
+        /**
+         * Talon SRX/ Victor SPX will supported multiple (cascaded) PID loops. For
+         * now we just want the primary one.
+         */
+        public static final int kPIDLoopIdx = 0;
+
+        /**
+         * set to zero to skip waiting for confirmation, set to nonzero to wait and
+         * report to DS if action fails.
+         */
+        public static final int kTimeoutMs = 0;
+
+        /**
+         * Gains used in Motion Magic, to be adjusted accordingly
+         * Gains(kp, ki, kd, kf, izone, peak output);
+         */
+        public static final Gains kGains = new Gains(1.75, 0.0, 0.0, 0.7887432537, 0, 0.0);
     }
 
 }
