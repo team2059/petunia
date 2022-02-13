@@ -81,6 +81,7 @@ public class RobotContainer {
                 m_chooser.addOption("Path forward Auto",
                                 loadPathWeaverTrajectoryCommand("pathplanner/generatedJSON/Forward.wpilib.json",
                                                 isReset));
+
                 m_chooser.addOption("Complex Auto",
                                 loadPathWeaverTrajectoryCommand("pathplanner/generatedJSON/Turn.wpilib.json", isReset));
 
@@ -100,22 +101,22 @@ public class RobotContainer {
         private void configureButtonBindings() {
 
                 // collect - X
-                new JoystickButton(xboxController, Button.kX.value).whileHeld(() -> ballCollecterSubsystem.setSpeed(1))
+                new JoystickButton(xboxController, Button.kX.value)
+                                .whileHeld(() -> ballCollecterSubsystem.setSpeed(0.66))
                                 .whenReleased(() -> ballCollecterSubsystem.setSpeed(0));
 
                 // spit out - B
-                new JoystickButton(xboxController, Button.kB.value).whileHeld(() -> ballCollecterSubsystem.setSpeed(-1))
+                new JoystickButton(xboxController, Button.kB.value)
+                                .whileHeld(() -> ballCollecterSubsystem.setSpeed(-0.66))
                                 .whenReleased(() -> ballCollecterSubsystem.setSpeed(0));
 
                 // collecter arm up - Y
                 new JoystickButton(xboxController, Button.kY.value)
-                                .whileHeld(new MMCollecterArmUpCmd(ballCollecterArmSubsystem, 12326))
-                                .whenReleased(() -> ballCollecterArmSubsystem.setCollecterArmSpeed(0));
+                                .whenPressed(new MMCollecterArmUpCmd(ballCollecterArmSubsystem, 2300));
 
                 // collecter arm down - A
                 new JoystickButton(xboxController, Button.kA.value)
-                                .whileHeld(new MMCollecterArmDownCmd(ballCollecterArmSubsystem, -1028))
-                                .whenReleased(() -> ballCollecterArmSubsystem.setCollecterArmSpeed(0));
+                                .whenPressed(new MMCollecterArmUpCmd(ballCollecterArmSubsystem, 0));
 
                 new JoystickButton(xboxController, Button.kB.value)
                                 .whileHeld(() -> new ExtendClimberCmd(climberSubsystem, 1));

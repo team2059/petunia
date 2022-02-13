@@ -42,7 +42,10 @@ public final class Constants {
 
         //
         // ratio*2*pi*Units.inchesToMeters(wheel raidus)
-        public static final double kPetuniaGearRatio = 10.71;
+
+        // public static final double kPetuniaGearRatio = 10.71;
+
+        public static final double kPetuniaGearRatio = 12.755;
         public static final double kPetuniaWheelRadiusInches = 3;
 
         // If we get the number of ticks, say 10000, we want to multiply that times
@@ -52,10 +55,10 @@ public final class Constants {
                 .inchesToMeters(1 / (kPetuniaGearRatio * 2 * Math.PI
                         * Units.inchesToMeters(kPetuniaWheelRadiusInches)) * 10));
 
-        public static final double ksVolts = 0;
-        public static final double kvVoltSecondsPerMeter = 0;
-        public static final double kaVoltSecondsSquaredPerMeter = 0;
-        public static final double kPDriveVel = 0;
+        public static final double ksVolts = 0.1219;
+        public static final double kvVoltSecondsPerMeter = 3.343;
+        public static final double kaVoltSecondsSquaredPerMeter = 1.0356;
+        public static final double kPDriveVel = 2.2662;
 
         // 21.75 inches equals 0.57785. trackwidth is horizontal distance between the
         // wheels
@@ -129,7 +132,7 @@ public final class Constants {
          * Gains used in Motion Magic, to be adjusted accordingly
          * Gains(kp, ki, kd, kf, izone, peak output);
          */
-        public static final Gains kGains = new Gains(1.75, 0.0, 0.0, 0.7887432537, 0, 0.0);
+        public static final Gains kGains = new Gains(2.25, 0.0, 0.0, 3.147692308, 0, 0.0);
     }
 
 }
