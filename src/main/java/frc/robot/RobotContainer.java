@@ -28,6 +28,8 @@ import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.commands.ArcadeDriveCmd;
 import frc.robot.commands.ExtendClimberCmd;
+import frc.robot.commands.MMCollecterArmDownCmd;
+import frc.robot.commands.MMCollecterArmUpCmd;
 import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.BallCollecterArmSubsystem;
@@ -97,16 +99,26 @@ public class RobotContainer {
          */
         private void configureButtonBindings() {
 
-                // collect - A
-                new JoystickButton(xboxController, Button.kA.value).whileHeld(() -> ballCollecterSubsystem.setSpeed(1))
+                // collect - X
+                new JoystickButton(xboxController, Button.kX.value).whileHeld(() -> ballCollecterSubsystem.setSpeed(1))
                                 .whenReleased(() -> ballCollecterSubsystem.setSpeed(0));
 
-                // spit out - Y
-                new JoystickButton(xboxController, Button.kY.value).whileHeld(() -> ballCollecterSubsystem.setSpeed(-1))
+                // spit out - B
+                new JoystickButton(xboxController, Button.kB.value).whileHeld(() -> ballCollecterSubsystem.setSpeed(-1))
                                 .whenReleased(() -> ballCollecterSubsystem.setSpeed(0));
+
+                // collecter arm up - Y
+                new JoystickButton(xboxController, Button.kY.value)
+                                .whileHeld(new MMCollecterArmUpCmd(ballCollecterArmSubsystem, 12326))
+                                .whenReleased(() -> ballCollecterArmSubsystem.setCollecterArmSpeed(0));
+
+                // collecter arm down - A
+                new JoystickButton(xboxController, Button.kA.value)
+                                .whileHeld(new MMCollecterArmDownCmd(ballCollecterArmSubsystem, -1028))
+                                .whenReleased(() -> ballCollecterArmSubsystem.setCollecterArmSpeed(0));
 
                 new JoystickButton(xboxController, Button.kB.value)
-                                .whileHeld(() -> new ExtendClimberCmd(climberSubsystem, 1)).whenReleased(() -> new ExtendC);
+                                .whileHeld(() -> new ExtendClimberCmd(climberSubsystem, 1));
         }
 
         public Command loadPathWeaverTrajectoryCommand(String filename, boolean resetOdometry) {
