@@ -27,14 +27,13 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.commands.ArcadeDriveCmd;
-import frc.robot.commands.ExtendClimberCmd;
 import frc.robot.commands.MMCollecterArmDownCmd;
 import frc.robot.commands.MMCollecterArmUpCmd;
 import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.BallCollecterArmSubsystem;
 import frc.robot.subsystems.BallCollecterSubsystem;
-import frc.robot.subsystems.ClimberSubsystem;
+
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -56,7 +55,7 @@ public class RobotContainer {
         public static XboxController xboxController = new XboxController(3);
 
         private final DriveTrainSubsystem driveTrainSubsystem = new DriveTrainSubsystem();
-        private final ClimberSubsystem climberSubsystem = new ClimberSubsystem();
+        //private final ClimberSubsystem climberSubsystem = new ClimberSubsystem();
         private final BallCollecterSubsystem ballCollecterSubsystem = new BallCollecterSubsystem();
         private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
         private final BallCollecterArmSubsystem ballCollecterArmSubsystem = new BallCollecterArmSubsystem();
@@ -117,9 +116,9 @@ public class RobotContainer {
                 // collecter arm down - A
                 new JoystickButton(xboxController, Button.kA.value)
                                 .whenPressed(new MMCollecterArmUpCmd(ballCollecterArmSubsystem, 0));
-
+/* 
                 new JoystickButton(xboxController, Button.kB.value)
-                                .whileHeld(() -> new ExtendClimberCmd(climberSubsystem, 1));
+                                .whileHeld(() -> new ExtendClimberCmd(climberSubsystem, 1)); */
         }
 
         public Command loadPathWeaverTrajectoryCommand(String filename, boolean resetOdometry) {
