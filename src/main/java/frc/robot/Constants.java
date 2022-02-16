@@ -79,6 +79,24 @@ public final class Constants {
         // 100:1 775pro
         public static final int climberExtenderTalonSRX = 9;
         public static final int climberAngleTalonSRX = 10;
+
+        /*PID slot to pull gains from*/
+        public static final int kSlotIdx = 0;
+
+        /*Select primary cascaded PID loop*/
+        public static final int kPIDLoopIdx = 0;
+
+        /*set to zero to skip waiting for confirmation*/
+        public static final int kTimeoutMs = 0;
+
+        /* Motion Magic Gains; Gains(kp, ki, kd, kf, izone, peak output)*/
+        public static final Gains kExtenderGains = new Gains(0.0, 0.0, 0.0, 0.0, 0, 0.0);
+
+        public static final Gains kAngleGains = new Gains(0.0, 0.0, 0.0, 0.0, 0, 0.0);
+    }
+
+    public static final class ClimberAngleConstants {
+        
     }
 
     public static final class ShooterConstants {
