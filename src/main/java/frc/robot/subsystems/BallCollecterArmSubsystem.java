@@ -7,6 +7,9 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.commands.MMCollecterArmUpCmd;
+
+import java.sql.Time;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
@@ -34,7 +37,7 @@ public class BallCollecterArmSubsystem extends SubsystemBase {
 
     /* Factory default hardware to prevent unexpected behavior */
     ballCollecterArmTalonSRX.configFactoryDefault();
-    
+
 
     /* Configure Sensor Source for Pirmary PID */
     ballCollecterArmTalonSRX.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder,
@@ -98,10 +101,19 @@ public class BallCollecterArmSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
+
     // This method will be called once per scheduler run
     SmartDashboard.putNumber("talon encoder value", ballCollecterArmTalonSRX.getSelectedSensorPosition());
 
-    
+    // if (ballCollecterArmTalonSRX.getControlMode() == ControlMode.MotionMagic
+    // && ballCollecterArmTalonSRX.getSelectedSensorPosition() > 2000) {
+    // ballCollecterArmTalonSRX.setNeutralMode(NeutralMode.Brake);
+    // } else {
+    // ballCollecterArmTalonSRX.setNeutralMode(NeutralMode.Coast);
+    // }
+
+    SmartDashboard.putString("talon mode", ballCollecterArmTalonSRX.getControlMode().toString());
+    SmartDashboard.putNumber("output", ballCollecterArmTalonSRX.getMotorOutputPercent());
 
   }
 }

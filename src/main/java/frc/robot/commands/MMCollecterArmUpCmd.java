@@ -26,7 +26,6 @@ public class MMCollecterArmUpCmd extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-   
 
   }
 
@@ -56,6 +55,14 @@ public class MMCollecterArmUpCmd extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+
+    double position = BallCollecterArmSubsystem.getBallCollecterArmTalonSRX().getSelectedSensorPosition();
+
+    // if position (sometimes 2988 or 2999, sometimes 3007) is greater than
+    // targetMax, end. no need to call coast mode or set output percetnage to 0
+    // becasue PID is automatically acting as breakmode by sending small output
+    // percent of ~0.002
+    return (position > targetMax);
+
   }
 }
