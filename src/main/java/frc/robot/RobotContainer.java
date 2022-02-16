@@ -7,6 +7,10 @@ package frc.robot;
 import java.io.IOException;
 import java.nio.file.Path;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.RamseteController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
@@ -116,10 +120,12 @@ public class RobotContainer {
 
                 // collecter arm down - A
                 new JoystickButton(xboxController, Button.kA.value)
-                                .whenPressed(new MMCollecterArmUpCmd(ballCollecterArmSubsystem, 0));
+                                .whenPressed(new MMCollecterArmDownCmd(ballCollecterArmSubsystem,
+                                                0));
 
                 new JoystickButton(xboxController, Button.kB.value)
                                 .whileHeld(() -> new ExtendClimberCmd(climberSubsystem, 1));
+
         }
 
         public Command loadPathWeaverTrajectoryCommand(String filename, boolean resetOdometry) {

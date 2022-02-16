@@ -4,6 +4,8 @@
 
 package frc.robot.commands;
 
+import java.util.ResourceBundle.Control;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 
@@ -27,7 +29,6 @@ public class MMCollecterArmDownCmd extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-   
 
   }
 
@@ -39,9 +40,8 @@ public class MMCollecterArmDownCmd extends CommandBase {
     /* 4096 ticks/rev * 10 Rotations in either direction */
     // double targetPos = targetMin;
     // * 4096 * 10.0;
-    
+
     BallCollecterArmSubsystem.getBallCollecterArmTalonSRX().set(ControlMode.MotionMagic, targetMin);
-   
 
   }
 
@@ -53,11 +53,24 @@ public class MMCollecterArmDownCmd extends CommandBase {
   @Override
   public void end(boolean interrupted) {
 
+    // set output to 0 to use coast mode
+    // we want to
+    // chagne control mode to Percent output to use coast mode
+    BallCollecterArmSubsystem.getBallCollecterArmTalonSRX().set(ControlMode.PercentOutput,
+        0);
+    BallCollecterArmSubsystem.getBallCollecterArmTalonSRX().setNeutralMode(NeutralMode.Coast);
+
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+
+    double position = (BallCollecterArmSubsystem.getBallCollecterArmTalonSRX().getSelectedSensorPosition());
+
+    // if position (usually -40 to -60) is less than 0, end command, we want to
+    // chagne control mode to Percent output to use coast mode
+    return (position < targetMin);
+
   }
 }
