@@ -4,6 +4,8 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.*;
 import frc.robot.Constants.ShooterConstants;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -15,10 +17,14 @@ public class ShooterSubsystem extends SubsystemBase {
    * This block creates two motor instances, the motor controller was a TalonSRX
    * and it takes in a the Motor Port
    */
-  WPI_TalonSRX ballShooter = new WPI_TalonSRX(ShooterConstants.intakeIndexerTalonSRX);
-  WPI_TalonSRX indexMotor = new WPI_TalonSRX(ShooterConstants.shooterMotorTalonSRX);
+  public static WPI_TalonSRX ballShooter = new WPI_TalonSRX(ShooterConstants.shooterMotorTalonSRX);
+  public static WPI_TalonSRX indexMotor = new WPI_TalonSRX(ShooterConstants.intakeIndexerTalonSRX);
   // TODO change port
   DigitalInput chamberPhotoElectricSensor = new DigitalInput(1);
+
+  public static void setIndexSpeed(double speed) {
+    indexMotor.set(speed);
+  }
 
   /*
    * Creates a new Shooter.
@@ -26,6 +32,8 @@ public class ShooterSubsystem extends SubsystemBase {
   public ShooterSubsystem() {
     // Resets all values to default
     ballShooter.configFactoryDefault();
+    ballShooter.setNeutralMode(NeutralMode.Coast);
+    ballShooter.setSelectedSensorPosition(0);
 
     /* Config the peak and nominal outputs ([-1, 1] represents [-100, 100]%) */
     ballShooter.configNominalOutputForward(0, ShooterConstants.kCtreTimeoutMs);
@@ -35,16 +43,16 @@ public class ShooterSubsystem extends SubsystemBase {
     ballShooter.selectProfileSlot(ShooterConstants.kSlotIdx, ShooterConstants.kPIDLoopIdx);
 
     // TODO Configure Gain PID stuff (then uncomment)
-    /*
-     * ballShooter.config_kP(ShooterConstants.kPIDLoopIdx,
-     * ShooterConstants.kGains.kP, ShooterConstants.kCtreTimeoutMs);
-     * ballShooter.config_kI(ShooterConstants.kPIDLoopIdx,
-     * ShooterConstants.kGains.kI, ShooterConstants.kCtreTimeoutMs);
-     * ballShooter.config_kD(ShooterConstants.kPIDLoopIdx,
-     * ShooterConstants.kGains.kD, ShooterConstants.kCtreTimeoutMs);
-     * ballShooter.config_kF(ShooterConstants.kPIDLoopIdx,
-     * ShooterConstants.kGains.kF, ShooterConstants.kCtreTimeoutMs);
-     */
+    // /*
+    // * ballShooter.config_kP(ShooterConstants.kPIDLoopIdx,
+    // * ShooterConstants.kGains.kP, ShooterConstants.kCtreTimeoutMs);
+    // * ballShooter.config_kI(ShooterConstants.kPIDLoopIdx,
+    // * ShooterConstants.kGains.kI, ShooterConstants.kCtreTimeoutMs);
+    // * ballShooter.config_kD(ShooterConstants.kPIDLoopIdx,
+    // * ShooterConstants.kGains.kD, ShooterConstants.kCtreTimeoutMs);
+    // * ballShooter.config_kF(ShooterConstants.kPIDLoopIdx,
+    // * ShooterConstants.kGains.kF, ShooterConstants.kCtreTimeoutMs);
+    // */
     indexMotor.configFactoryDefault();
 
     indexMotor.configNominalOutputForward(0, ShooterConstants.kCtreTimeoutMs);
@@ -64,7 +72,7 @@ public class ShooterSubsystem extends SubsystemBase {
     return ballShooter.getSelectedSensorVelocity();
   }
 
-  public void setShooterVelocity() {
-
+  public void setShooterVelocity(double velocity) {
+    ballShooter.set(velocity);
   }
 }
