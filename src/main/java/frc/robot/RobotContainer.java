@@ -31,14 +31,18 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.commands.ArcadeDriveCmd;
-import frc.robot.commands.ExtendClimberCmd;
+import frc.robot.commands.MMClimberExtendDownCmd;
+import frc.robot.commands.MMClimberExtendUpCmd;
+import frc.robot.commands.MMClimberTiltBackCmd;
+import frc.robot.commands.MMClimberTiltForwardCmd;
 import frc.robot.commands.MMCollecterArmDownCmd;
 import frc.robot.commands.MMCollecterArmUpCmd;
 import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.BallCollecterArmSubsystem;
 import frc.robot.subsystems.BallCollecterSubsystem;
-import frc.robot.subsystems.ClimberSubsystem;
+import frc.robot.subsystems.ClimberExtenderSubsystem;
+import frc.robot.subsystems.ClimberTiltSubsystem;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -57,12 +61,14 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class RobotContainer {
 
         // The robot's subsystems and commands are defined here...
+        public static XboxController logitech = new XboxController(5);
         public static XboxController xboxController = new XboxController(3);
 
         private final DriveTrainSubsystem driveTrainSubsystem = new DriveTrainSubsystem();
-        private final ClimberSubsystem climberSubsystem = new ClimberSubsystem();
+        private final ClimberExtenderSubsystem climberExtendSubsystem = new ClimberExtenderSubsystem();
+        private final ClimberTiltSubsystem climberTiltSubsystem = new ClimberTiltSubsystem();
         private final BallCollecterSubsystem ballCollecterSubsystem = new BallCollecterSubsystem();
-        private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
+        // private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
         private final BallCollecterArmSubsystem ballCollecterArmSubsystem = new BallCollecterArmSubsystem();
 
         Command autonomousCommand;
@@ -123,8 +129,23 @@ public class RobotContainer {
                                 .whenPressed(new MMCollecterArmDownCmd(ballCollecterArmSubsystem,
                                                 0));
 
-                new JoystickButton(xboxController, Button.kB.value)
-                                .whileHeld(() -> new ExtendClimberCmd(climberSubsystem, 1));
+                // extend up
+                new JoystickButton(logitech, Button.kY.value)
+                                .whileHeld(new MMClimberExtendUpCmd(climberExtendSubsystem, 52500))
+                                .whenReleased(() -> climberExtendSubsystem.stopMotors());
+
+                // extend down
+                new JoystickButton(logitech, Button.kA.value)
+                                .whileHeld(new MMClimberExtendDownCmd(climberExtendSubsystem, 2000))
+                                .whenReleased(() -> climberExtendSubsystem.stopMotors());
+
+                // tilt forward
+                // new JoystickButton(logitech, Button.kX.value)
+                // .whileHeld(new MMClimberTiltForwardCmd(climberTiltSubsystem, 600));
+
+                // tilt back
+                // new JoystickButton(logitech, Button.kB.value)
+                // .whileHeld(new MMClimberTiltBackCmd(climberTiltSubsystem, 100));
 
         }
 
