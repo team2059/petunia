@@ -68,7 +68,7 @@ public class RobotContainer {
         private final ClimberExtenderSubsystem climberExtendSubsystem = new ClimberExtenderSubsystem();
         private final ClimberTiltSubsystem climberTiltSubsystem = new ClimberTiltSubsystem();
         private final BallCollecterSubsystem ballCollecterSubsystem = new BallCollecterSubsystem();
-        // private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
+        private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
         private final BallCollecterArmSubsystem ballCollecterArmSubsystem = new BallCollecterArmSubsystem();
 
         Command autonomousCommand;
@@ -139,6 +139,7 @@ public class RobotContainer {
                                 .whileHeld(new MMClimberExtendDownCmd(climberExtendSubsystem, 2000))
                                 .whenReleased(() -> climberExtendSubsystem.stopMotors());
 
+                // TODO Tilt mechanics
                 // tilt forward
                 // new JoystickButton(logitech, Button.kX.value)
                 // .whileHeld(new MMClimberTiltForwardCmd(climberTiltSubsystem, 600));
@@ -146,6 +147,20 @@ public class RobotContainer {
                 // tilt back
                 // new JoystickButton(logitech, Button.kB.value)
                 // .whileHeld(new MMClimberTiltBackCmd(climberTiltSubsystem, 100));
+
+                // X - indexer forward
+                new JoystickButton(logitech, Button.kX.value).whileHeld(() -> shooterSubsystem.setIndexSpeed(.5))
+                                .whenReleased(() -> shooterSubsystem.setIndexSpeed(0));
+
+                // B - indexer backwards
+                new JoystickButton(logitech, Button.kB.value).whileHeld(() -> shooterSubsystem.setIndexSpeed(-.5))
+                                .whenReleased(() -> shooterSubsystem.setIndexSpeed(0));
+
+                new JoystickButton(logitech, Button.kRightBumper.value)
+                                .whenPressed(() -> shooterSubsystem.setShooterVelocity(0.75));
+
+                new JoystickButton(logitech, Button.kRightBumper.value)
+                                .whenPressed(() -> shooterSubsystem.setShooterVelocity(100));
 
         }
 
