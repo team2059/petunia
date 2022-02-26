@@ -25,6 +25,7 @@ import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -61,8 +62,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class RobotContainer {
 
         // The robot's subsystems and commands are defined here...
-        public static XboxController logitech = new XboxController(5);
-        public static XboxController xboxController = new XboxController(3);
+        public static XboxController logitech = new XboxController(3);
+        public static XboxController xboxController = new XboxController(5);
 
         private final DriveTrainSubsystem driveTrainSubsystem = new DriveTrainSubsystem();
         private final ClimberExtenderSubsystem climberExtendSubsystem = new ClimberExtenderSubsystem();
@@ -131,36 +132,53 @@ public class RobotContainer {
 
                 // extend up
                 new JoystickButton(logitech, Button.kY.value)
-                                .whileHeld(new MMClimberExtendUpCmd(climberExtendSubsystem, 52500))
+                                .whileHeld(new MMClimberExtendUpCmd(climberExtendSubsystem, 77900))
                                 .whenReleased(() -> climberExtendSubsystem.stopMotors());
 
                 // extend down
                 new JoystickButton(logitech, Button.kA.value)
-                                .whileHeld(new MMClimberExtendDownCmd(climberExtendSubsystem, 2000))
+                                .whileHeld(new MMClimberExtendDownCmd(climberExtendSubsystem, 50))
                                 .whenReleased(() -> climberExtendSubsystem.stopMotors());
 
                 // TODO Tilt mechanics
                 // tilt forward
-                // new JoystickButton(logitech, Button.kX.value)
-                // .whileHeld(new MMClimberTiltForwardCmd(climberTiltSubsystem, 600));
+                new JoystickButton(logitech, Button.kX.value)
+                                .whileHeld(new MMClimberTiltForwardCmd(climberTiltSubsystem,
+                                                600));
+                // .whenReleased(() -> ClimberTiltSubsystem.getClimberLeftTiltSRX()
+                // .set(ControlMode.PercentOutput, 0.000001));
 
                 // tilt back
-                // new JoystickButton(logitech, Button.kB.value)
-                // .whileHeld(new MMClimberTiltBackCmd(climberTiltSubsystem, 100));
+                new JoystickButton(logitech, Button.kB.value)
+                                .whileHeld(new MMClimberTiltBackCmd(climberTiltSubsystem, 0))
+
+                ;
+
+                // tilt align
+
+                new JoystickButton(logitech, Button.kLeftBumper.value)
+                                .whenPressed(new MMClimberTiltForwardCmd(climberTiltSubsystem, -114))
+
+                ;
+
+                // .whenReleased(() -> ClimberTiltSubsystem.getClimberLeftTiltSRX()
+                // .set(ControlMode.PercentOutput, 0.000001));
 
                 // X - indexer forward
-                new JoystickButton(logitech, Button.kX.value).whileHeld(() -> shooterSubsystem.setIndexSpeed(.5))
-                                .whenReleased(() -> shooterSubsystem.setIndexSpeed(0));
+                // new JoystickButton(logitech, Button.kX.value).whileHeld(() ->
+                // shooterSubsystem.setIndexSpeed(.5))
+                // .whenReleased(() -> shooterSubsystem.setIndexSpeed(0));
 
                 // B - indexer backwards
-                new JoystickButton(logitech, Button.kB.value).whileHeld(() -> shooterSubsystem.setIndexSpeed(-.5))
-                                .whenReleased(() -> shooterSubsystem.setIndexSpeed(0));
+                // new JoystickButton(logitech, Button.kB.value).whileHeld(() ->
+                // shooterSubsystem.setIndexSpeed(-.5))
+                // .whenReleased(() -> shooterSubsystem.setIndexSpeed(0));
 
-                new JoystickButton(logitech, Button.kRightBumper.value)
-                                .whenPressed(() -> shooterSubsystem.setShooterVelocity(0.75));
+                // new JoystickButton(logitech, Button.kRightBumper.value)
+                // .whenPressed(() -> shooterSubsystem.setShooterVelocity(0.75));
 
-                new JoystickButton(logitech, Button.kRightBumper.value)
-                                .whenPressed(() -> shooterSubsystem.setShooterVelocity(100));
+                // new JoystickButton(logitech, Button.kRightBumper.value)
+                // .whenPressed(() -> shooterSubsystem.setShooterVelocity(100));
 
         }
 
@@ -213,11 +231,30 @@ public class RobotContainer {
          */
 
         public Command getAutonomousCommand() {
-                return m_chooser.getSelected();
+
+                // TODO test auto routine
+                return new SequentialCommandGroup(
+                                new ParallelCommandGroup(new MMCollecterArmDownCmd(ballCollecterArmSubsystem, 0),
+                                                new InstantCommand(() -> ballCollecterArmSubsystem
+                                                                .setCollecterArmSpeed(-.5)),
+                                                m_chooser.getSelected()),
+                                new ParallelCommandGroup(new InstantCommand(() -> shooterSubsystem.setIndexSpeed(-.5)),
+                                                new InstantCommand(() -> shooterSubsystem.setShooterVelocity(0.75))));
+
+                // return m_chooser.getSelected();
+
         }
 
         public DriveTrainSubsystem getDriveTrainSubsystem() {
                 return driveTrainSubsystem;
+        }
+
+        public ClimberTiltSubsystem getClimberTiltSubsystem() {
+                return climberTiltSubsystem;
+        }
+
+        public ClimberExtenderSubsystem getClimberExtenderSubsystem() {
+                return climberExtendSubsystem;
         }
 
 }
