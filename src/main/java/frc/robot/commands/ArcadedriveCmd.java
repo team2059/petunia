@@ -30,8 +30,8 @@ public class ArcadeDriveCmd extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double xSpeed = RobotContainer.xboxController.getRawAxis(1) * 0.5;
-    double zRotation = RobotContainer.xboxController.getRawAxis(0) * 0.5;
+    double xSpeed = RobotContainer.logitech.getRawAxis(1) * 0.25;
+    double zRotation = RobotContainer.logitech.getRawAxis(0) * 0.25;
     // negate zRotation because we invertetd rightMotorControllerGroup
 
     driveTrainSubsystem.arcadeDrive(xSpeed, -zRotation);
