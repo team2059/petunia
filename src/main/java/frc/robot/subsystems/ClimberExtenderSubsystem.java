@@ -11,6 +11,7 @@ import frc.robot.Constants.ClimberExtendConstants;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ClimberExtenderSubsystem extends SubsystemBase {
@@ -20,6 +21,12 @@ public class ClimberExtenderSubsystem extends SubsystemBase {
                         Constants.ClimberExtendConstants.climberLeftExtendSRX);
         static WPI_TalonSRX climberRightExtendSRX = new WPI_TalonSRX(
                         Constants.ClimberExtendConstants.climberRightExtendSRX);
+
+        static DigitalInput leftSensor = new DigitalInput(0);
+        static DigitalInput rightSensor = new DigitalInput(1);
+
+        boolean leftStatus = leftSensor.get();
+        boolean rightStatus = rightSensor.get();
 
         public static WPI_TalonSRX getClimberRightExtendSRX() {
                 return climberRightExtendSRX;
@@ -34,15 +41,15 @@ public class ClimberExtenderSubsystem extends SubsystemBase {
                 climberRightExtendSRX.set(0);
         }
 
-     
-
         public ClimberExtenderSubsystem() {
+                // if (leftStatus == false && rightStatus == false) {
                 /* Zero the sensor once on robot boot up */
                 climberLeftExtendSRX.setSelectedSensorPosition(0, Constants.ClimberExtendConstants.kPIDLoopIdx,
                                 Constants.ClimberExtendConstants.kTimeoutMs);
                 /* Zero the sensor once on robot boot up */
                 climberRightExtendSRX.setSelectedSensorPosition(0, Constants.ClimberExtendConstants.kPIDLoopIdx,
                                 Constants.ClimberExtendConstants.kTimeoutMs);
+                // }
 
                 /* Factory default hardware to prevent unexpected behavior */
                 climberRightExtendSRX.configFactoryDefault();
@@ -67,9 +74,6 @@ public class ClimberExtenderSubsystem extends SubsystemBase {
                 climberRightExtendSRX.setSensorPhase(true);
                 climberRightExtendSRX.setInverted(true);
 
-                climberLeftExtendSRX.setNeutralMode(NeutralMode.Brake);
-                climberRightExtendSRX.setNeutralMode(NeutralMode.Brake);
-
                 /* Set relevant frame periods to be at least as fast as periodic rate */
                 climberRightExtendSRX.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, 10,
                                 Constants.ClimberExtendConstants.kTimeoutMs);
@@ -86,27 +90,23 @@ public class ClimberExtenderSubsystem extends SubsystemBase {
                 climberRightExtendSRX.selectProfileSlot(Constants.ClimberExtendConstants.kSlotIdx,
                                 Constants.ClimberExtendConstants.kPIDLoopIdx);
                 climberRightExtendSRX.config_kF(Constants.ClimberExtendConstants.kSlotIdx,
-                                Constants.ClimberExtendConstants.masterGains.kF,
+                                Constants.ClimberExtendConstants.gains.kF,
                                 Constants.ClimberExtendConstants.kTimeoutMs);
                 climberRightExtendSRX.config_kP(Constants.ClimberExtendConstants.kSlotIdx,
-                                Constants.ClimberExtendConstants.masterGains.kP,
+                                Constants.ClimberExtendConstants.gains.kP,
                                 Constants.ClimberExtendConstants.kTimeoutMs);
                 climberRightExtendSRX.config_kI(Constants.ClimberExtendConstants.kSlotIdx,
-                                Constants.ClimberExtendConstants.masterGains.kI,
+                                Constants.ClimberExtendConstants.gains.kI,
                                 Constants.ClimberExtendConstants.kTimeoutMs);
                 climberRightExtendSRX.config_kD(Constants.ClimberExtendConstants.kSlotIdx,
-                                Constants.ClimberExtendConstants.masterGains.kD,
+                                Constants.ClimberExtendConstants.gains.kD,
                                 Constants.ClimberExtendConstants.kTimeoutMs);
 
                 /* Set acceleration and vcruise velocity - see documentation */
-                climberRightExtendSRX.configMotionCruiseVelocity(1091, Constants.ClimberExtendConstants.kTimeoutMs);
-                climberRightExtendSRX.configMotionAcceleration(1090.8, Constants.ClimberExtendConstants.kTimeoutMs);
+                climberRightExtendSRX.configMotionCruiseVelocity(1889, Constants.ClimberExtendConstants.kTimeoutMs);
+                climberRightExtendSRX.configMotionAcceleration(1889.1, Constants.ClimberExtendConstants.kTimeoutMs);
 
                 climberRightExtendSRX.configFeedbackNotContinuous(true, Constants.ClimberExtendConstants.kTimeoutMs);
-
-                /* Zero the sensor once on robot boot up */
-                climberRightExtendSRX.setSelectedSensorPosition(0, Constants.ClimberExtendConstants.kPIDLoopIdx,
-                                Constants.ClimberExtendConstants.kTimeoutMs);
 
                 // Configure current limits
                 climberRightExtendSRX.configPeakCurrentLimit(30);
@@ -134,21 +134,21 @@ public class ClimberExtenderSubsystem extends SubsystemBase {
                 climberLeftExtendSRX.selectProfileSlot(Constants.ClimberExtendConstants.kSlotIdx,
                                 Constants.ClimberExtendConstants.kPIDLoopIdx);
                 climberLeftExtendSRX.config_kF(Constants.ClimberExtendConstants.kSlotIdx,
-                                Constants.ClimberExtendConstants.followerGains.kF,
+                                Constants.ClimberExtendConstants.gains.kF,
                                 Constants.ClimberExtendConstants.kTimeoutMs);
                 climberLeftExtendSRX.config_kP(Constants.ClimberExtendConstants.kSlotIdx,
-                                Constants.ClimberExtendConstants.followerGains.kP,
+                                Constants.ClimberExtendConstants.gains.kP,
                                 Constants.ClimberExtendConstants.kTimeoutMs);
                 climberLeftExtendSRX.config_kI(Constants.ClimberExtendConstants.kSlotIdx,
-                                Constants.ClimberExtendConstants.followerGains.kI,
+                                Constants.ClimberExtendConstants.gains.kI,
                                 Constants.ClimberExtendConstants.kTimeoutMs);
                 climberLeftExtendSRX.config_kD(Constants.ClimberExtendConstants.kSlotIdx,
-                                Constants.ClimberExtendConstants.followerGains.kD,
+                                Constants.ClimberExtendConstants.gains.kD,
                                 Constants.ClimberExtendConstants.kTimeoutMs);
 
                 /* Set acceleration and vcruise velocity - see documentation */
-                climberLeftExtendSRX.configMotionCruiseVelocity(1091, Constants.ClimberExtendConstants.kTimeoutMs);
-                climberLeftExtendSRX.configMotionAcceleration(1090.8, Constants.ClimberExtendConstants.kTimeoutMs);
+                climberLeftExtendSRX.configMotionCruiseVelocity(1889, Constants.ClimberExtendConstants.kTimeoutMs);
+                climberLeftExtendSRX.configMotionAcceleration(1889.1, Constants.ClimberExtendConstants.kTimeoutMs);
 
                 climberLeftExtendSRX.configFeedbackNotContinuous(true, Constants.ClimberExtendConstants.kTimeoutMs);
 
@@ -169,6 +169,22 @@ public class ClimberExtenderSubsystem extends SubsystemBase {
                 SmartDashboard.putNumber("left arm", climberLeftExtendSRX.getSelectedSensorPosition());
                 SmartDashboard.putNumber("right arm", climberRightExtendSRX.getSelectedSensorPosition());
 
+                // if (leftSensor.get() == false) {
+                //         climberLeftExtendSRX.setSelectedSensorPosition(0);
+                // }
+
+                // if (rightSensor.get() == false) {
+
+                //         climberRightExtendSRX.setSelectedSensorPosition(0);
+                // }
+
+                SmartDashboard.putBoolean("right sensor", rightSensor.get());
+                SmartDashboard.putBoolean("left sensor", leftSensor.get());
+
+                // if (leftStatus && rightStatus) {
+                // climberLeftExtendSRX.setSelectedSensorPosition(25);
+                // climberRightExtendSRX.setSelectedSensorPosition(25);
+                // }
         }
 
 }

@@ -12,6 +12,9 @@ import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.commands.MMCollecterArmActivate;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -26,6 +29,11 @@ public class Robot extends TimedRobot {
 
   private Command m_autonomousCommand;
   private RobotContainer m_robotContainer;
+
+  public RobotContainer getRobotContainer() {
+    return m_robotContainer;
+  }
+
   // private DriveTrainSubsystem driveTrainSubsystem;
 
   /**
@@ -40,7 +48,6 @@ public class Robot extends TimedRobot {
     // and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
-
   }
 
   /**
@@ -71,6 +78,7 @@ public class Robot extends TimedRobot {
   public void disabledInit() {
     m_robotContainer.getDriveTrainSubsystem().zeroHeading();
     m_robotContainer.getDriveTrainSubsystem().resetEncoders();
+    m_robotContainer.getBallCollecterArmSubsystem().getBallCollecterArmTalonSRX().setSelectedSensorPosition(0);
 
     // m_robotContainer.getDriveTrainSubsystem().zeroHeading();
     // m_robotContainer.getDriveTrainSubsystem().resetEncoders();
@@ -87,7 +95,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-
+    m_robotContainer.getBallCollecterArmSubsystem().getBallCollecterArmTalonSRX().setSelectedSensorPosition(0);
     m_robotContainer.getDriveTrainSubsystem().zeroHeading();
     m_robotContainer.getDriveTrainSubsystem().resetEncoders();
 
@@ -111,6 +119,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
+    m_robotContainer.getBallCollecterArmSubsystem().getBallCollecterArmTalonSRX().setSelectedSensorPosition(0);
     m_robotContainer.getDriveTrainSubsystem().zeroHeading();
     m_robotContainer.getDriveTrainSubsystem().resetEncoders();
     m_robotContainer.getClimberExtenderSubsystem().getClimberLeftExtendSRX().set(ControlMode.PercentOutput, 0);
