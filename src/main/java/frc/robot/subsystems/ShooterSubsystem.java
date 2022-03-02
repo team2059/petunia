@@ -20,7 +20,7 @@ public class ShooterSubsystem extends SubsystemBase {
   public static WPI_TalonSRX ballShooter = new WPI_TalonSRX(ShooterConstants.shooterMotorTalonSRX);
   public static WPI_TalonSRX indexMotor = new WPI_TalonSRX(ShooterConstants.intakeIndexerTalonSRX);
   // TODO change port
-  //DigitalInput chamberPhotoElectricSensor = new DigitalInput(1);
+  // DigitalInput chamberPhotoElectricSensor = new DigitalInput(1);
 
   public static void setIndexSpeed(double speed) {
     indexMotor.set(speed);
