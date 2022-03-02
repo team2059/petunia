@@ -5,21 +5,28 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.ShooterSubsystem;
 
 public class ShootBallCmd extends CommandBase {
+  private final ShooterSubsystem mShooter;
+
   /** Creates a new ShootBallCmd. */
-  public ShootBallCmd() {
+  public ShootBallCmd(ShooterSubsystem mShooter) {
     // Use addRequirements() here to declare subsystem dependencies.
+    this.mShooter = mShooter;
+    addRequirements(mShooter);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    mShooter.setIndexSpeed(-0.66);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    mShooter.setShooterVelocity(0.66);
   }
 
   // Called once the command ends or is interrupted.

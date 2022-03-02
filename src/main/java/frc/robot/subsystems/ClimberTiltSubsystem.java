@@ -27,6 +27,7 @@ public class ClimberTiltSubsystem extends SubsystemBase {
         public static WPI_TalonSRX getClimberRightTiltSRX() {
                 return climberRightTiltTalonSRX;
         }
+
         public static void stopMotors() {
                 climberLeftTiltTalonSRX.set(0);
                 climberRightTiltTalonSRX.set(0);
@@ -55,20 +56,12 @@ public class ClimberTiltSubsystem extends SubsystemBase {
                  */
                 climberLeftTiltTalonSRX.configNeutralDeadband(0.001, Constants.ClimberTiltConstants.kTimeoutMs);
 
-                /**
-                 * Configure Talon SRX Output and Sensor direction accordingly Invert Motor to
-                 * have green LEDs when driving Talon Forward / Requesting Postiive Output Phase
-                 * sensor to have positive increment when driving Talon Forward (Green LED)
-                 */
+                // talon 11 settings
                 climberLeftTiltTalonSRX.setSensorPhase(true);
-                climberLeftTiltTalonSRX.setInverted(false);
+                climberLeftTiltTalonSRX.setInverted(true);
 
-                /**
-                 * Configure Talon SRX Output and Sensor direction accordingly Invert Motor to
-                 * have green LEDs when driving Talon Forward / Requesting Postiive Output Phase
-                 * sensor to have positive increment when driving Talon Forward (Green LED)
-                 */
-                climberRightTiltTalonSRX.setSensorPhase(false);
+                // talon 12 settings
+                climberRightTiltTalonSRX.setSensorPhase(true);
                 climberRightTiltTalonSRX.setInverted(false);
 
                 /* Set relevant frame periods to be at least as fast as periodic rate */
@@ -88,22 +81,22 @@ public class ClimberTiltSubsystem extends SubsystemBase {
                 climberLeftTiltTalonSRX.selectProfileSlot(Constants.ClimberTiltConstants.kSlotIdx,
                                 Constants.ClimberTiltConstants.kPIDLoopIdx);
                 climberLeftTiltTalonSRX.config_kF(Constants.ClimberTiltConstants.kSlotIdx,
-                                Constants.ClimberTiltConstants.masterGains.kF,
+                                Constants.ClimberTiltConstants.gains.kF,
                                 Constants.ClimberTiltConstants.kTimeoutMs);
                 climberLeftTiltTalonSRX.config_kP(Constants.ClimberTiltConstants.kSlotIdx,
-                                Constants.ClimberTiltConstants.masterGains.kP,
+                                Constants.ClimberTiltConstants.gains.kP,
                                 Constants.ClimberTiltConstants.kTimeoutMs);
                 climberLeftTiltTalonSRX.config_kI(Constants.ClimberTiltConstants.kSlotIdx,
-                                Constants.ClimberTiltConstants.masterGains.kI,
+                                Constants.ClimberTiltConstants.gains.kI,
                                 Constants.ClimberTiltConstants.kTimeoutMs);
                 climberLeftTiltTalonSRX.config_kD(Constants.ClimberTiltConstants.kSlotIdx,
-                                Constants.ClimberTiltConstants.masterGains.kD,
+                                Constants.ClimberTiltConstants.gains.kD,
                                 Constants.ClimberTiltConstants.kTimeoutMs);
 
                 /* Set acceleration and vcruise velocity - see documentation */
                 // TUNE CRUISE VELOCITY WHEN TESTING
-                climberLeftTiltTalonSRX.configMotionCruiseVelocity(148, Constants.ClimberTiltConstants.kTimeoutMs);
-                climberLeftTiltTalonSRX.configMotionAcceleration(147.6, Constants.ClimberTiltConstants.kTimeoutMs);
+                climberLeftTiltTalonSRX.configMotionCruiseVelocity(50, Constants.ClimberTiltConstants.kTimeoutMs);
+                climberLeftTiltTalonSRX.configMotionAcceleration(50.4, Constants.ClimberTiltConstants.kTimeoutMs);
 
                 climberLeftTiltTalonSRX.configFeedbackNotContinuous(true, Constants.ClimberTiltConstants.kTimeoutMs);
 
@@ -148,22 +141,22 @@ public class ClimberTiltSubsystem extends SubsystemBase {
                 climberRightTiltTalonSRX.selectProfileSlot(Constants.ClimberTiltConstants.kSlotIdx,
                                 Constants.ClimberTiltConstants.kPIDLoopIdx);
                 climberRightTiltTalonSRX.config_kF(Constants.ClimberTiltConstants.kSlotIdx,
-                                Constants.ClimberTiltConstants.followerGains.kF,
+                                Constants.ClimberTiltConstants.gains.kF,
                                 Constants.ClimberTiltConstants.kTimeoutMs);
                 climberRightTiltTalonSRX.config_kP(Constants.ClimberTiltConstants.kSlotIdx,
-                                Constants.ClimberTiltConstants.followerGains.kP,
+                                Constants.ClimberTiltConstants.gains.kP,
                                 Constants.ClimberTiltConstants.kTimeoutMs);
                 climberRightTiltTalonSRX.config_kI(Constants.ClimberTiltConstants.kSlotIdx,
-                                Constants.ClimberTiltConstants.followerGains.kI,
+                                Constants.ClimberTiltConstants.gains.kI,
                                 Constants.ClimberTiltConstants.kTimeoutMs);
                 climberRightTiltTalonSRX.config_kD(Constants.ClimberTiltConstants.kSlotIdx,
-                                Constants.ClimberTiltConstants.followerGains.kD,
+                                Constants.ClimberTiltConstants.gains.kD,
                                 Constants.ClimberTiltConstants.kTimeoutMs);
 
                 /* Set acceleration and vcruise velocity - see documentation */
                 // TUNE CRUISE VELOCITY WHEN TESTING
-                climberRightTiltTalonSRX.configMotionCruiseVelocity(125, Constants.ClimberTiltConstants.kTimeoutMs);
-                climberRightTiltTalonSRX.configMotionAcceleration(124.5, Constants.ClimberTiltConstants.kTimeoutMs);
+                climberRightTiltTalonSRX.configMotionCruiseVelocity(50, Constants.ClimberTiltConstants.kTimeoutMs);
+                climberRightTiltTalonSRX.configMotionAcceleration(50.4, Constants.ClimberTiltConstants.kTimeoutMs);
 
                 climberRightTiltTalonSRX.configFeedbackNotContinuous(true, Constants.ClimberTiltConstants.kTimeoutMs);
 
