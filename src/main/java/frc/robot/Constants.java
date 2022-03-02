@@ -86,7 +86,6 @@ public final class Constants {
         public static final int kTimeoutMs = 0;
 
         public static final Gains gains = new Gains(5, 0.001, 50, 18.26785714, 0, 0.0);
-    
 
     }
 
@@ -120,7 +119,6 @@ public final class Constants {
          */
         public static final Gains gains = new Gains(5, 0.001, 50, 0.4873749404, 0, 0.0);
 
-  
     }
 
     public static final class ShooterConstants {
@@ -177,4 +175,12 @@ public final class Constants {
         public static final Gains kGains = new Gains(2.5, 0.001, 31.4, 3.147692308, 0, 0.0);
     }
 
+    public static final class LimeLightConstants {
+        public static final double kLimeLightHeight = 0.0;
+        public static final double kLimeLightAngle = 0;
+        public static final double kTargetHeight = 0;
+
+        public static final double kTurnP = 0.05; //TODO tune P gains
+        public static final double kDistanceP = 0.0;
+    }
 }
