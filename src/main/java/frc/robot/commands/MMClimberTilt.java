@@ -11,14 +11,14 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ClimberTiltSubsystem;
 
-public class MMClimberTiltBackCmd extends CommandBase {
+public class MMClimberTilt extends CommandBase {
   private final ClimberTiltSubsystem climberTilt;
-  private final int targetMin;
+  private final int target;
 
   /** Creates a new MMClimberTiltForwardCmd. */
-  public MMClimberTiltBackCmd(ClimberTiltSubsystem climberTilt, int targetMin) {
+  public MMClimberTilt(ClimberTiltSubsystem climberTilt, int target) {
     this.climberTilt = climberTilt;
-    this.targetMin = targetMin;
+    this.target = target;
 
     addRequirements(climberTilt);
     // Use addRequirements() here to declare subsystem dependencies.
@@ -32,12 +32,8 @@ public class MMClimberTiltBackCmd extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    ClimberTiltSubsystem.getClimberLeftTiltSRX().set(ControlMode.MotionMagic, targetMin,
-        DemandType.ArbitraryFeedForward,
-        0.1);
-    ClimberTiltSubsystem.getClimberRightTiltSRX().set(ControlMode.MotionMagic, targetMin,
-        DemandType.ArbitraryFeedForward,
-        0.1);
+    ClimberTiltSubsystem.getClimberLeftTiltSRX().set(ControlMode.MotionMagic, target);
+    ClimberTiltSubsystem.getClimberRightTiltSRX().set(ControlMode.MotionMagic, target);
   }
 
   // Called once the command ends or is interrupted.
@@ -45,6 +41,7 @@ public class MMClimberTiltBackCmd extends CommandBase {
   public void end(boolean interrupted) {
     // ClimberTiltSubsystem.getClimberLeftTiltSRX().setNeutralMode(NeutralMode.Brake);
     // ClimberTiltSubsystem.getClimberRightTiltSRX().setNeutralMode(NeutralMode.Brake);
+
   }
 
   // Returns true when the command should end.
@@ -52,7 +49,8 @@ public class MMClimberTiltBackCmd extends CommandBase {
   public boolean isFinished() {
     // return
     // (ClimberTiltSubsystem.getClimberLeftTiltSRX().getSelectedSensorPosition() <
-    // targetMin);
+    // target);
+    
     return false;
   }
 }

@@ -85,8 +85,8 @@ public final class Constants {
 
         public static final int kTimeoutMs = 0;
 
-        public static final Gains masterGains = new Gains(2, 0.001, 20, 6.237804878, 0, 0.0);
-        public static final Gains followerGains = new Gains(2, 0.001, 20, 6.237804878, 0, 0.0);
+        public static final Gains gains = new Gains(5, 0.001, 50, 18.26785714, 0, 0.0);
+    
 
     }
 
@@ -118,9 +118,9 @@ public final class Constants {
          * Gains used in Motion Magic, to be adjusted accordingly
          * Gains(kp, ki, kd, kf, izone, peak output);
          */
-        public static final Gains masterGains = new Gains(2, 0.001, 20, 0.8440594059, 0, 0.0);
+        public static final Gains gains = new Gains(5, 0.001, 50, 0.4873749404, 0, 0.0);
 
-        public static final Gains followerGains = new Gains(2, 0.001, 20, 0.8440594059, 0, 0.0);
+  
     }
 
     public static final class ShooterConstants {

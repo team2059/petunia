@@ -7,6 +7,7 @@ package frc.robot.commands;
 import java.util.ResourceBundle.Control;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -15,15 +16,15 @@ import frc.robot.Constants.ClimberExtendConstants;
 import frc.robot.subsystems.BallCollecterArmSubsystem;
 import frc.robot.subsystems.ClimberExtenderSubsystem;
 
-public class MMClimberExtendDownCmd extends CommandBase {
+public class MMClimberExtend extends CommandBase {
   private final ClimberExtenderSubsystem climberExtend;
-  private int targetMin;
+  private int target;
 
   /** Creates a new CollecterArmUp. */
-  public MMClimberExtendDownCmd(ClimberExtenderSubsystem climberExtend, int targetMin) {
+  public MMClimberExtend(ClimberExtenderSubsystem climberExtend, int target) {
 
     this.climberExtend = climberExtend;
-    this.targetMin = targetMin;
+    this.target = target;
     addRequirements(climberExtend);
     // Use addRequirements() here to declare subsystem dependencies.
   }
@@ -40,11 +41,13 @@ public class MMClimberExtendDownCmd extends CommandBase {
     /* Motion Magic */
 
     /* 4096 ticks/rev * 10 Rotations in either direction */
-    // double targetPos = targetMin;
+    // double targetPos = target;
     // * 4096 * 10.0;
 
-    ClimberExtenderSubsystem.getClimberLeftExtendSRX().set(ControlMode.MotionMagic, targetMin);
-    ClimberExtenderSubsystem.getClimberRightExtendSRX().set(ControlMode.MotionMagic, targetMin);
+    ClimberExtenderSubsystem.getClimberLeftExtendSRX().set(ControlMode.MotionMagic, target,
+        DemandType.ArbitraryFeedForward, 0.1);
+    ClimberExtenderSubsystem.getClimberRightExtendSRX().set(ControlMode.MotionMagic, target,
+        DemandType.ArbitraryFeedForward, 0.1);
 
   }
 
@@ -70,8 +73,8 @@ public class MMClimberExtendDownCmd extends CommandBase {
 
     // if position (usually -40 to -60) is less than 0, end command, we want to
     // chagne control mode to Percent output to use coast mode
-    // return (position < targetMin);
-    return (ClimberExtenderSubsystem.getClimberLeftExtendSRX().getSelectedSensorPosition() <= targetMin);
+    // return (position < target);
+    return false;
 
   }
 }

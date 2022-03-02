@@ -13,15 +13,15 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.BallCollecterArmSubsystem;
 
-public class MMCollecterArmDownCmd extends CommandBase {
+public class MMCollecterArmActivate extends CommandBase {
   private final BallCollecterArmSubsystem ballCollecterArm;
-  private int targetMin;
+  private int target;
 
   /** Creates a new CollecterArmUp. */
-  public MMCollecterArmDownCmd(BallCollecterArmSubsystem ballCollecterArm, int targetMin) {
+  public MMCollecterArmActivate(BallCollecterArmSubsystem ballCollecterArm, int target) {
 
     this.ballCollecterArm = ballCollecterArm;
-    this.targetMin = targetMin;
+    this.target = target;
     addRequirements(ballCollecterArm);
     // Use addRequirements() here to declare subsystem dependencies.
   }
@@ -38,15 +38,15 @@ public class MMCollecterArmDownCmd extends CommandBase {
     /* Motion Magic */
 
     /* 4096 ticks/rev * 10 Rotations in either direction */
-    // double targetPos = targetMin;
+    // double targetPos = target;
     // * 4096 * 10.0;
 
-    BallCollecterArmSubsystem.getBallCollecterArmTalonSRX().set(ControlMode.MotionMagic, targetMin);
+    BallCollecterArmSubsystem.getBallCollecterArmTalonSRX().set(ControlMode.MotionMagic, target);
 
   }
 
-  public int getTargetMin() {
-    return targetMin;
+  public int getTarget() {
+    return target;
   }
 
   // Called once the command ends or is interrupted.
@@ -56,8 +56,8 @@ public class MMCollecterArmDownCmd extends CommandBase {
     // set output to 0 to use coast mode
     // we want to
     // chagne control mode to Percent output to use coast mode
-    BallCollecterArmSubsystem.getBallCollecterArmTalonSRX().set(ControlMode.PercentOutput,
-        0);
+    // BallCollecterArmSubsystem.getBallCollecterArmTalonSRX().set(ControlMode.PercentOutput,
+    // 0);
     BallCollecterArmSubsystem.getBallCollecterArmTalonSRX().setNeutralMode(NeutralMode.Coast);
 
   }
@@ -70,7 +70,7 @@ public class MMCollecterArmDownCmd extends CommandBase {
 
     // if position (usually -40 to -60) is less than 0, end command, we want to
     // chagne control mode to Percent output to use coast mode
-    return (position < targetMin);
+    return (position < target);
 
   }
 }
