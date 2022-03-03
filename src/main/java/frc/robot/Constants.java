@@ -86,7 +86,6 @@ public final class Constants {
         public static final int kTimeoutMs = 0;
 
         public static final Gains gains = new Gains(5, 0.001, 50, 18.26785714, 0, 0.0);
-    
 
     }
 
@@ -120,7 +119,6 @@ public final class Constants {
          */
         public static final Gains gains = new Gains(5, 0.001, 50, 0.4873749404, 0, 0.0);
 
-  
     }
 
     public static final class ShooterConstants {
@@ -135,10 +133,8 @@ public final class Constants {
         public static final double kaVoltSecondsSquaredPerMeter = 0;
 
         // Base PID settings
-        public static final double kBallShooterkF = 0;
-        public static final double kBallShooterkP = 0;
-        public static final double kBallShooterkI = 0;
-        public static final double kBallShooterkD = 0;
+        public final static Gains kGains_Velocit = new Gains(1, 0.001, 10,
+                0.0378, 300, 1.00);
         // These are for different PID configurations --> Set in Motion Magic
         // kSlotIdx sets the PID profile that the motor will pull from (ranges from
         // 1,2,3)
@@ -148,6 +144,7 @@ public final class Constants {
         public static final int kPIDLoopIdx = 0;
 
         public static final int kCtreTimeoutMs = 30;
+        public static int kTimeoutMs;
     }
 
     public static final class CollecterArmConstants {
