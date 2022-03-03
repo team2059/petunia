@@ -28,7 +28,9 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.POVButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
@@ -36,6 +38,7 @@ import frc.robot.commands.ArcadeDriveCmd;
 import frc.robot.commands.MMClimberExtend;
 import frc.robot.commands.MMClimberTilt;
 import frc.robot.commands.MMCollecterArmActivate;
+import frc.robot.commands.PIDShootCmd;
 import frc.robot.commands.ShootBallCmd;
 import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
@@ -62,8 +65,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class RobotContainer {
 
         // The robot's subsystems and commands are defined here...
-        public static XboxController logitech = new XboxController(3);
-        public static XboxController xboxController = new XboxController(5);
+        public static XboxController logitech = new XboxController(5);
+        public static XboxController xboxController = new XboxController(3);
 
         private final DriveTrainSubsystem driveTrainSubsystem = new DriveTrainSubsystem();
         private final ClimberExtenderSubsystem climberExtendSubsystem = new ClimberExtenderSubsystem();
@@ -127,6 +130,28 @@ public class RobotContainer {
          */
         private void configureButtonBindings() {
 
+                // should be -1 being nothing pressed, 0 being top, 1 being top
+                // right, 2 being right, and progressing clockwise to 7 in top left.
+
+                // back button spins shooter up
+                new JoystickButton(xboxController, Button.kBack.value).whenPressed(
+                                new PIDShootCmd(shooterSubsystem, 500));
+
+                // start button degrees does different rpm
+                new JoystickButton(xboxController, Button.kStart.value).whenPressed(
+                                new PIDShootCmd(shooterSubsystem, 3570));
+
+                // right bumper actuates indexer
+                new JoystickButton(xboxController, Button.kRightBumper.value)
+                                .whenPressed(new InstantCommand(() -> shooterSubsystem.setIndexSpeed(-0.66)));
+
+                // , new WaitCommand(2.5),
+                // new InstantCommand(() -> shooterSubsystem.setIndexSpeed(-0.66))))
+                // new ConditionalCommand(new InstantCommand(() ->
+                // shooterSubsystem.setIndexSpeed(-0.66)),
+                // new InstantCommand(() -> shooterSubsystem.setIndexSpeed(0)),
+                // PIDShootCmd.isAtTargetVelocity())));
+
                 // spit out - B
                 new JoystickButton(xboxController, Button.kB.value)
                                 .whileHeld(() -> ballCollecterSubsystem.setSpeed(0.66))
@@ -139,12 +164,15 @@ public class RobotContainer {
 
                 // collecter arm up - Y
                 new JoystickButton(xboxController, Button.kY.value)
-                                .whenPressed(new MMCollecterArmActivate(ballCollecterArmSubsystem, -3750));
+                                .whenPressed(new MMCollecterArmActivate(ballCollecterArmSubsystem, 3750));
 
                 // collecter arm down - A
                 new JoystickButton(xboxController, Button.kA.value)
                                 .whenPressed(new MMCollecterArmActivate(ballCollecterArmSubsystem,
                                                 0));
+
+                // driver 2 climbing (only need 5 bindings + switch arcade drive to driver 2's
+                // controller when actuated)
 
                 // extend up
                 new JoystickButton(logitech, Button.kY.value)
