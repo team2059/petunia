@@ -87,10 +87,10 @@ public class ShooterSubsystem extends SubsystemBase {
     // This method will be called once per scheduler run
     SmartDashboard.putNumber("Ball Shooter Velocity", ballShooter.getSelectedSensorVelocity());
 
-    if (ballChamberSensor.get()) {
-      setIndexSpeed(0);
-    }
-    setIndexSpeed(-0.66);
+    // if (ballChamberSensor.get()) {
+    // setIndexSpeed(0);
+    // }
+    // setIndexSpeed(-0.66);
   }
 
   public void autoLoader(double speed) {
@@ -104,7 +104,6 @@ public class ShooterSubsystem extends SubsystemBase {
   public double getShooterVelocity() {
     return ballShooter.getSelectedSensorVelocity();
   }
-
 
   public void setShooterVelocity(double velocity) {
     ballShooter.set(velocity);

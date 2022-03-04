@@ -65,8 +65,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class RobotContainer {
 
         // The robot's subsystems and commands are defined here...
-        public static XboxController logitech = new XboxController(5);
-        public static XboxController xboxController = new XboxController(3);
+        public static XboxController logitech = new XboxController(3);
+        public static XboxController xboxController = new XboxController(5);
 
         private final DriveTrainSubsystem driveTrainSubsystem = new DriveTrainSubsystem();
         private final ClimberExtenderSubsystem climberExtendSubsystem = new ClimberExtenderSubsystem();
@@ -108,11 +108,13 @@ public class RobotContainer {
                 colorChooser.addOption("Blue alliance", blue);
 
                 pathChooser.addOption("Path forward Auto",
-                                loadPathWeaverTrajectoryCommand("pathplanner/generatedJSON/Forward.wpilib.json",
+                                loadPathWeaverTrajectoryCommand(
+                                                "pathplanner/generatedJSON/Forward.wpilib.json",
                                                 isReset));
 
-                pathChooser.addOption("Complex Auto",
-                                loadPathWeaverTrajectoryCommand("pathplanner/generatedJSON/Turn.wpilib.json", isReset));
+                // pathChooser.addOption("Complex Auto",
+                // loadPathWeaverTrajectoryCommand("pathplanner/generatedJSON/Turn.wpilib.json",
+                // isReset));
 
                 // Put the chooser on the dashboard
                 Shuffleboard.getTab("Autonomous").add(pathChooser);
@@ -276,15 +278,17 @@ public class RobotContainer {
         public Command getAutonomousCommand() {
 
                 // TODO test auto routine
-                return new SequentialCommandGroup(
-                                new ParallelCommandGroup(new MMCollecterArmActivate(ballCollecterArmSubsystem, 0),
-                                                new InstantCommand(() -> ballCollecterArmSubsystem
-                                                                .setCollecterArmSpeed(-.5)),
-                                                pathChooser.getSelected()),
-                                new ParallelCommandGroup(new InstantCommand(() -> shooterSubsystem.setIndexSpeed(-.5)),
-                                                new InstantCommand(() -> shooterSubsystem.setShooterVelocity(0.75))));
+                // return new SequentialCommandGroup(
+                // new ParallelCommandGroup(new
+                // MMCollecterArmActivate(ballCollecterArmSubsystem, 0),
+                // new InstantCommand(() -> ballCollecterArmSubsystem
+                // .setCollecterArmSpeed(-.5)),
+                // pathChooser.getSelected()),
+                // new ParallelCommandGroup(new InstantCommand(() ->
+                // shooterSubsystem.setIndexSpeed(-.5)),
+                // new InstantCommand(() -> shooterSubsystem.setShooterVelocity(0.75))));
 
-                // return pathChooser.getSelected();
+                return pathChooser.getSelected();
 
         }
 
