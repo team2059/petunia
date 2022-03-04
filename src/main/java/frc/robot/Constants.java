@@ -45,7 +45,7 @@ public final class Constants {
 
         // public static final double kPetuniaGearRatio = 10.71;
 
-        public static final double kPetuniaGearRatio = 12.755;
+        public static final double kPetuniaGearRatio = 10.71;
         public static final double kPetuniaWheelRadiusInches = 3;
 
         // If we get the number of ticks, say 10000, we want to multiply that times
@@ -55,10 +55,10 @@ public final class Constants {
                 .inchesToMeters(1 / (kPetuniaGearRatio * 2 * Math.PI
                         * Units.inchesToMeters(kPetuniaWheelRadiusInches)) * 10));
 
-        public static final double ksVolts = 0.1219;
-        public static final double kvVoltSecondsPerMeter = 3.343;
-        public static final double kaVoltSecondsSquaredPerMeter = 1.0356;
-        public static final double kPDriveVel = 2.2662;
+        public static final double ksVolts = -0.045772;
+        public static final double kvVoltSecondsPerMeter = 3.0212;
+        public static final double kaVoltSecondsSquaredPerMeter = 0.42369;
+        public static final double kPDriveVel = 3.839;
 
         // 21.75 inches equals 0.57785. trackwidth is horizontal distance between the
         // wheels
