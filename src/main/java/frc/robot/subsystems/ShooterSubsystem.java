@@ -47,6 +47,8 @@ public class ShooterSubsystem extends SubsystemBase {
    * Creates a new Shooter.
    */
   public ShooterSubsystem() {
+    indexMotor.configFactoryDefault();
+    
 
     /* Config sensor used for Primary PID [Velocity] */
     ballShooter.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative,

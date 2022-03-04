@@ -167,8 +167,9 @@ public class BallCollecterArmSubsystem extends SubsystemBase {
      * have green LEDs when driving Talon Forward / Requesting Postiive Output Phase
      * sensor to have positive increment when driving Talon Forward (Green LED)
      */
-    ballCollecterArmTalonSRX.setSensorPhase(true);
-    ballCollecterArmTalonSRX.setInverted(false);
+
+    ballCollecterArmTalonSRX.setSensorPhase(false);
+    ballCollecterArmTalonSRX.setInverted(true);
 
     /* Set relevant frame periods to be at least as fast as periodic rate */
     ballCollecterArmTalonSRX.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, 10,

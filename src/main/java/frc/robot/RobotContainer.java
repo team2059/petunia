@@ -166,7 +166,7 @@ public class RobotContainer {
 
                 // collecter arm up - Y
                 new JoystickButton(xboxController, Button.kY.value)
-                                .whenPressed(new MMCollecterArmActivate(ballCollecterArmSubsystem, 3750));
+                                .whenPressed(new MMCollecterArmActivate(ballCollecterArmSubsystem, 3500));
 
                 // collecter arm down - A
                 new JoystickButton(xboxController, Button.kA.value)
