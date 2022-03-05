@@ -35,12 +35,15 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.commands.ArcadeDriveCmd;
+import frc.robot.commands.AutoAlignCmd;
+import frc.robot.commands.AutoRangeCmd;
 import frc.robot.commands.MMClimberExtend;
 import frc.robot.commands.MMClimberTilt;
 import frc.robot.commands.MMCollecterArmActivate;
 import frc.robot.commands.PIDShootCmd;
 import frc.robot.commands.ShootBallCmd;
 import frc.robot.subsystems.DriveTrainSubsystem;
+import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.BallCollecterArmSubsystem;
 import frc.robot.subsystems.BallCollecterSubsystem;
@@ -52,6 +55,8 @@ import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.Joystick;
+import frc.robot.commands.JoystickArcadeDriveCmd;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -67,6 +72,7 @@ public class RobotContainer {
         // The robot's subsystems and commands are defined here...
         public static XboxController logitech = new XboxController(3);
         public static XboxController xboxController = new XboxController(5);
+        public static Joystick joystick = new Joystick(0);
 
         private final DriveTrainSubsystem driveTrainSubsystem = new DriveTrainSubsystem();
         private final ClimberExtenderSubsystem climberExtendSubsystem = new ClimberExtenderSubsystem();
@@ -74,6 +80,7 @@ public class RobotContainer {
         private final static BallCollecterSubsystem ballCollecterSubsystem = new BallCollecterSubsystem();
         private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
         private final static BallCollecterArmSubsystem ballCollecterArmSubsystem = new BallCollecterArmSubsystem();
+        private final Limelight limelight = new Limelight();
 
         Command autonomousCommand;
 
@@ -93,7 +100,8 @@ public class RobotContainer {
         public RobotContainer() {
                 // Configure the button bindings
                 configureButtonBindings();
-                driveTrainSubsystem.setDefaultCommand(new ArcadeDriveCmd(driveTrainSubsystem));
+                //ARCADE DRIVE CHANGED TO USE JOYSTICK FOR LIMELIGHT TEST CHANGE BACK !!!!!!!
+                driveTrainSubsystem.setDefaultCommand(new JoystickArcadeDriveCmd(driveTrainSubsystem));
 
                 // Add commands to the autonomous command chooser
 
@@ -225,6 +233,11 @@ public class RobotContainer {
                 // new InstantCommand(() -> ShooterSubsystem
                 // .setIndexSpeed(-0.66))),
                 // ballCollecterArmSubsystem.isSameColor()));
+
+                //limelight auto align/ranging buttons
+                new JoystickButton(joystick, 1).whileHeld(new AutoAlignCmd(driveTrainSubsystem, limelight));
+
+                new JoystickButton(joystick, 3).whileHeld(new AutoRangeCmd(driveTrainSubsystem, limelight, 71.0));
         }
 
         public Command loadPathWeaverTrajectoryCommand(String filename, boolean resetOdometry) {
