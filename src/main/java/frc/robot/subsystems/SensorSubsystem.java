@@ -33,7 +33,7 @@ public class SensorSubsystem extends SubsystemBase {
 
   String colorString = "";
   
-  private final static Color kBlueTarget = new Color(0.143, 0.427, 0.429); //TODO tune colors 
+  private final static Color kBlueTarget = new Color(0.143, 0.427, 0.429); 
   private final static Color kGreenTarget = new Color(0.197, 0.561, 0.240);
   private final static Color kRedTarget = new Color(0.561, 0.232, 0.114);
 
@@ -53,7 +53,7 @@ public class SensorSubsystem extends SubsystemBase {
   public boolean findBlackTape(){
     return groundPhotoElectricSensor.get();
   }
-  
+
   public String detectColor() {
     
     Color detectedColor = ballColorSensor.getColor();

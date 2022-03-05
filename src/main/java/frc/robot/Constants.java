@@ -45,7 +45,7 @@ public final class Constants {
 
         // public static final double kPetuniaGearRatio = 10.71;
 
-        public static final double kPetuniaGearRatio = 12.755;
+        public static final double kPetuniaGearRatio = 10.71;
         public static final double kPetuniaWheelRadiusInches = 3;
 
         // If we get the number of ticks, say 10000, we want to multiply that times
@@ -55,10 +55,10 @@ public final class Constants {
                 .inchesToMeters(1 / (kPetuniaGearRatio * 2 * Math.PI
                         * Units.inchesToMeters(kPetuniaWheelRadiusInches)) * 10));
 
-        public static final double ksVolts = 0.1219;
-        public static final double kvVoltSecondsPerMeter = 3.343;
-        public static final double kaVoltSecondsSquaredPerMeter = 1.0356;
-        public static final double kPDriveVel = 2.2662;
+        public static final double ksVolts = -0.045772;
+        public static final double kvVoltSecondsPerMeter = 3.0212;
+        public static final double kaVoltSecondsSquaredPerMeter = 0.42369;
+        public static final double kPDriveVel = 3.839;
 
         // 21.75 inches equals 0.57785. trackwidth is horizontal distance between the
         // wheels
@@ -133,10 +133,8 @@ public final class Constants {
         public static final double kaVoltSecondsSquaredPerMeter = 0;
 
         // Base PID settings
-        public static final double kBallShooterkF = 0;
-        public static final double kBallShooterkP = 0;
-        public static final double kBallShooterkI = 0;
-        public static final double kBallShooterkD = 0;
+        public final static Gains kGains_Velocit = new Gains(1, 0.001, 10,
+                0.0378, 300, 1.00);
         // These are for different PID configurations --> Set in Motion Magic
         // kSlotIdx sets the PID profile that the motor will pull from (ranges from
         // 1,2,3)
@@ -146,6 +144,7 @@ public final class Constants {
         public static final int kPIDLoopIdx = 0;
 
         public static final int kCtreTimeoutMs = 30;
+        public static int kTimeoutMs;
     }
 
     public static final class CollecterArmConstants {
@@ -172,7 +171,7 @@ public final class Constants {
          * Gains used in Motion Magic, to be adjusted accordingly
          * Gains(kp, ki, kd, kf, izone, peak output);
          */
-        public static final Gains kGains = new Gains(2.5, 0.001, 31.4, 3.147692308, 0, 0.0);
+        public static final Gains kGains = new Gains(2.5, 0.001, 25, 3.147692308, 0, 0.0);
     }
 
     public static final class LimeLightConstants {

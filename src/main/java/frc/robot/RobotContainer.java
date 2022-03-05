@@ -28,7 +28,12 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+<<<<<<< HEAD
+=======
+import edu.wpi.first.wpilibj2.command.button.POVButton;
+>>>>>>> 74c695c37a5ed790eb3afccab8e0938960a4e1f8
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
@@ -36,6 +41,10 @@ import frc.robot.commands.ArcadeDriveCmd;
 import frc.robot.commands.MMClimberExtend;
 import frc.robot.commands.MMClimberTilt;
 import frc.robot.commands.MMCollecterArmActivate;
+<<<<<<< HEAD
+=======
+import frc.robot.commands.PIDShootCmd;
+>>>>>>> 74c695c37a5ed790eb3afccab8e0938960a4e1f8
 import frc.robot.commands.ShootBallCmd;
 import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
@@ -105,11 +114,21 @@ public class RobotContainer {
                 colorChooser.addOption("Blue alliance", blue);
 
                 pathChooser.addOption("Path forward Auto",
+<<<<<<< HEAD
                                 loadPathWeaverTrajectoryCommand("pathplanner/generatedJSON/Forward.wpilib.json",
                                                 isReset));
 
                 pathChooser.addOption("Complex Auto",
                                 loadPathWeaverTrajectoryCommand("pathplanner/generatedJSON/Turn.wpilib.json", isReset));
+=======
+                                loadPathWeaverTrajectoryCommand(
+                                                "pathplanner/generatedJSON/Forward.wpilib.json",
+                                                isReset));
+
+                // pathChooser.addOption("Complex Auto",
+                // loadPathWeaverTrajectoryCommand("pathplanner/generatedJSON/Turn.wpilib.json",
+                // isReset));
+>>>>>>> 74c695c37a5ed790eb3afccab8e0938960a4e1f8
 
                 // Put the chooser on the dashboard
                 Shuffleboard.getTab("Autonomous").add(pathChooser);
@@ -127,11 +146,41 @@ public class RobotContainer {
          */
         private void configureButtonBindings() {
 
+<<<<<<< HEAD
                 // spit out - B
                 new JoystickButton(xboxController, Button.kB.value)
                                 .whileHeld(() -> ballCollecterSubsystem.setSpeed(0.66))
                                 .whenReleased(() -> ballCollecterSubsystem.setSpeed(0));
 
+=======
+                // should be -1 being nothing pressed, 0 being top, 1 being top
+                // right, 2 being right, and progressing clockwise to 7 in top left.
+
+                // back button spins shooter up
+                new JoystickButton(xboxController, Button.kBack.value).whenPressed(
+                                new PIDShootCmd(shooterSubsystem, 500));
+
+                // start button degrees does different rpm
+                new JoystickButton(xboxController, Button.kStart.value).whenPressed(
+                                new PIDShootCmd(shooterSubsystem, 3570));
+
+                // right bumper actuates indexer
+                new JoystickButton(xboxController, Button.kRightBumper.value)
+                                .whenPressed(new InstantCommand(() -> shooterSubsystem.setIndexSpeed(-0.66)));
+
+                // , new WaitCommand(2.5),
+                // new InstantCommand(() -> shooterSubsystem.setIndexSpeed(-0.66))))
+                // new ConditionalCommand(new InstantCommand(() ->
+                // shooterSubsystem.setIndexSpeed(-0.66)),
+                // new InstantCommand(() -> shooterSubsystem.setIndexSpeed(0)),
+                // PIDShootCmd.isAtTargetVelocity())));
+
+                // spit out - B
+                new JoystickButton(xboxController, Button.kB.value)
+                                .whileHeld(() -> ballCollecterSubsystem.setSpeed(0.66))
+                                .whenReleased(() -> ballCollecterSubsystem.setSpeed(0));
+
+>>>>>>> 74c695c37a5ed790eb3afccab8e0938960a4e1f8
                 // collect - X
                 new JoystickButton(xboxController, Button.kX.value)
                                 .whileHeld(() -> ballCollecterSubsystem.setSpeed(-0.66))
@@ -139,12 +188,19 @@ public class RobotContainer {
 
                 // collecter arm up - Y
                 new JoystickButton(xboxController, Button.kY.value)
+<<<<<<< HEAD
                                 .whenPressed(new MMCollecterArmActivate(ballCollecterArmSubsystem, -3750));
+=======
+                                .whenPressed(new MMCollecterArmActivate(ballCollecterArmSubsystem, 3500));
+>>>>>>> 74c695c37a5ed790eb3afccab8e0938960a4e1f8
 
                 // collecter arm down - A
                 new JoystickButton(xboxController, Button.kA.value)
                                 .whenPressed(new MMCollecterArmActivate(ballCollecterArmSubsystem,
                                                 0));
+
+                // driver 2 climbing (only need 5 bindings + switch arcade drive to driver 2's
+                // controller when actuated)
 
                 // extend up
                 new JoystickButton(logitech, Button.kY.value)
@@ -248,6 +304,7 @@ public class RobotContainer {
         public Command getAutonomousCommand() {
 
                 // TODO test auto routine
+<<<<<<< HEAD
                 return new SequentialCommandGroup(
                                 new ParallelCommandGroup(new MMCollecterArmActivate(ballCollecterArmSubsystem, 0),
                                                 new InstantCommand(() -> ballCollecterArmSubsystem
@@ -257,6 +314,19 @@ public class RobotContainer {
                                                 new InstantCommand(() -> shooterSubsystem.setShooterVelocity(0.75))));
 
                 // return pathChooser.getSelected();
+=======
+                // return new SequentialCommandGroup(
+                // new ParallelCommandGroup(new
+                // MMCollecterArmActivate(ballCollecterArmSubsystem, 0),
+                // new InstantCommand(() -> ballCollecterArmSubsystem
+                // .setCollecterArmSpeed(-.5)),
+                // pathChooser.getSelected()),
+                // new ParallelCommandGroup(new InstantCommand(() ->
+                // shooterSubsystem.setIndexSpeed(-.5)),
+                // new InstantCommand(() -> shooterSubsystem.setShooterVelocity(0.75))));
+
+                return pathChooser.getSelected();
+>>>>>>> 74c695c37a5ed790eb3afccab8e0938960a4e1f8
 
         }
 
