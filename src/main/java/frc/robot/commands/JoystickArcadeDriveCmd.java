@@ -5,24 +5,44 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.RobotContainer;
+import frc.robot.subsystems.DriveTrainSubsystem;
 
 public class JoystickArcadeDriveCmd extends CommandBase {
-  /** Creates a new JoystickArcadeDriveCmd. */
-  public JoystickArcadeDriveCmd() {
+
+  private final DriveTrainSubsystem driveTrainSubsystem;
+
+  /** Creates a new teleopDrive. */
+  public JoystickArcadeDriveCmd(DriveTrainSubsystem subsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
+    this.driveTrainSubsystem = subsystem;
+    addRequirements(subsystem);
+
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+
+    System.out.println("Starting TeleopDriveCmd");
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    double xSpeed = RobotContainer.joystick.getRawAxis(1) * 0.25;
+    double zRotation = RobotContainer.joystick.getRawAxis(2) * 0.25;
+
+    // negate zRotation because we invertetd rightMotorControllerGroup testtest
+
+    driveTrainSubsystem.arcadeDrive(xSpeed, -zRotation);
+  }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    driveTrainSubsystem.tankDriveVolts(0, 0);
+  }
 
   // Returns true when the command should end.
   @Override
