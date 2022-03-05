@@ -20,23 +20,34 @@ public class ShootBallCmd extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+<<<<<<< HEAD
     mShooter.setIndexSpeed(-0.66);
+=======
+
+>>>>>>> 74c695c37a5ed790eb3afccab8e0938960a4e1f8
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+<<<<<<< HEAD
     mShooter.setShooterVelocity(0.66);
+=======
+
+    mShooter.setShooterVelocity(-0.66);
+
+>>>>>>> 74c695c37a5ed790eb3afccab8e0938960a4e1f8
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return (mShooter.getShooterVelocity() == -0.66);
   }
 }

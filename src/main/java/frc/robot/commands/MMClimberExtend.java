@@ -44,10 +44,15 @@ public class MMClimberExtend extends CommandBase {
     // double targetPos = target;
     // * 4096 * 10.0;
 
+<<<<<<< HEAD
     ClimberExtenderSubsystem.getClimberLeftExtendSRX().set(ControlMode.MotionMagic, target,
         DemandType.ArbitraryFeedForward, 0.1);
     ClimberExtenderSubsystem.getClimberRightExtendSRX().set(ControlMode.MotionMagic, target,
         DemandType.ArbitraryFeedForward, 0.1);
+=======
+    ClimberExtenderSubsystem.getClimberLeftExtendSRX().set(ControlMode.MotionMagic, target);
+    ClimberExtenderSubsystem.getClimberRightExtendSRX().set(ControlMode.MotionMagic, target);
+>>>>>>> 74c695c37a5ed790eb3afccab8e0938960a4e1f8
 
   }
 

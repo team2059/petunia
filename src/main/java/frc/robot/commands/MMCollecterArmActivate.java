@@ -70,7 +70,11 @@ public class MMCollecterArmActivate extends CommandBase {
 
     // if position (usually -40 to -60) is less than 0, end command, we want to
     // chagne control mode to Percent output to use coast mode
+<<<<<<< HEAD
     return (position < target);
+=======
+    return (position > target);
+>>>>>>> 74c695c37a5ed790eb3afccab8e0938960a4e1f8
 
   }
 }
