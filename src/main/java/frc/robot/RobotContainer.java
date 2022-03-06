@@ -237,7 +237,7 @@ public class RobotContainer {
                 //limelight auto align/ranging buttons
                 new JoystickButton(joystick, 1).whileHeld(new AutoAlignCmd(driveTrainSubsystem, limelight));
 
-                new JoystickButton(joystick, 3).whileHeld(new AutoRangeCmd(driveTrainSubsystem, limelight, 71.0));
+                new JoystickButton(joystick, 3).whileHeld(new AutoRangeCmd(driveTrainSubsystem, limelight, 49.0));
         }
 
         public Command loadPathWeaverTrajectoryCommand(String filename, boolean resetOdometry) {
