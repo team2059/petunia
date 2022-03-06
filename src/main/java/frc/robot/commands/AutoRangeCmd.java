@@ -19,9 +19,9 @@ public class AutoRangeCmd extends CommandBase {
 
   final double goalHeightInches = 82.0;
 
-  final double limelightHeightInches = 15.25;
+  final double limelightHeightInches = 30.75;
 
-  final double limelightMountingAngleDegrees = 45.0;
+  final double limelightMountingAngleDegrees = 26.5;
   
 
 
@@ -44,6 +44,7 @@ public class AutoRangeCmd extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+
     double currentDistance = limelight.getDistance();
     double distanceError = currentDistance - target;
     double speed = distanceError * 0.0725;

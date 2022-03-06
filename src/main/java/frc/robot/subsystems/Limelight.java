@@ -20,20 +20,22 @@ public class Limelight extends SubsystemBase {
   private final NetworkTableEntry yOffset = table.getEntry("ty");
   private final NetworkTableEntry hasTargets = table.getEntry("tv");
 
-  public double getDistance() {
-    double goalHeightInches = 82.0;
-
-    double limelightHeightInches = 15.25;
+  double goalHeightInches = 91.0;
   
-    double limelightMountingAngleDegrees = 28.5;
+  double limelightHeightInches = 15.25;
+  
+  double limelightMountingAngleDegrees = 28.5;
 
+
+  public double getDistance() {
+    
     double targetOffsetAngle_Vertical = getYOffset();
     double angleToGoalDegrees = limelightMountingAngleDegrees + targetOffsetAngle_Vertical;
     double angleToGoalRadians = angleToGoalDegrees * (3.14159 / 180.0);
 
     double distanceFromLimelightToGoalInches = (goalHeightInches - limelightHeightInches)/Math.tan(angleToGoalRadians) + 23.0;
 
-    return distanceFromLimelightToGoalInches ;
+    return distanceFromLimelightToGoalInches;
   }
 
   /** Creates a new Limelight. */
