@@ -15,7 +15,11 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ClimberExtenderSubsystem extends SubsystemBase {
+
         /** Creates a new ClimberSubsystem. */
+
+        public static DigitalInput firstHangerLight = new DigitalInput(1);
+        public static DigitalInput secondHangerLight = new DigitalInput(3);
 
         static WPI_TalonSRX climberLeftExtendSRX = new WPI_TalonSRX(
                         Constants.ClimberExtendConstants.climberLeftExtendSRX);
@@ -170,12 +174,12 @@ public class ClimberExtenderSubsystem extends SubsystemBase {
                 SmartDashboard.putNumber("right arm", climberRightExtendSRX.getSelectedSensorPosition());
 
                 // if (leftSensor.get() == false) {
-                //         climberLeftExtendSRX.setSelectedSensorPosition(0);
+                // climberLeftExtendSRX.setSelectedSensorPosition(0);
                 // }
 
                 // if (rightSensor.get() == false) {
 
-                //         climberRightExtendSRX.setSelectedSensorPosition(0);
+                // climberRightExtendSRX.setSelectedSensorPosition(0);
                 // }
 
                 SmartDashboard.putBoolean("right sensor", rightSensor.get());

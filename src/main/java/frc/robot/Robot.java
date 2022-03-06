@@ -56,6 +56,7 @@ public class Robot extends TimedRobot {
     m_robotContainer.getClimberExtenderSubsystem().getClimberRightExtendSRX().set(ControlMode.PercentOutput, 0);
     m_robotContainer.getClimberTiltSubsystem().getClimberLeftTiltSRX().set(ControlMode.PercentOutput, 0);
     m_robotContainer.getClimberTiltSubsystem().getClimberRightTiltSRX().set(ControlMode.PercentOutput, 0);
+    m_robotContainer.getShooterSubsystem().setShooterVelocity(0);
   }
 
   /**
@@ -92,7 +93,7 @@ public class Robot extends TimedRobot {
     m_robotContainer.getClimberExtenderSubsystem().getClimberRightExtendSRX().set(ControlMode.PercentOutput, 0);
     m_robotContainer.getClimberTiltSubsystem().getClimberLeftTiltSRX().set(ControlMode.PercentOutput, 0);
     m_robotContainer.getClimberTiltSubsystem().getClimberRightTiltSRX().set(ControlMode.PercentOutput, 0);
-
+    m_robotContainer.getShooterSubsystem().setShooterVelocity(0);
     // m_robotContainer.getDriveTrainSubsystem().zeroHeading();
     // m_robotContainer.getDriveTrainSubsystem().resetEncoders();
 
@@ -117,6 +118,7 @@ public class Robot extends TimedRobot {
     m_robotContainer.getClimberExtenderSubsystem().getClimberRightExtendSRX().set(ControlMode.PercentOutput, 0);
     m_robotContainer.getClimberTiltSubsystem().getClimberLeftTiltSRX().set(ControlMode.PercentOutput, 0);
     m_robotContainer.getClimberTiltSubsystem().getClimberRightTiltSRX().set(ControlMode.PercentOutput, 0);
+    m_robotContainer.getShooterSubsystem().setShooterVelocity(0);
 
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
@@ -146,6 +148,7 @@ public class Robot extends TimedRobot {
     m_robotContainer.getClimberExtenderSubsystem().getClimberRightExtendSRX().set(ControlMode.PercentOutput, 0);
     m_robotContainer.getClimberTiltSubsystem().getClimberLeftTiltSRX().set(ControlMode.PercentOutput, 0);
     m_robotContainer.getClimberTiltSubsystem().getClimberRightTiltSRX().set(ControlMode.PercentOutput, 0);
+    m_robotContainer.getShooterSubsystem().setShooterVelocity(0);
 
     Rotation2d thetaPose = m_robotContainer.getDriveTrainSubsystem().navX.getRotation2d();
     DifferentialDriveOdometry myDriveOdometry = m_robotContainer.getDriveTrainSubsystem().getOdometry();
