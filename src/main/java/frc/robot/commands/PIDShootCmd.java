@@ -29,7 +29,7 @@ public class PIDShootCmd extends CommandBase {
 
     // 500 rpm
     // max unit/100ms = ~
-    rpmVelocity = RobotContainer.logitech.getLeftY() * 500.0 * 4096 / 600;
+    // rpmVelocity = rpmVelocity * 4096 / 600;
   }
 
   // Called every time the scheduler runs while the command is scheduled.

@@ -27,7 +27,8 @@ public class ShooterSubsystem extends SubsystemBase {
   public static WPI_TalonSRX ballShooter = new WPI_TalonSRX(ShooterConstants.shooterMotorTalonSRX);
   public static WPI_TalonSRX indexMotor = new WPI_TalonSRX(ShooterConstants.intakeIndexerTalonSRX);
 
-  public static DigitalInput ballChamberSensor = new DigitalInput(4);
+  public static DigitalInput ballChamberSensor = new DigitalInput(0);
+
   // TODO change port
   // DigitalInput chamberPhotoElectricSensor = new DigitalInput(1);
 
@@ -48,7 +49,6 @@ public class ShooterSubsystem extends SubsystemBase {
    */
   public ShooterSubsystem() {
     indexMotor.configFactoryDefault();
-    
 
     /* Config sensor used for Primary PID [Velocity] */
     ballShooter.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative,
@@ -89,10 +89,10 @@ public class ShooterSubsystem extends SubsystemBase {
     // This method will be called once per scheduler run
     SmartDashboard.putNumber("Ball Shooter Velocity", ballShooter.getSelectedSensorVelocity());
 
-    // if (ballChamberSensor.get()) {
-    // setIndexSpeed(0);
-    // }
-    // setIndexSpeed(-0.66);
+    if (ballChamberSensor.get()) {
+      setIndexSpeed(0);
+    }
+    setIndexSpeed(-0.66);
   }
 
   public void autoLoader(double speed) {

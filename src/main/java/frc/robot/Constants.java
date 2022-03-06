@@ -133,7 +133,7 @@ public final class Constants {
         public static final double kaVoltSecondsSquaredPerMeter = 0;
 
         // Base PID settings
-        public final static Gains kGains_Velocit = new Gains(1, 0.001, 10,
+        public final static Gains kGains_Velocit = new Gains(0.75, 0.00, 7.5,
                 0.0378, 300, 1.00);
         // These are for different PID configurations --> Set in Motion Magic
         // kSlotIdx sets the PID profile that the motor will pull from (ranges from

@@ -7,7 +7,7 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.SPI;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-
+import frc.robot.RobotContainer;
 import frc.robot.Constants.DriveConstants;
 
 import edu.wpi.first.math.geometry.Pose2d;
@@ -115,6 +115,8 @@ public class DriveTrainSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
+    SmartDashboard.putNumber("flight pov values", RobotContainer.logiFlightController.getPOV());
+
     m_field.setRobotPose(m_odometry.getPoseMeters());
 
     // Update the odometry in the periodic block

@@ -35,12 +35,15 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.commands.ArcadeDriveCmd;
+import frc.robot.commands.AutoAlignCmd;
+import frc.robot.commands.AutoRangeCmd;
 import frc.robot.commands.MMClimberExtend;
 import frc.robot.commands.MMClimberTilt;
 import frc.robot.commands.MMCollecterArmActivate;
 import frc.robot.commands.PIDShootCmd;
 import frc.robot.commands.ShootBallCmd;
 import frc.robot.subsystems.DriveTrainSubsystem;
+import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.BallCollecterArmSubsystem;
 import frc.robot.subsystems.BallCollecterSubsystem;
@@ -65,15 +68,16 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class RobotContainer {
 
         // The robot's subsystems and commands are defined here...
-        public static XboxController logitech = new XboxController(3);
-        public static XboxController xboxController = new XboxController(5);
+        public static XboxController logiGameController = new XboxController(3);
+        public static XboxController logiFlightController = new XboxController(0);
 
         private final DriveTrainSubsystem driveTrainSubsystem = new DriveTrainSubsystem();
         private final ClimberExtenderSubsystem climberExtendSubsystem = new ClimberExtenderSubsystem();
         private final ClimberTiltSubsystem climberTiltSubsystem = new ClimberTiltSubsystem();
         private final static BallCollecterSubsystem ballCollecterSubsystem = new BallCollecterSubsystem();
-        private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
+        private final static ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
         private final static BallCollecterArmSubsystem ballCollecterArmSubsystem = new BallCollecterArmSubsystem();
+        private final Limelight limelight = new Limelight();
 
         Command autonomousCommand;
 
@@ -131,80 +135,11 @@ public class RobotContainer {
          * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
          */
         private void configureButtonBindings() {
+                // limelight auto align/ranging buttons
+                new JoystickButton(logiFlightController, 1).whileHeld(new AutoAlignCmd(driveTrainSubsystem, limelight));
 
-                // should be -1 being nothing pressed, 0 being top, 1 being top
-                // right, 2 being right, and progressing clockwise to 7 in top left.
-
-                // back button spins shooter up
-                new JoystickButton(xboxController, Button.kBack.value).whenPressed(
-                                new PIDShootCmd(shooterSubsystem, 500));
-
-                // start button degrees does different rpm
-                new JoystickButton(xboxController, Button.kStart.value).whenPressed(
-                                new PIDShootCmd(shooterSubsystem, 3570));
-
-                // right bumper actuates indexer
-                new JoystickButton(xboxController, Button.kRightBumper.value)
-                                .whenPressed(new InstantCommand(() -> shooterSubsystem.setIndexSpeed(-0.66)));
-
-                // , new WaitCommand(2.5),
-                // new InstantCommand(() -> shooterSubsystem.setIndexSpeed(-0.66))))
-                // new ConditionalCommand(new InstantCommand(() ->
-                // shooterSubsystem.setIndexSpeed(-0.66)),
-                // new InstantCommand(() -> shooterSubsystem.setIndexSpeed(0)),
-                // PIDShootCmd.isAtTargetVelocity())));
-
-                // spit out - B
-                new JoystickButton(xboxController, Button.kB.value)
-                                .whileHeld(() -> ballCollecterSubsystem.setSpeed(0.66))
-                                .whenReleased(() -> ballCollecterSubsystem.setSpeed(0));
-
-                // collect - X
-                new JoystickButton(xboxController, Button.kX.value)
-                                .whileHeld(() -> ballCollecterSubsystem.setSpeed(-0.66))
-                                .whenReleased(() -> ballCollecterSubsystem.setSpeed(0));
-
-                // collecter arm up - Y
-                new JoystickButton(xboxController, Button.kY.value)
-                                .whenPressed(new MMCollecterArmActivate(ballCollecterArmSubsystem, 3500));
-
-                // collecter arm down - A
-                new JoystickButton(xboxController, Button.kA.value)
-                                .whenPressed(new MMCollecterArmActivate(ballCollecterArmSubsystem,
-                                                0));
-
-                // driver 2 climbing (only need 5 bindings + switch arcade drive to driver 2's
-                // controller when actuated)
-
-                // extend up
-                new JoystickButton(logitech, Button.kY.value)
-                                .whileHeld(new MMClimberExtend(climberExtendSubsystem, 77500))
-                                .whenReleased(() -> climberExtendSubsystem.stopMotors());
-
-                // extend down
-                new JoystickButton(logitech, Button.kA.value)
-                                .whileHeld(new MMClimberExtend(climberExtendSubsystem, 0))
-                                .whenReleased(() -> climberExtendSubsystem.stopMotors());
-
-                // TODO Tilt mechanics
-                // tilt forward
-                new JoystickButton(logitech, Button.kX.value)
-                                .whileHeld(new MMClimberTilt(climberTiltSubsystem,
-                                                325))
-                                .whenReleased(() -> climberTiltSubsystem.stopMotors());
-                // tilt back
-                new JoystickButton(logitech, Button.kB.value)
-                                .whileHeld(new MMClimberTilt(climberTiltSubsystem, 0))
-                                .whenReleased(() -> climberTiltSubsystem.stopMotors());
-
-                // tilt align
-
-                new JoystickButton(logitech, Button.kLeftBumper.value)
-                                .whenPressed(new MMClimberTilt(climberTiltSubsystem, 175))
-                                .whenReleased(() -> climberTiltSubsystem.stopMotors());
-
-                // .whenReleased(() -> ClimberTiltSubsystem.getClimberLeftTiltSRX()
-                // .set(ControlMode.PercentOutput, 0.000001));
+                new JoystickButton(logiFlightController, 3)
+                                .whileHeld(new AutoRangeCmd(driveTrainSubsystem, limelight, 49.0));
 
                 // X - indexer forward
                 // new JoystickButton(logitech, Button.kX.value).whileHeld(() ->
@@ -225,6 +160,75 @@ public class RobotContainer {
                 // new InstantCommand(() -> ShooterSubsystem
                 // .setIndexSpeed(-0.66))),
                 // ballCollecterArmSubsystem.isSameColor()));
+
+                // back button spins shooter up
+                new POVButton(logiGameController, 180).whenPressed(
+                                new PIDShootCmd(shooterSubsystem, 1000));
+                // .whenReleased(new PIDShootCmd(shooterSubsystem, 0));
+
+                // start button degrees does different rpm
+                // new POVButton(logiGameController, 0).whenPressed(
+                // new PIDShootCmd(shooterSubsystem, 27000));
+                // .whenReleased(new PIDShootCmd(shooterSubsystem, 0));
+
+                // right bumper actuates indexer
+                new JoystickButton(logiGameController, Button.kRightBumper.value)
+                                .whenPressed(new InstantCommand(() -> shooterSubsystem.setIndexSpeed(-0.66)));
+
+                // , new WaitCommand(2.5),,
+                // new InstantCommand(() -> shooterSubsystem.setIndexSpeed(-0.66))))
+                // new ConditionalCommand(new InstantCommand(() ->
+                // shooterSubsystem.setIndexSpeed(-0.66)),
+                // new InstantCommand(() -> shooterSubsystem.setIndexSpeed(0)),
+                // PIDShootCmd.isAtTargetVelocity())));
+
+                // spit out - B
+                new JoystickButton(logiGameController, Button.kB.value)
+                                .whileHeld(() -> ballCollecterSubsystem.setSpeed(0.66))
+                                .whenReleased(() -> ballCollecterSubsystem.setSpeed(0));
+
+                // collect - X
+                new JoystickButton(logiGameController, Button.kX.value)
+                                .whileHeld(() -> ballCollecterSubsystem.setSpeed(-0.66))
+                                .whenReleased(() -> ballCollecterSubsystem.setSpeed(0));
+
+                // collecter arm up - Y
+                new JoystickButton(logiGameController, Button.kY.value)
+                                .whenPressed(new MMCollecterArmActivate(ballCollecterArmSubsystem, 3750));
+
+                // collecter arm down - A
+                new JoystickButton(logiGameController, Button.kA.value)
+                                .whenPressed(new MMCollecterArmActivate(ballCollecterArmSubsystem,
+                                                0));
+
+                // driver 2 climbing extreme 3d
+
+                // extend up
+                new POVButton(logiFlightController, 0)
+                                .whileHeld(new MMClimberExtend(climberExtendSubsystem, 77500))
+                                .whenReleased(() -> climberExtendSubsystem.stopMotors());
+
+                // extend down
+                new POVButton(logiFlightController, 180)
+                                .whileHeld(new MMClimberExtend(climberExtendSubsystem, 0))
+                                .whenReleased(() -> climberExtendSubsystem.stopMotors());
+
+                // TODO Tilt mechanics
+                // tilt forward
+                new POVButton(logiFlightController, 90)
+                                .whileHeld(new MMClimberTilt(climberTiltSubsystem,
+                                                575))
+                                .whenReleased(() -> climberTiltSubsystem.stopMotors());
+                // tilt back
+                new POVButton(logiFlightController, 270)
+                                .whileHeld(new MMClimberTilt(climberTiltSubsystem, 0))
+                                .whenReleased(() -> climberTiltSubsystem.stopMotors());
+
+                // tilt align
+                new JoystickButton(logiFlightController, 1)
+                                .whenPressed(new MMClimberTilt(climberTiltSubsystem, 25))
+                                .whenReleased(() -> climberTiltSubsystem.stopMotors());
+
         }
 
         public Command loadPathWeaverTrajectoryCommand(String filename, boolean resetOdometry) {
@@ -310,6 +314,10 @@ public class RobotContainer {
 
         public static BallCollecterSubsystem getBallCollecterSubsystem() {
                 return ballCollecterSubsystem;
+        }
+
+        public static ShooterSubsystem getShooterSubsystem() {
+                return shooterSubsystem;
         }
 
 }
