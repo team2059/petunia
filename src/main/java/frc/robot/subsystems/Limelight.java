@@ -11,7 +11,6 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import java.lang.Math;
 
-
 public class Limelight extends SubsystemBase {
 
   private final NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
@@ -20,26 +19,27 @@ public class Limelight extends SubsystemBase {
   private final NetworkTableEntry yOffset = table.getEntry("ty");
   private final NetworkTableEntry hasTargets = table.getEntry("tv");
 
-  double goalHeightInches = 91.0;
-  
-  double limelightHeightInches = 15.25;
-  
-  double limelightMountingAngleDegrees = 28.5;
+  double goalHeightInches = 104.0;
 
+  double limelightHeightInches = 30.75;
+
+  double limelightMountingAngleDegrees = 27.0;
 
   public double getDistance() {
-    
+
     double targetOffsetAngle_Vertical = getYOffset();
     double angleToGoalDegrees = limelightMountingAngleDegrees + targetOffsetAngle_Vertical;
     double angleToGoalRadians = angleToGoalDegrees * (3.14159 / 180.0);
 
-    double distanceFromLimelightToGoalInches = (goalHeightInches - limelightHeightInches)/Math.tan(angleToGoalRadians) + 23.0;
+    double distanceFromLimelightToGoalInches = (goalHeightInches - limelightHeightInches) / Math.tan(angleToGoalRadians)
+        ;
 
     return distanceFromLimelightToGoalInches;
   }
 
   /** Creates a new Limelight. */
-  public Limelight() {}
+  public Limelight() {
+  }
 
   @Override
   public void periodic() {
@@ -63,7 +63,7 @@ public class Limelight extends SubsystemBase {
     } else {
       return true;
     }
-      
+
   }
 
 }

@@ -49,6 +49,7 @@ public class ShooterSubsystem extends SubsystemBase {
    */
   public ShooterSubsystem() {
     indexMotor.configFactoryDefault();
+    indexMotor.setNeutralMode(NeutralMode.Brake);
 
     /* Config sensor used for Primary PID [Velocity] */
     ballShooter.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative,
@@ -88,6 +89,7 @@ public class ShooterSubsystem extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     SmartDashboard.putNumber("Ball Shooter Velocity", ballShooter.getSelectedSensorVelocity());
+    SmartDashboard.putBoolean("Is Ball in chamber", ballChamberSensor.get());
 
     if (ballChamberSensor.get()) {
       setIndexSpeed(0);

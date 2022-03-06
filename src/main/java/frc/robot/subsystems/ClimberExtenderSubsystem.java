@@ -26,11 +26,11 @@ public class ClimberExtenderSubsystem extends SubsystemBase {
         static WPI_TalonSRX climberRightExtendSRX = new WPI_TalonSRX(
                         Constants.ClimberExtendConstants.climberRightExtendSRX);
 
-        static DigitalInput leftSensor = new DigitalInput(0);
-        static DigitalInput rightSensor = new DigitalInput(1);
+        // static DigitalInput leftSensor = new DigitalInput(0);
+        // static DigitalInput rightSensor = new DigitalInput(1);
 
-        boolean leftStatus = leftSensor.get();
-        boolean rightStatus = rightSensor.get();
+        // boolean leftStatus = leftSensor.get();
+        // boolean rightStatus = rightSensor.get();
 
         public static WPI_TalonSRX getClimberRightExtendSRX() {
                 return climberRightExtendSRX;
@@ -182,8 +182,8 @@ public class ClimberExtenderSubsystem extends SubsystemBase {
                 // climberRightExtendSRX.setSelectedSensorPosition(0);
                 // }
 
-                SmartDashboard.putBoolean("right sensor", rightSensor.get());
-                SmartDashboard.putBoolean("left sensor", leftSensor.get());
+                // SmartDashboard.putBoolean("right sensor", rightSensor.get());
+                // SmartDashboard.putBoolean("left sensor", leftSensor.get());
 
                 // if (leftStatus && rightStatus) {
                 // climberLeftExtendSRX.setSelectedSensorPosition(25);

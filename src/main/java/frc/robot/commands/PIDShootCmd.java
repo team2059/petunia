@@ -27,6 +27,7 @@ public class PIDShootCmd extends CommandBase {
   @Override
   public void initialize() {
 
+
     // 500 rpm
     // max unit/100ms = ~
     // rpmVelocity = rpmVelocity * 4096 / 600;
