@@ -142,46 +142,15 @@ public class RobotContainer {
                 new JoystickButton(logiFlightController, 3)
                                 .whileHeld(new AutoRangeCmd(driveTrainSubsystem, limelight, 49.0));
 
-                // X - indexer forward
-                // new JoystickButton(logitech, Button.kX.value).whileHeld(() ->
-                // shooterSubsystem.setIndexSpeed(.5))
-                // .whenReleased(() -> shooterSubsystem.setIndexSpeed(0));
-
-                // B - indexer backwards
-                // new JoystickButton(logitech, Button.kB.value).whileHeld(() ->
-                // shooterSubsystem.setIndexSpeed(-.5))
-                // .whenReleased(() -> shooterSubsystem.setIndexSpeed(0));
-
-                // // shoot
-                // new JoystickButton(logitech, Axis.kRightTrigger.value)
-                // .whenPressed(new ConditionalCommand(new ShootBallCmd(shooterSubsystem),
-                // new SequentialCommandGroup(
-                // new MMCollecterArmActivate(ballCollecterArmSubsystem,
-                // 0),
-                // new InstantCommand(() -> ShooterSubsystem
-                // .setIndexSpeed(-0.66))),
-                // ballCollecterArmSubsystem.isSameColor()));
-
                 // back button spins shooter up
-                new POVButton(logiGameController, 180).whenPressed(
-                                new PIDShootCmd(shooterSubsystem, 1000));
-                // .whenReleased(new PIDShootCmd(shooterSubsystem, 0));
-
-                // start button degrees does different rpm
-                // new POVButton(logiGameController, 0).whenPressed(
-                // new PIDShootCmd(shooterSubsystem, 27000));
+                new JoystickButton(logiGameController, Button.kLeftBumper.value).whenPressed(
+                                new PIDShootCmd(shooterSubsystem, 25000));
                 // .whenReleased(new PIDShootCmd(shooterSubsystem, 0));
 
                 // right bumper actuates indexer
                 new JoystickButton(logiGameController, Button.kRightBumper.value)
-                                .whenPressed(new InstantCommand(() -> shooterSubsystem.setIndexSpeed(-0.66)));
-
-                // , new WaitCommand(2.5),,
-                // new InstantCommand(() -> shooterSubsystem.setIndexSpeed(-0.66))))
-                // new ConditionalCommand(new InstantCommand(() ->
-                // shooterSubsystem.setIndexSpeed(-0.66)),
-                // new InstantCommand(() -> shooterSubsystem.setIndexSpeed(0)),
-                // PIDShootCmd.isAtTargetVelocity())));
+                                .whileHeld(new InstantCommand(() -> shooterSubsystem.setIndexSpeed(-0.66)))
+                                .whenReleased(new InstantCommand(() -> shooterSubsystem.setIndexSpeed(0)));
 
                 // spit out - B
                 new JoystickButton(logiGameController, Button.kB.value)
@@ -226,9 +195,9 @@ public class RobotContainer {
                                 .whenReleased(() -> climberTiltSubsystem.stopMotors());
 
                 // tilt align
-                new JoystickButton(logiFlightController, 1)
-                                .whenPressed(new MMClimberTilt(climberTiltSubsystem, 25))
-                                .whenReleased(() -> climberTiltSubsystem.stopMotors());
+                // new JoystickButton(logiFlightController, 1)
+                // .whenPressed(new MMClimberTilt(climberTiltSubsystem, 25))
+                // .whenReleased(() -> climberTiltSubsystem.stopMotors());
 
         }
 
