@@ -20,13 +20,14 @@ public class PIDShootCmd extends CommandBase {
   public PIDShootCmd(ShooterSubsystem mShooter, double rpmVelocity) {
     // Use addRequirements() here to declare submShooter dependencies.
     this.mShooter = mShooter;
+
+    //rpmVelocity in ticks/units 100ms
     this.rpmVelocity = rpmVelocity;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-
 
     // 500 rpm
     // max unit/100ms = ~
@@ -39,14 +40,10 @@ public class PIDShootCmd extends CommandBase {
     mShooter.ballShooter.set(ControlMode.Velocity, rpmVelocity);
   }
 
-  public static BooleanSupplier isAtTargetVelocity() {
-    return () -> ((rpmVelocity - mShooter.getShooterVelocity()) > 0
-        && (rpmVelocity - mShooter.getShooterVelocity()) < 25);
-  }
-
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    mShooter.setShooterVelocity(0);
   }
 
   // Returns true when the command should end.

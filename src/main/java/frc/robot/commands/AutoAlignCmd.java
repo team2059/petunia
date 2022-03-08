@@ -3,6 +3,7 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot.commands;
+
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.DriveTrainSubsystem;
 
@@ -15,62 +16,60 @@ public class AutoAlignCmd extends CommandBase {
 
   double lastXOffset;
 
-  
-
   /** Creates a new AutoAlign. */
   public AutoAlignCmd(DriveTrainSubsystem driveTrainSubsystem, Limelight limelight) {
     this.driveTrainSubsystem = driveTrainSubsystem;
     this.limelight = limelight;
 
     addRequirements(driveTrainSubsystem, limelight);
-    
+
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    //double tx = limelight.getXOffset();
+    // double tx = limelight.getXOffset();
     boolean tv = limelight.getHasTargets();
     double speed = 0.0;
 
     if (tv) {
-      //TODO - Check Area processing v X-Ofset / Y-Offset
-      speed = (limelight.getXOffset() * 0.05); //P gain
-      
+      // TODO - Check Area processing v X-Ofset / Y-Offset
+      speed = (limelight.getXOffset() * 0.05); // P gain
 
-      if (speed > 1.5) { //set speed limits
+      if (speed > 1.5) { // set speed limits
         speed = 1.5;
       } else if (speed < -1.5) {
         speed = -1.5;
       }
       lastXOffset = limelight.getXOffset();
-    }
-    else {
+    } else {
       if (lastXOffset < 0) {
         speed = -0.5;
       } else {
         speed = 0.5;
-    }
-      //TODO Forward Distance testing
+      }
+      // TODO Forward Distance testing
     }
 
-    //System.out.println("SPEED: " + speed);
+    // System.out.println("SPEED: " + speed);
     driveTrainSubsystem.arcadeDrive(0, -(speed * 0.5));
 
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+  }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return (limelight.getXOffset() * 0.05 == 0);
   }
 }
