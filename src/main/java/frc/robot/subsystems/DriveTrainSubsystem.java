@@ -33,11 +33,11 @@ public class DriveTrainSubsystem extends SubsystemBase {
 
   static CANSparkMax leftFrontCANSparkMax = new CANSparkMax(DriveConstants.leftFrontCANSparkMaxCANId,
       CANSparkMaxLowLevel.MotorType.kBrushless);
-  CANSparkMax leftBackCANSparkMax = new CANSparkMax(DriveConstants.leftbackCANSparkMaxCANId,
+  static CANSparkMax leftBackCANSparkMax = new CANSparkMax(DriveConstants.leftbackCANSparkMaxCANId,
       CANSparkMaxLowLevel.MotorType.kBrushless);
   static CANSparkMax rightFrontCANSparkMax = new CANSparkMax(DriveConstants.rightFrontCANSparkMaxCANId,
       CANSparkMaxLowLevel.MotorType.kBrushless);
-  CANSparkMax rightBackCANSparkMax = new CANSparkMax(DriveConstants.rightBackCANSparkMaxCANId,
+  static CANSparkMax rightBackCANSparkMax = new CANSparkMax(DriveConstants.rightBackCANSparkMaxCANId,
       CANSparkMaxLowLevel.MotorType.kBrushless);
 
   WPI_TalonSRX testTalon = new WPI_TalonSRX(0);
@@ -48,12 +48,12 @@ public class DriveTrainSubsystem extends SubsystemBase {
   // NEGATIVE RIGHT ENCODER VALUE!!!!!!!!!!!
   public final static RelativeEncoder rightRelativeEncoder = rightFrontCANSparkMax.getEncoder();
 
-  private final MotorControllerGroup leftMotorControllerGroup = new MotorControllerGroup(leftFrontCANSparkMax,
+  private final static MotorControllerGroup leftMotorControllerGroup = new MotorControllerGroup(leftFrontCANSparkMax,
       leftBackCANSparkMax);
-  public final MotorControllerGroup rightMotorControllerGroup = new MotorControllerGroup(rightFrontCANSparkMax,
+  public final static MotorControllerGroup rightMotorControllerGroup = new MotorControllerGroup(rightFrontCANSparkMax,
       rightBackCANSparkMax);
 
-  private final DifferentialDrive differentialDrive = new DifferentialDrive(leftMotorControllerGroup,
+  private final static DifferentialDrive differentialDrive = new DifferentialDrive(leftMotorControllerGroup,
       rightMotorControllerGroup);
 
   private Field2d m_field = new Field2d();
@@ -143,6 +143,14 @@ public class DriveTrainSubsystem extends SubsystemBase {
     // NEGATE RIGHT ENCODER VALUE!!!!!!!!!!!
     m_odometry.update(navX.getRotation2d(), getLeftEncoderPosition(), getRightEncoderPosition());
 
+  }
+
+  public static void driveToDistanceMeters(double meters) {
+    if (leftRelativeEncoder.getPosition() < meters) {
+      differentialDrive.tankDrive(-.5, -.5);
+    } else {
+      differentialDrive.tankDrive(0, 0);
+    }
   }
 
   public DifferentialDriveOdometry getOdometry() {

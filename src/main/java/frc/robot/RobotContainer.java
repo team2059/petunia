@@ -6,6 +6,7 @@ package frc.robot;
 
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.ResourceBundle.Control;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
@@ -43,6 +44,7 @@ import frc.robot.commands.MMClimberTilt;
 import frc.robot.commands.MMCollecterArmActivate;
 import frc.robot.commands.PIDShootCmd;
 import frc.robot.commands.ShootBallCmd;
+import frc.robot.commands.TwoBallAuto;
 import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.ShooterSubsystem;
@@ -56,6 +58,7 @@ import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.commands.TwoBallAuto;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -69,8 +72,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class RobotContainer {
 
         // The robot's subsystems and commands are defined here...
-        public static XboxController logiGameController = new XboxController(1);
-        public static Joystick logiFlightController = new Joystick(0);
+        public static XboxController logiGameController = new XboxController(0);
+        public static Joystick logiFlightController = new Joystick(1);
 
         private final DriveTrainSubsystem driveTrainSubsystem = new DriveTrainSubsystem();
         private final ClimberExtenderSubsystem climberExtendSubsystem = new ClimberExtenderSubsystem();
@@ -83,7 +86,7 @@ public class RobotContainer {
         Command autonomousCommand;
 
         // A chooser for autonomous commands
-        SendableChooser<Command> pathChooser = new SendableChooser<>();
+        static SendableChooser<Command> pathChooser = new SendableChooser<>();
 
         // A chooser for autonomous commands
         static SendableChooser<String> colorChooser = new SendableChooser<>();
@@ -164,7 +167,10 @@ public class RobotContainer {
 
                 // collecter arm up - Y
                 new JoystickButton(logiGameController, Button.kY.value)
-                                .whenPressed(new MMCollecterArmActivate(ballCollecterArmSubsystem, 3750));
+                                .whenPressed(new MMCollecterArmActivate(ballCollecterArmSubsystem, 3750)
+                                                .andThen(new InstantCommand(() -> ballCollecterArmSubsystem
+                                                                .getBallCollecterArmTalonSRX()
+                                                                .set(ControlMode.PercentOutput, 0))));
 
                 // collecter arm down - A
                 new JoystickButton(logiGameController, Button.kA.value)
@@ -249,20 +255,18 @@ public class RobotContainer {
          * @throws IOException
          */
 
+        public static SendableChooser getPathChooser() {
+                return pathChooser;
+        }
+
         public Command getAutonomousCommand() {
 
-                // TODO test auto routine
-                // return new SequentialCommandGroup(
-                // new ParallelCommandGroup(new
-                // MMCollecterArmActivate(ballCollecterArmSubsystem, 0),
-                // new InstantCommand(() -> ballCollecterArmSubsystem
-                // .setCollecterArmSpeed(-.5)),
-                // pathChooser.getSelected()),
-                // new ParallelCommandGroup(new InstantCommand(() ->
-                // shooterSubsystem.setIndexSpeed(-.5)),
-                // new InstantCommand(() -> shooterSubsystem.setShooterVelocity(0.75))));
-
-                return pathChooser.getSelected();
+                // return pathChooser.getSelected();
+                return new SequentialCommandGroup(new TwoBallAuto(ballCollecterSubsystem, driveTrainSubsystem,
+                                limelight,
+                                ballCollecterArmSubsystem, ballCollecterArmSubsystem,
+                                shooterSubsystem), pathChooser.getSelected(),
+                                new PIDShootCmd(shooterSubsystem, 25000));
 
         }
 

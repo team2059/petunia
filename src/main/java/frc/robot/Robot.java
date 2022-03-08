@@ -85,15 +85,15 @@ public class Robot extends TimedRobot {
   /** This function is called once each time the robot enters Disabled mode. */
   @Override
   public void disabledInit() {
-    m_robotContainer.getBallCollecterArmSubsystem().getBallCollecterArmTalonSRX().setSelectedSensorPosition(0);
-    m_robotContainer.getBallCollecterArmSubsystem().getBallCollecterArmTalonSRX().set(ControlMode.PercentOutput, 0);
-    m_robotContainer.getDriveTrainSubsystem().zeroHeading();
-    m_robotContainer.getDriveTrainSubsystem().resetEncoders();
-    m_robotContainer.getClimberExtenderSubsystem().getClimberLeftExtendSRX().set(ControlMode.PercentOutput, 0);
-    m_robotContainer.getClimberExtenderSubsystem().getClimberRightExtendSRX().set(ControlMode.PercentOutput, 0);
-    m_robotContainer.getClimberTiltSubsystem().getClimberLeftTiltSRX().set(ControlMode.PercentOutput, 0);
-    m_robotContainer.getClimberTiltSubsystem().getClimberRightTiltSRX().set(ControlMode.PercentOutput, 0);
-    m_robotContainer.getShooterSubsystem().setShooterVelocity(0);
+    // m_robotContainer.getBallCollecterArmSubsystem().getBallCollecterArmTalonSRX().setSelectedSensorPosition(0);
+    // m_robotContainer.getBallCollecterArmSubsystem().getBallCollecterArmTalonSRX().set(ControlMode.PercentOutput, 0);
+    // m_robotContainer.getDriveTrainSubsystem().zeroHeading();
+    // m_robotContainer.getDriveTrainSubsystem().resetEncoders();
+    // m_robotContainer.getClimberExtenderSubsystem().getClimberLeftExtendSRX().set(ControlMode.PercentOutput, 0);
+    // m_robotContainer.getClimberExtenderSubsystem().getClimberRightExtendSRX().set(ControlMode.PercentOutput, 0);
+    // m_robotContainer.getClimberTiltSubsystem().getClimberLeftTiltSRX().set(ControlMode.PercentOutput, 0);
+    // m_robotContainer.getClimberTiltSubsystem().getClimberRightTiltSRX().set(ControlMode.PercentOutput, 0);
+    // m_robotContainer.getShooterSubsystem().setShooterVelocity(0);
     // m_robotContainer.getDriveTrainSubsystem().zeroHeading();
     // m_robotContainer.getDriveTrainSubsystem().resetEncoders();
 
@@ -110,7 +110,10 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
 
-    m_robotContainer.getBallCollecterArmSubsystem().getBallCollecterArmTalonSRX().setSelectedSensorPosition(0);
+    Rotation2d thetaPose = m_robotContainer.getDriveTrainSubsystem().navX.getRotation2d();
+    DifferentialDriveOdometry myDriveOdometry = m_robotContainer.getDriveTrainSubsystem().getOdometry();
+    myDriveOdometry.resetPosition(new Pose2d(), thetaPose);
+    
     m_robotContainer.getBallCollecterArmSubsystem().getBallCollecterArmTalonSRX().set(ControlMode.PercentOutput, 0);
     m_robotContainer.getDriveTrainSubsystem().zeroHeading();
     m_robotContainer.getDriveTrainSubsystem().resetEncoders();
@@ -140,19 +143,14 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
-    m_robotContainer.getBallCollecterArmSubsystem().getBallCollecterArmTalonSRX().setSelectedSensorPosition(0);
+
     m_robotContainer.getBallCollecterArmSubsystem().getBallCollecterArmTalonSRX().set(ControlMode.PercentOutput, 0);
-    m_robotContainer.getDriveTrainSubsystem().zeroHeading();
-    m_robotContainer.getDriveTrainSubsystem().resetEncoders();
     m_robotContainer.getClimberExtenderSubsystem().getClimberLeftExtendSRX().set(ControlMode.PercentOutput, 0);
     m_robotContainer.getClimberExtenderSubsystem().getClimberRightExtendSRX().set(ControlMode.PercentOutput, 0);
     m_robotContainer.getClimberTiltSubsystem().getClimberLeftTiltSRX().set(ControlMode.PercentOutput, 0);
     m_robotContainer.getClimberTiltSubsystem().getClimberRightTiltSRX().set(ControlMode.PercentOutput, 0);
     m_robotContainer.getShooterSubsystem().setShooterVelocity(0);
 
-    Rotation2d thetaPose = m_robotContainer.getDriveTrainSubsystem().navX.getRotation2d();
-    DifferentialDriveOdometry myDriveOdometry = m_robotContainer.getDriveTrainSubsystem().getOdometry();
-    myDriveOdometry.resetPosition(new Pose2d(), thetaPose);
 
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
