@@ -4,9 +4,12 @@
 
 package frc.robot.commands;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.*;
 import frc.robot.RobotContainer;
@@ -25,11 +28,14 @@ public class TwoBallAuto extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
 
     addCommands(
-        // new AutoAlignCmd(driveTrainSubsystem,
-        // limelight),
-        new PIDShootCmd(shooterSubsystem, 15000).withTimeout(2.5),
-        new InstantCommand(() -> shooterSubsystem.setIndexSpeed(-0.66)),
-        new MMCollecterArmActivate(ballCollecterArmSubsystem, 3750),
+
+        new AutoAlignCmd(driveTrainSubsystem, limelight),
+        new ParallelCommandGroup(new PIDShootCmd(shooterSubsystem, 17500).withTimeout(2),
+            new InstantCommand(() -> shooterSubsystem.setIndexSpeed(-0.66))),
+        new MMCollecterArmActivate(ballCollecterArmSubsystem, 3750), new InstantCommand(() -> ballCollecterArmSubsystem
+            .getBallCollecterArmTalonSRX()
+            .set(ControlMode.PercentOutput, 0)),
+
         new InstantCommand(() -> ballCollecterSubsystem.setSpeed(-0.66)));
 
   }

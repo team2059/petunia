@@ -265,8 +265,8 @@ public class RobotContainer {
                 return new SequentialCommandGroup(new TwoBallAuto(ballCollecterSubsystem, driveTrainSubsystem,
                                 limelight,
                                 ballCollecterArmSubsystem, ballCollecterArmSubsystem,
-                                shooterSubsystem), pathChooser.getSelected(),
-                                new PIDShootCmd(shooterSubsystem, 25000));
+                                shooterSubsystem), pathChooser.getSelected(), new PIDShootCmd(shooterSubsystem, 22500),
+                                new AutoAlignCmd(driveTrainSubsystem, limelight));
 
         }
 
