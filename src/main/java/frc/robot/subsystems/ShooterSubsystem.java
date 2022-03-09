@@ -90,17 +90,13 @@ public class ShooterSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Ball Shooter Velocity", ballShooter.getSelectedSensorVelocity());
     SmartDashboard.putBoolean("Is Ball in chamber", ballChamberSensor.get());
 
-    // if (ballChamberSensor.get() == false) {
-    // setIndexSpeed(0);
-    // }
-    // setIndexSpeed(-0.66);
   }
 
-  public void autoLoader(double speed) {
+  public void autoLoader() {
     if (ballChamberSensor.get()) {
-      setShooterVelocity(0);
+      setIndexSpeed(0);
     } else {
-      setShooterVelocity(speed);
+      setIndexSpeed(-0.66);
     }
   }
 

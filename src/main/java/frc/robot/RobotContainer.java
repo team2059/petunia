@@ -130,8 +130,6 @@ public class RobotContainer {
 
                 new JoystickButton(logiFlightController, 3)
                                 .whileHeld(new AutoRangeCmd(driveTrainSubsystem, limelight, 49.0));
-                
-                                
 
                 // back button spins shooter up
                 new JoystickButton(logiGameController, Button.kLeftBumper.value).whenPressed(
@@ -242,11 +240,10 @@ public class RobotContainer {
          * @throws IOException
          */
 
-
         public Command getAutonomousCommand() {
 
                 // return pathChooser.getSelected();
-                //TODO 3 ball auto
+                // TODO 3 ball auto
                 return new SequentialCommandGroup(new TwoBallAuto(ballCollecterSubsystem, driveTrainSubsystem,
                                 limelight,
                                 ballCollecterArmSubsystem, ballCollecterArmSubsystem,
