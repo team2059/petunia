@@ -77,7 +77,7 @@ public class ClimberTiltSubsystem extends SubsystemBase {
                 climberLeftTiltTalonSRX.configPeakOutputReverse(-1, Constants.ClimberTiltConstants.kTimeoutMs);
 
                 /* Set Motion Magic gains in slot0 - see documentation */
-                /* TODO TUNE PID VALUES */
+          
                 climberLeftTiltTalonSRX.selectProfileSlot(Constants.ClimberTiltConstants.kSlotIdx,
                                 Constants.ClimberTiltConstants.kPIDLoopIdx);
                 climberLeftTiltTalonSRX.config_kF(Constants.ClimberTiltConstants.kSlotIdx,
@@ -137,7 +137,7 @@ public class ClimberTiltSubsystem extends SubsystemBase {
                 climberRightTiltTalonSRX.configPeakOutputReverse(-1, Constants.ClimberTiltConstants.kTimeoutMs);
 
                 /* Set Motion Magic gains in slot0 - see documentation */
-                /* TODO TUNE PID VALUES */
+              
                 climberRightTiltTalonSRX.selectProfileSlot(Constants.ClimberTiltConstants.kSlotIdx,
                                 Constants.ClimberTiltConstants.kPIDLoopIdx);
                 climberRightTiltTalonSRX.config_kF(Constants.ClimberTiltConstants.kSlotIdx,
