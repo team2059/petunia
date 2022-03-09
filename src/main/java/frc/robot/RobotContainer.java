@@ -6,34 +6,23 @@ package frc.robot;
 
 import java.io.IOException;
 import java.nio.file.Path;
-import java.util.ResourceBundle.Control;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.RamseteController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
-import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.trajectory.Trajectory;
-import edu.wpi.first.math.trajectory.TrajectoryConfig;
-import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.math.trajectory.TrajectoryUtil;
-import edu.wpi.first.math.trajectory.constraint.DifferentialDriveVoltageConstraint;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.commands.ArcadeDriveCmd;
@@ -43,7 +32,6 @@ import frc.robot.commands.MMClimberExtend;
 import frc.robot.commands.MMClimberTilt;
 import frc.robot.commands.MMCollecterArmActivate;
 import frc.robot.commands.PIDShootCmd;
-import frc.robot.commands.ShootBallCmd;
 import frc.robot.commands.AutoCmds.PIDShootAuto;
 import frc.robot.commands.AutoCmds.TwoBallAuto;
 import frc.robot.subsystems.DriveTrainSubsystem;
@@ -54,11 +42,9 @@ import frc.robot.subsystems.BallCollecterSubsystem;
 import frc.robot.subsystems.ClimberExtenderSubsystem;
 import frc.robot.subsystems.ClimberTiltSubsystem;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.XboxController.Axis;
 import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -144,6 +130,8 @@ public class RobotContainer {
 
                 new JoystickButton(logiFlightController, 3)
                                 .whileHeld(new AutoRangeCmd(driveTrainSubsystem, limelight, 49.0));
+                
+                                
 
                 // back button spins shooter up
                 new JoystickButton(logiGameController, Button.kLeftBumper.value).whenPressed(
@@ -189,7 +177,6 @@ public class RobotContainer {
                                 .whileHeld(new MMClimberExtend(climberExtendSubsystem, 0))
                                 .whenReleased(() -> climberExtendSubsystem.stopMotors());
 
-                // TODO Tilt mechanics
                 // tilt forward
                 new POVButton(logiFlightController, 90)
                                 .whileHeld(new MMClimberTilt(climberTiltSubsystem,
@@ -255,9 +242,6 @@ public class RobotContainer {
          * @throws IOException
          */
 
-        public static SendableChooser getPathChooser() {
-                return pathChooser;
-        }
 
         public Command getAutonomousCommand() {
 

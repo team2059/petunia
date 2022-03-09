@@ -4,13 +4,8 @@
 
 package frc.robot.commands.AutoCmds;
 
-import java.util.function.BooleanSupplier;
-
 import com.ctre.phoenix.motorcontrol.ControlMode;
-
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Robot;
-import frc.robot.RobotContainer;
 import frc.robot.subsystems.ShooterSubsystem;
 
 public class PIDShootAuto extends CommandBase {
@@ -50,7 +45,7 @@ public class PIDShootAuto extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    int counter = 0;
+  
 
     // if (RobotContainer.logiGameController.getLeftBumperPressed()) {
     // counter++;
