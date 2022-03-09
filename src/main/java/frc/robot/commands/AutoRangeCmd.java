@@ -32,6 +32,7 @@ public class AutoRangeCmd extends CommandBase {
     this.driveTrainSubsystem = driveTrainSubsystem;
     this.limelight = limelight;
     this.target = target;
+    
 
     addRequirements(driveTrainSubsystem, limelight);
     // Use addRequirements() here to declare subsystem dependencies.

@@ -13,12 +13,12 @@ import frc.robot.Robot;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.ShooterSubsystem;
 
-public class PIDShootCmd extends CommandBase {
+public class PIDShootAuto extends CommandBase {
   private static ShooterSubsystem mShooter;
   private static double rpmVelocity;
 
   /** Creates a new PIDShootCmd. */
-  public PIDShootCmd(ShooterSubsystem mShooter, double rpmVelocity) {
+  public PIDShootAuto(ShooterSubsystem mShooter, double rpmVelocity) {
     // Use addRequirements() here to declare submShooter dependencies.
     this.mShooter = mShooter;
     // rpmVelocity in ticks/units 100ms
@@ -51,8 +51,6 @@ public class PIDShootCmd extends CommandBase {
   @Override
   public boolean isFinished() {
     int counter = 0;
-
-    
 
     // if (RobotContainer.logiGameController.getLeftBumperPressed()) {
     // counter++;

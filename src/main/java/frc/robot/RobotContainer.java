@@ -42,6 +42,7 @@ import frc.robot.commands.AutoRangeCmd;
 import frc.robot.commands.MMClimberExtend;
 import frc.robot.commands.MMClimberTilt;
 import frc.robot.commands.MMCollecterArmActivate;
+import frc.robot.commands.PIDShootAuto;
 import frc.robot.commands.PIDShootCmd;
 import frc.robot.commands.ShootBallCmd;
 import frc.robot.commands.TwoBallAuto;
@@ -265,8 +266,10 @@ public class RobotContainer {
                 return new SequentialCommandGroup(new TwoBallAuto(ballCollecterSubsystem, driveTrainSubsystem,
                                 limelight,
                                 ballCollecterArmSubsystem, ballCollecterArmSubsystem,
-                                shooterSubsystem), pathChooser.getSelected(), new PIDShootCmd(shooterSubsystem, 22500),
-                                new AutoAlignCmd(driveTrainSubsystem, limelight));
+                                shooterSubsystem),
+                                pathChooser.getSelected(),
+                                new AutoAlignCmd(driveTrainSubsystem, limelight),
+                                new PIDShootAuto(shooterSubsystem, 27500).withTimeout(2));
 
         }
 

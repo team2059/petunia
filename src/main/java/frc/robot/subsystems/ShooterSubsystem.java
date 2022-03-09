@@ -44,6 +44,10 @@ public class ShooterSubsystem extends SubsystemBase {
     return () -> ballChamberSensor.get();
   }
 
+  public static BooleanSupplier isAtTargetVelocity(double ticks) {
+    return () -> ballShooter.getSelectedSensorVelocity() >= ticks;
+  }
+
   /*
    * Creates a new Shooter.
    */
@@ -65,7 +69,6 @@ public class ShooterSubsystem extends SubsystemBase {
     // Resets all values to default
     ballShooter.configFactoryDefault();
     ballShooter.setNeutralMode(NeutralMode.Coast);
-    ballShooter.setSelectedSensorPosition(0);
 
     /* Config the peak and nominal outputs ([-1, 1] represents [-100, 100]%) */
     ballShooter.configNominalOutputForward(0, ShooterConstants.kCtreTimeoutMs);
