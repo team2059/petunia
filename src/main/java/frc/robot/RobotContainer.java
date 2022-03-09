@@ -42,10 +42,10 @@ import frc.robot.commands.AutoRangeCmd;
 import frc.robot.commands.MMClimberExtend;
 import frc.robot.commands.MMClimberTilt;
 import frc.robot.commands.MMCollecterArmActivate;
-import frc.robot.commands.PIDShootAuto;
 import frc.robot.commands.PIDShootCmd;
 import frc.robot.commands.ShootBallCmd;
-import frc.robot.commands.TwoBallAuto;
+import frc.robot.commands.AutoCmds.PIDShootAuto;
+import frc.robot.commands.AutoCmds.TwoBallAuto;
 import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.ShooterSubsystem;
@@ -59,7 +59,6 @@ import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.commands.TwoBallAuto;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -263,13 +262,14 @@ public class RobotContainer {
         public Command getAutonomousCommand() {
 
                 // return pathChooser.getSelected();
+                //TODO 3 ball auto
                 return new SequentialCommandGroup(new TwoBallAuto(ballCollecterSubsystem, driveTrainSubsystem,
                                 limelight,
                                 ballCollecterArmSubsystem, ballCollecterArmSubsystem,
                                 shooterSubsystem),
                                 pathChooser.getSelected(),
                                 new AutoAlignCmd(driveTrainSubsystem, limelight),
-                                new PIDShootAuto(shooterSubsystem, 27500).withTimeout(2));
+                                new PIDShootAuto(shooterSubsystem, 27500).withTimeout(2.5));
 
         }
 
