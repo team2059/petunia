@@ -83,13 +83,18 @@ public class Robot extends TimedRobot {
   @Override
   public void disabledInit() {
     // m_robotContainer.getBallCollecterArmSubsystem().getBallCollecterArmTalonSRX().setSelectedSensorPosition(0);
-    // m_robotContainer.getBallCollecterArmSubsystem().getBallCollecterArmTalonSRX().set(ControlMode.PercentOutput, 0);
+    // m_robotContainer.getBallCollecterArmSubsystem().getBallCollecterArmTalonSRX().set(ControlMode.PercentOutput,
+    // 0);
     // m_robotContainer.getDriveTrainSubsystem().zeroHeading();
     // m_robotContainer.getDriveTrainSubsystem().resetEncoders();
-    // m_robotContainer.getClimberExtenderSubsystem().getClimberLeftExtendSRX().set(ControlMode.PercentOutput, 0);
-    // m_robotContainer.getClimberExtenderSubsystem().getClimberRightExtendSRX().set(ControlMode.PercentOutput, 0);
-    // m_robotContainer.getClimberTiltSubsystem().getClimberLeftTiltSRX().set(ControlMode.PercentOutput, 0);
-    // m_robotContainer.getClimberTiltSubsystem().getClimberRightTiltSRX().set(ControlMode.PercentOutput, 0);
+    // m_robotContainer.getClimberExtenderSubsystem().getClimberLeftExtendSRX().set(ControlMode.PercentOutput,
+    // 0);
+    // m_robotContainer.getClimberExtenderSubsystem().getClimberRightExtendSRX().set(ControlMode.PercentOutput,
+    // 0);
+    // m_robotContainer.getClimberTiltSubsystem().getClimberLeftTiltSRX().set(ControlMode.PercentOutput,
+    // 0);
+    // m_robotContainer.getClimberTiltSubsystem().getClimberRightTiltSRX().set(ControlMode.PercentOutput,
+    // 0);
     // m_robotContainer.getShooterSubsystem().setShooterVelocity(0);
     // m_robotContainer.getDriveTrainSubsystem().zeroHeading();
     // m_robotContainer.getDriveTrainSubsystem().resetEncoders();
@@ -110,7 +115,7 @@ public class Robot extends TimedRobot {
     Rotation2d thetaPose = m_robotContainer.getDriveTrainSubsystem().navX.getRotation2d();
     DifferentialDriveOdometry myDriveOdometry = m_robotContainer.getDriveTrainSubsystem().getOdometry();
     myDriveOdometry.resetPosition(new Pose2d(), thetaPose);
-    
+
     m_robotContainer.getBallCollecterArmSubsystem().getBallCollecterArmTalonSRX().set(ControlMode.PercentOutput, 0);
     m_robotContainer.getDriveTrainSubsystem().zeroHeading();
     m_robotContainer.getDriveTrainSubsystem().resetEncoders();
@@ -141,13 +146,14 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopInit() {
 
+    m_robotContainer.getShooterSubsystem().autoLoader();
     m_robotContainer.getBallCollecterArmSubsystem().getBallCollecterArmTalonSRX().set(ControlMode.PercentOutput, 0);
     m_robotContainer.getClimberExtenderSubsystem().getClimberLeftExtendSRX().set(ControlMode.PercentOutput, 0);
     m_robotContainer.getClimberExtenderSubsystem().getClimberRightExtendSRX().set(ControlMode.PercentOutput, 0);
     m_robotContainer.getClimberTiltSubsystem().getClimberLeftTiltSRX().set(ControlMode.PercentOutput, 0);
     m_robotContainer.getClimberTiltSubsystem().getClimberRightTiltSRX().set(ControlMode.PercentOutput, 0);
+    m_robotContainer.getBallCollecterSubsystem().getCollecterMotorTalonSRX().set(ControlMode.PercentOutput, 0);
     m_robotContainer.getShooterSubsystem().setShooterVelocity(0);
-
 
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
@@ -157,6 +163,7 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
+    m_robotContainer.getShooterSubsystem().autoLoader();
   }
 
   @Override

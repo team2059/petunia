@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.subsystems.*;
+
 import frc.robot.commands.*;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
@@ -29,8 +30,8 @@ public class TwoBallAuto extends SequentialCommandGroup {
         new MMCollecterArmActivate(ballCollecterArmSubsystem, 3750), new InstantCommand(() -> ballCollecterArmSubsystem
             .getBallCollecterArmTalonSRX()
             .set(ControlMode.PercentOutput, 0)),
-        new ParallelCommandGroup(new PIDShootCmd(shooterSubsystem, 12500).withTimeout(4),
-            new InstantCommand(() -> shooterSubsystem.setIndexSpeed(-0.45)).beforeStarting(new WaitCommand(2.5))),
+        new ParallelCommandGroup(new PIDShootCmd(shooterSubsystem, 17500).withTimeout(3.5),
+            new InstantCommand(() -> shooterSubsystem.setIndexSpeed(-0.45)).beforeStarting(new WaitCommand(2))),
         new InstantCommand(() -> ballCollecterSubsystem.setSpeed(-0.5)));
 
   }
