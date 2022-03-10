@@ -31,9 +31,12 @@ import frc.robot.commands.AutoRangeCmd;
 import frc.robot.commands.MMClimberExtend;
 import frc.robot.commands.MMClimberTilt;
 import frc.robot.commands.MMCollecterArmActivate;
-import frc.robot.commands.PIDShootCmd;
-import frc.robot.commands.AutoCmds.PIDShootAuto;
+import frc.robot.commands.AutoCmds.FinalShoot;
 import frc.robot.commands.AutoCmds.TwoBallAuto;
+import frc.robot.commands.PIDShootingCmds.Shoot12500;
+import frc.robot.commands.PIDShootingCmds.Shoot17500;
+import frc.robot.commands.PIDShootingCmds.Shoot22500;
+import frc.robot.commands.PIDShootingCmds.Shoot27500;
 import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.ShooterSubsystem;
@@ -125,21 +128,26 @@ public class RobotContainer {
          * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
          */
         private void configureButtonBindings() {
-                // limelight auto align/ranging buttons
-                new JoystickButton(logiFlightController, 1).whileHeld(new AutoAlignCmd(driveTrainSubsystem, limelight));
 
-                new JoystickButton(logiFlightController, 3)
-                                .whileHeld(new AutoRangeCmd(driveTrainSubsystem, limelight, 49.0));
+                new POVButton(logiGameController, 0).toggleWhenPressed(
+                                new Shoot27500(shooterSubsystem, 27500));
+
+                new POVButton(logiGameController, 90).toggleWhenPressed(
+                                new Shoot22500(shooterSubsystem, 22500));
+
+                new POVButton(logiGameController, 180).toggleWhenPressed(
+                                new Shoot17500(shooterSubsystem, 17500));
+
+                new POVButton(logiGameController, 270).toggleWhenPressed(
+                                new Shoot12500(shooterSubsystem, 12500));
 
                 // back button spins shooter up
-                new JoystickButton(logiGameController, Button.kLeftBumper.value).whenPressed(
-                                new PIDShootCmd(shooterSubsystem, 25000));
-                // .whenReleased(new PIDShootCmd(shooterSubsystem, 0));
+                // new JoystickButton(logiGameController, Button.kLeftBumper.value)
 
                 // right bumper actuates indexer
                 new JoystickButton(logiGameController, Button.kRightBumper.value)
-                                .whileHeld(new InstantCommand(() -> shooterSubsystem.setIndexSpeed(-0.66)))
-                                .whenReleased(new InstantCommand(() -> shooterSubsystem.setIndexSpeed(0)));
+                                .whenPressed(new InstantCommand(() -> shooterSubsystem.setIndexSpeed(-0.66))
+                                                .withTimeout(2));
 
                 // spit out - B
                 new JoystickButton(logiGameController, Button.kB.value)
@@ -164,6 +172,12 @@ public class RobotContainer {
                                                 0));
 
                 // driver 2 climbing extreme 3d
+
+                // limelight auto align/ranging buttons
+                new JoystickButton(logiFlightController, 1).whileHeld(new AutoAlignCmd(driveTrainSubsystem, limelight));
+
+                new JoystickButton(logiFlightController, 2)
+                                .whileHeld(new AutoRangeCmd(driveTrainSubsystem, limelight, 49.0));
 
                 // extend up
                 new POVButton(logiFlightController, 0)
@@ -250,7 +264,7 @@ public class RobotContainer {
                                 shooterSubsystem),
                                 pathChooser.getSelected(),
                                 new AutoAlignCmd(driveTrainSubsystem, limelight),
-                                new PIDShootAuto(shooterSubsystem, 27500).withTimeout(2.5));
+                                new FinalShoot(shooterSubsystem, 27500).withTimeout(2.5));
 
         }
 
