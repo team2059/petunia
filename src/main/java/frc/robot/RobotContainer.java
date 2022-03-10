@@ -146,8 +146,8 @@ public class RobotContainer {
 
                 // right bumper actuates indexer
                 new JoystickButton(logiGameController, Button.kRightBumper.value)
-                                .whenPressed(new InstantCommand(() -> shooterSubsystem.setIndexSpeed(-0.66))
-                                                .withTimeout(2));
+                                .whileHeld(new InstantCommand(() -> shooterSubsystem.setIndexSpeed(-0.66)))
+                                .whenReleased(new InstantCommand(() -> shooterSubsystem.setIndexSpeed(0)));
 
                 // spit out - B
                 new JoystickButton(logiGameController, Button.kB.value)
