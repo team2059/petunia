@@ -90,8 +90,6 @@ public class ShooterSubsystem extends SubsystemBase {
     // This method will be called once per scheduler run
     SmartDashboard.putNumber("Ball Shooter Velocity", ballShooter.getSelectedSensorVelocity());
     SmartDashboard.putBoolean("Is Ball in chamber", ballChamberSensor.get());
-    SmartDashboard.putNumber("pov values", RobotContainer.logiGameController.getPOV());
-
   }
 
   public void autoLoader() {
