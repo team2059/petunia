@@ -179,11 +179,12 @@ public class RobotContainer {
 
                 // extend up
                 new POVButton(logiFlightController, 0)
-                                .whileHeld(new SequentialCommandGroup(
-                                                new MMCollecterArmActivate(ballCollecterArmSubsystem, 1500),
-                                                new MMClimberExtend(climberExtendSubsystem, 77500)))
+                                .whileHeld(new MMClimberExtend(climberExtendSubsystem, 77500))
                                 .whenReleased(() -> climberExtendSubsystem
                                                 .stopMotors());
+
+                new JoystickButton(logiFlightController, 5)
+                                .whenPressed(new MMCollecterArmActivate(ballCollecterArmSubsystem, 1500));
 
                 // extend down
                 new POVButton(logiFlightController, 180)
