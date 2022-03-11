@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -31,6 +32,7 @@ import frc.robot.commands.AutoRangeCmd;
 import frc.robot.commands.MMClimberExtend;
 import frc.robot.commands.MMClimberTilt;
 import frc.robot.commands.MMCollecterArmActivate;
+import frc.robot.commands.SlowArcadeDrive;
 import frc.robot.commands.AutoCmds.FinalShoot;
 import frc.robot.commands.AutoCmds.TwoBallAuto;
 import frc.robot.commands.PIDShootingCmds.Shoot12500;
@@ -96,13 +98,13 @@ public class RobotContainer {
 
                 boolean isReset = true;
 
-                String red = "Red";
-                String blue = "Blue";
+                // String red = "Red";
+                // String blue = "Blue";
 
-                colorChooser.setDefaultOption("Red alliance", red);
+                // colorChooser.setDefaultOption("Red alliance", red);
 
-                colorChooser.addOption("Red alliance", red);
-                colorChooser.addOption("Blue alliance", blue);
+                // colorChooser.addOption("Red alliance", red);
+                // colorChooser.addOption("Blue alliance", blue);
 
                 pathChooser.addOption("Path forward Auto",
                                 loadPathWeaverTrajectoryCommand(
@@ -115,7 +117,7 @@ public class RobotContainer {
 
                 // Put the chooser on the dashboard
                 Shuffleboard.getTab("Autonomous").add(pathChooser);
-                Shuffleboard.getTab("Autonomous").add(colorChooser);
+                // Shuffleboard.getTab("Autonomous").add(colorChooser);
 
         }
 
@@ -146,8 +148,10 @@ public class RobotContainer {
 
                 // right bumper actuates indexer
                 new JoystickButton(logiGameController, Button.kRightBumper.value)
-                                .whileHeld(new InstantCommand(() -> shooterSubsystem.setIndexSpeed(-0.66)))
-                                .whenReleased(new InstantCommand(() -> shooterSubsystem.setIndexSpeed(0)));
+                                .whileHeld(new SequentialCommandGroup(new AutoAlignCmd(driveTrainSubsystem, limelight),
+                                                new InstantCommand(() -> shooterSubsystem.setIndexSpeed(-0.66))))
+                                .whenReleased(new InstantCommand(() -> shooterSubsystem
+                                                .setIndexSpeed(0)));
 
                 // spit out - B
                 new JoystickButton(logiGameController, Button.kB.value)
@@ -173,12 +177,6 @@ public class RobotContainer {
 
                 // driver 2 climbing extreme 3d
 
-                // limelight auto align/ranging buttons
-                new JoystickButton(logiFlightController, 1).whileHeld(new AutoAlignCmd(driveTrainSubsystem, limelight));
-
-                new JoystickButton(logiFlightController, 2)
-                                .whileHeld(new AutoRangeCmd(driveTrainSubsystem, limelight, 49.0));
-
                 // extend up
                 new POVButton(logiFlightController, 0)
                                 .whileHeld(new MMClimberExtend(climberExtendSubsystem, 77500))
@@ -199,10 +197,7 @@ public class RobotContainer {
                                 .whileHeld(new MMClimberTilt(climberTiltSubsystem, 0))
                                 .whenReleased(() -> climberTiltSubsystem.stopMotors());
 
-                // tilt align
-                // new JoystickButton(logiFlightController, 1)
-                // .whenPressed(new MMClimberTilt(climberTiltSubsystem, 25))
-                // .whenReleased(() -> climberTiltSubsystem.stopMotors());
+                new JoystickButton(logiFlightController, 1).whileHeld(new SlowArcadeDrive(driveTrainSubsystem));
 
         }
 
