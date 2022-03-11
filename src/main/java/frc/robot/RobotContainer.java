@@ -63,8 +63,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 public class RobotContainer {
 
         // The robot's subsystems and commands are defined here...
-        public static XboxController logiGameController = new XboxController(0);
-        public static Joystick logiFlightController = new Joystick(1);
+        public static XboxController logiGameController = new XboxController(3);
+        public static Joystick logiFlightController = new Joystick(0);
 
         private final DriveTrainSubsystem driveTrainSubsystem = new DriveTrainSubsystem();
         private final ClimberExtenderSubsystem climberExtendSubsystem = new ClimberExtenderSubsystem();
@@ -143,10 +143,14 @@ public class RobotContainer {
                 new POVButton(logiGameController, 270).toggleWhenPressed(
                                 new Shoot12500(shooterSubsystem, 12500));
 
-                // back button spins shooter up
-                // new JoystickButton(logiGameController, Button.kLeftBumper.value)
+                // no limelight alignment - LB
+                new JoystickButton(logiGameController, Button.kLeftBumper.value)
+                                .whileHeld(
+                                                new InstantCommand(() -> shooterSubsystem.setIndexSpeed(-0.66)))
+                                .whenReleased(new InstantCommand(() -> shooterSubsystem
+                                                .setIndexSpeed(0)));
 
-                // right bumper actuates indexer
+                // align then activate indexer (shoot) - RB
                 new JoystickButton(logiGameController, Button.kRightBumper.value)
                                 .whileHeld(new SequentialCommandGroup(new AutoAlignCmd(driveTrainSubsystem, limelight),
                                                 new InstantCommand(() -> shooterSubsystem.setIndexSpeed(-0.66))))
@@ -177,34 +181,69 @@ public class RobotContainer {
 
                 // driver 2 climbing extreme 3d
 
+                new JoystickButton(logiFlightController, 1).whileHeld(new SlowArcadeDrive(driveTrainSubsystem));
+
+                // before climbing, set collecter arm position upright
+                new JoystickButton(logiFlightController, 5)
+                                .whenPressed(new MMCollecterArmActivate(ballCollecterArmSubsystem, 1500));
+
                 // extend up
                 new POVButton(logiFlightController, 0)
                                 .whileHeld(new MMClimberExtend(climberExtendSubsystem, 77500))
                                 .whenReleased(() -> climberExtendSubsystem
                                                 .stopMotors());
 
-                new JoystickButton(logiFlightController, 5)
-                                .whenPressed(new MMCollecterArmActivate(ballCollecterArmSubsystem, 1500));
-
-                // extend down
-                new POVButton(logiFlightController, 180)
-                                .whileHeld(new MMClimberExtend(climberExtendSubsystem, 0))
-                                .whenReleased(() -> climberExtendSubsystem.stopMotors());
+                // extend up while tilting forward
+                new POVButton(logiFlightController, 45)
+                                .whileHeld(new ParallelCommandGroup(new MMClimberTilt(climberTiltSubsystem, 700),
+                                                new MMClimberExtend(climberExtendSubsystem, 77500)))
+                                .whenReleased(new ParallelCommandGroup(
+                                                new InstantCommand(() -> climberTiltSubsystem.stopMotors()),
+                                                new InstantCommand(() -> climberExtendSubsystem
+                                                                .stopMotors())));
 
                 // tilt forward
                 new POVButton(logiFlightController, 90)
                                 .whileHeld(new MMClimberTilt(climberTiltSubsystem,
                                                 700))
                                 .whenReleased(() -> climberTiltSubsystem.stopMotors());
+
+                // extend down while tilting forward
+                new POVButton(logiFlightController, 135)
+                                .whileHeld(new ParallelCommandGroup(new MMClimberTilt(climberTiltSubsystem, 700),
+                                                new MMClimberExtend(climberExtendSubsystem, 0)))
+                                .whenReleased(new ParallelCommandGroup(
+                                                new InstantCommand(() -> climberTiltSubsystem.stopMotors()),
+                                                new InstantCommand(() -> climberExtendSubsystem
+                                                                .stopMotors())));
+
+                // extend down
+                new POVButton(logiFlightController, 180)
+                                .whileHeld(new MMClimberExtend(climberExtendSubsystem, 0))
+                                .whenReleased(() -> climberExtendSubsystem.stopMotors());
+
+                // extend down while tilting back
+                new POVButton(logiFlightController, 225)
+                                .whileHeld(new ParallelCommandGroup(new MMClimberTilt(climberTiltSubsystem, 0),
+                                                new MMClimberExtend(climberExtendSubsystem, 0)))
+                                .whenReleased(new ParallelCommandGroup(
+                                                new InstantCommand(() -> climberTiltSubsystem.stopMotors()),
+                                                new InstantCommand(() -> climberExtendSubsystem
+                                                                .stopMotors())));
+
                 // tilt back
                 new POVButton(logiFlightController, 270)
                                 .whileHeld(new MMClimberTilt(climberTiltSubsystem, 0))
                                 .whenReleased(() -> climberTiltSubsystem.stopMotors());
 
-                // tilt align
-                new JoystickButton(logiFlightController, 2).whenPressed(new MMClimberTilt(climberTiltSubsystem, 850));
-
-                new JoystickButton(logiFlightController, 1).whileHeld(new SlowArcadeDrive(driveTrainSubsystem));
+                // extend up while tilting back
+                new POVButton(logiFlightController, 315)
+                                .whileHeld(new ParallelCommandGroup(new MMClimberTilt(climberTiltSubsystem, 0),
+                                                new MMClimberExtend(climberExtendSubsystem, 77500)))
+                                .whenReleased(new ParallelCommandGroup(
+                                                new InstantCommand(() -> climberTiltSubsystem.stopMotors()),
+                                                new InstantCommand(() -> climberExtendSubsystem
+                                                                .stopMotors())));
 
         }
 

@@ -31,8 +31,8 @@ public class Limelight extends SubsystemBase {
     double angleToGoalDegrees = limelightMountingAngleDegrees + targetOffsetAngle_Vertical;
     double angleToGoalRadians = angleToGoalDegrees * (3.14159 / 180.0);
 
-    double distanceFromLimelightToGoalInches = (goalHeightInches - limelightHeightInches) / Math.tan(angleToGoalRadians)
-        ;
+    double distanceFromLimelightToGoalInches = (goalHeightInches - limelightHeightInches)
+        / Math.tan(angleToGoalRadians);
 
     return distanceFromLimelightToGoalInches;
   }

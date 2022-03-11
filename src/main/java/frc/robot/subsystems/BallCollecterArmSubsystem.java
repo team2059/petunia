@@ -213,25 +213,20 @@ public class BallCollecterArmSubsystem extends SubsystemBase {
   public void periodic() {
 
     // This method will be called once per scheduler run
-    SmartDashboard.putNumber("talon encoder value", ballCollecterArmTalonSRX.getSelectedSensorPosition());
+    SmartDashboard.putNumber("collector arm ticks", ballCollecterArmTalonSRX.getSelectedSensorPosition());
 
-    // if (ballCollecterArmTalonSRX.getControlMode() == ControlMode.MotionMagic
-    // && ballCollecterArmTalonSRX.getSelectedSensorPosition() > 2000) {
-    // ballCollecterArmTalonSRX.setNeutralMode(NeutralMode.Brake);
-    // } else {
-    // ballCollecterArmTalonSRX.setNeutralMode(NeutralMode.Coast);
-    // }
+    // SmartDashboard.putString("talon mode",
+    // ballCollecterArmTalonSRX.getControlMode().toString());
+    // SmartDashboard.putNumber("output",
+    // ballCollecterArmTalonSRX.getMotorOutputPercent());
 
-    SmartDashboard.putString("talon mode", ballCollecterArmTalonSRX.getControlMode().toString());
-    SmartDashboard.putNumber("output", ballCollecterArmTalonSRX.getMotorOutputPercent());
+    // detectColor();
 
-    detectColor();
+    // // This method will be called once per scheduler run
 
-    // This method will be called once per scheduler run
-
-    // if (colorString.equals("Green")) {
-    // System.out.println("do nothing!");
-    // } else
+    // // if (colorString.equals("Green")) {
+    // // System.out.println("do nothing!");
+    // // } else
 
   }
 }

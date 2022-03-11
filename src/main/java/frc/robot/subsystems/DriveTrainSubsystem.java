@@ -65,7 +65,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
   /** Creates a new DriveTrain. */
   public DriveTrainSubsystem() {
 
-    SmartDashboard.putData("Field", m_field);
+    // SmartDashboard.putData("Field", m_field);
 
     leftRelativeEncoder.setPosition(0);
     rightRelativeEncoder.setPosition(0);
@@ -115,7 +115,6 @@ public class DriveTrainSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    SmartDashboard.putNumber("flight pov values", RobotContainer.logiFlightController.getPOV());
 
     m_field.setRobotPose(m_odometry.getPoseMeters());
 
@@ -127,18 +126,22 @@ public class DriveTrainSubsystem extends SubsystemBase {
     m_xEntry.setNumber(translation.getX());
     m_yEntry.setNumber(translation.getY());
 
-    SmartDashboard.putNumber("x pose", m_odometry.getPoseMeters().getX());
-    SmartDashboard.putNumber("y pose", m_odometry.getPoseMeters().getY());
+    // SmartDashboard.putNumber("x pose", m_odometry.getPoseMeters().getX());
+    // SmartDashboard.putNumber("y pose", m_odometry.getPoseMeters().getY());
 
-    SmartDashboard.putNumber("theta pose", m_odometry.getPoseMeters().getRotation().getDegrees());
+    // SmartDashboard.putNumber("theta pose",
+    // m_odometry.getPoseMeters().getRotation().getDegrees());
 
     // This method will be called once per scheduler run
-    SmartDashboard.putNumber("Left encoder value in meters", getLeftEncoderPosition());
-    SmartDashboard.putNumber("Right encoder value in meters", getRightEncoderPosition());
+    // SmartDashboard.putNumber("Left encoder value in meters",
+    // getLeftEncoderPosition());
+    // SmartDashboard.putNumber("Right encoder value in meters",
+    // getRightEncoderPosition());
 
     // NEGATE RIGHT ENCODER VALUE!!!!!!!!!!!
-    SmartDashboard.putNumber("Right encoder value in meters", getRightEncoderPosition());
-    SmartDashboard.putNumber("Gyro heading", getHeading());
+    // SmartDashboard.putNumber("Right encoder value in meters",
+    // getRightEncoderPosition());
+    // SmartDashboard.putNumber("Gyro heading", getHeading());
 
     // NEGATE RIGHT ENCODER VALUE!!!!!!!!!!!
     m_odometry.update(navX.getRotation2d(), getLeftEncoderPosition(), getRightEncoderPosition());
