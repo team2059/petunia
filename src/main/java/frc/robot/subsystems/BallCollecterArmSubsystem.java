@@ -16,7 +16,6 @@ import com.revrobotics.ColorMatch;
 
 import java.util.function.BooleanSupplier;
 
-
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import com.ctre.phoenix.motorcontrol.can.*;
@@ -27,6 +26,10 @@ public class BallCollecterArmSubsystem extends SubsystemBase {
 
   static WPI_TalonSRX ballCollecterArmTalonSRX = new WPI_TalonSRX(
       Constants.CollecterConstants.ballCollecterArmTalonSRX);
+
+  public static void reset() {
+    ballCollecterArmTalonSRX.setSelectedSensorPosition(0);
+  }
 
   /**
    * Change the I2C port below to match the connection of your color sensor
