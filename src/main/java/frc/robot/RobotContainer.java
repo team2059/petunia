@@ -190,12 +190,15 @@ public class RobotContainer {
                 // tilt forward
                 new POVButton(logiFlightController, 90)
                                 .whileHeld(new MMClimberTilt(climberTiltSubsystem,
-                                                575))
+                                                700))
                                 .whenReleased(() -> climberTiltSubsystem.stopMotors());
                 // tilt back
                 new POVButton(logiFlightController, 270)
                                 .whileHeld(new MMClimberTilt(climberTiltSubsystem, 0))
                                 .whenReleased(() -> climberTiltSubsystem.stopMotors());
+
+                // tilt align
+                new JoystickButton(logiFlightController, 2).whenPressed(new MMClimberTilt(climberTiltSubsystem, 850));
 
                 new JoystickButton(logiFlightController, 1).whileHeld(new SlowArcadeDrive(driveTrainSubsystem));
 
@@ -258,7 +261,7 @@ public class RobotContainer {
                                 ballCollecterArmSubsystem, ballCollecterArmSubsystem,
                                 shooterSubsystem),
                                 pathChooser.getSelected(),
-                                new AutoAlignCmd(driveTrainSubsystem, limelight),
+                                // new AutoAlignCmd(driveTrainSubsystem, limelight),
                                 new FinalShoot(shooterSubsystem, 27500).withTimeout(2.5));
 
         }

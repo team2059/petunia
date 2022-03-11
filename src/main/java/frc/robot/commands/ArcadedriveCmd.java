@@ -23,7 +23,7 @@ public class ArcadeDriveCmd extends CommandBase {
   @Override
   public void initialize() {
 
-    System.out.println("Starting TeleopDriveCommand");
+    // System.out.println("Starting TeleopDriveCommand");
   }
 
   // Called every time the scheduler runs while the command is scheduled.

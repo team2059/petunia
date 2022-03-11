@@ -45,10 +45,14 @@ public class Robot extends TimedRobot {
     // and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
-    m_robotContainer.getBallCollecterArmSubsystem().getBallCollecterArmTalonSRX().setSelectedSensorPosition(0);
-    m_robotContainer.getBallCollecterArmSubsystem().getBallCollecterArmTalonSRX().set(ControlMode.PercentOutput, 0);
+
+    m_robotContainer.getBallCollecterArmSubsystem().reset();
+    m_robotContainer.getClimberExtenderSubsystem().reset();
+    m_robotContainer.getClimberTiltSubsystem().reset();
     m_robotContainer.getDriveTrainSubsystem().zeroHeading();
     m_robotContainer.getDriveTrainSubsystem().resetEncoders();
+
+    m_robotContainer.getBallCollecterArmSubsystem().getBallCollecterArmTalonSRX().set(ControlMode.PercentOutput, 0);
     m_robotContainer.getClimberExtenderSubsystem().getClimberLeftExtendSRX().set(ControlMode.PercentOutput, 0);
     m_robotContainer.getClimberExtenderSubsystem().getClimberRightExtendSRX().set(ControlMode.PercentOutput, 0);
     m_robotContainer.getClimberTiltSubsystem().getClimberLeftTiltSRX().set(ControlMode.PercentOutput, 0);
@@ -116,9 +120,13 @@ public class Robot extends TimedRobot {
     DifferentialDriveOdometry myDriveOdometry = m_robotContainer.getDriveTrainSubsystem().getOdometry();
     myDriveOdometry.resetPosition(new Pose2d(), thetaPose);
 
-    m_robotContainer.getBallCollecterArmSubsystem().getBallCollecterArmTalonSRX().set(ControlMode.PercentOutput, 0);
+    m_robotContainer.getBallCollecterArmSubsystem().reset();
+    m_robotContainer.getClimberExtenderSubsystem().reset();
+    m_robotContainer.getClimberTiltSubsystem().reset();
     m_robotContainer.getDriveTrainSubsystem().zeroHeading();
     m_robotContainer.getDriveTrainSubsystem().resetEncoders();
+
+    m_robotContainer.getBallCollecterArmSubsystem().getBallCollecterArmTalonSRX().set(ControlMode.PercentOutput, 0);
     m_robotContainer.getClimberExtenderSubsystem().getClimberLeftExtendSRX().set(ControlMode.PercentOutput, 0);
     m_robotContainer.getClimberExtenderSubsystem().getClimberRightExtendSRX().set(ControlMode.PercentOutput, 0);
     m_robotContainer.getClimberTiltSubsystem().getClimberLeftTiltSRX().set(ControlMode.PercentOutput, 0);

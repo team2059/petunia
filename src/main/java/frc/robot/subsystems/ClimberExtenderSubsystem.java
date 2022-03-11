@@ -29,6 +29,10 @@ public class ClimberExtenderSubsystem extends SubsystemBase {
 
         // boolean leftStatus = leftSensor.get();
         // boolean rightStatus = rightSensor.get();
+        public static void reset() {
+                climberLeftExtendSRX.setSelectedSensorPosition(0);
+                climberRightExtendSRX.setSelectedSensorPosition(0);
+        }
 
         public static WPI_TalonSRX getClimberRightExtendSRX() {
                 return climberRightExtendSRX;

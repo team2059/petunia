@@ -33,6 +33,11 @@ public class ClimberTiltSubsystem extends SubsystemBase {
                 climberRightTiltTalonSRX.set(0);
         }
 
+        public static void reset() {
+                climberLeftTiltTalonSRX.setSelectedSensorPosition(0);
+                climberRightTiltTalonSRX.setSelectedSensorPosition(0);
+        }
+
         public ClimberTiltSubsystem() {
                 climberLeftTiltTalonSRX.setSelectedSensorPosition(0, Constants.ClimberTiltConstants.kPIDLoopIdx,
                                 Constants.ClimberTiltConstants.kTimeoutMs);
@@ -77,7 +82,7 @@ public class ClimberTiltSubsystem extends SubsystemBase {
                 climberLeftTiltTalonSRX.configPeakOutputReverse(-1, Constants.ClimberTiltConstants.kTimeoutMs);
 
                 /* Set Motion Magic gains in slot0 - see documentation */
-          
+
                 climberLeftTiltTalonSRX.selectProfileSlot(Constants.ClimberTiltConstants.kSlotIdx,
                                 Constants.ClimberTiltConstants.kPIDLoopIdx);
                 climberLeftTiltTalonSRX.config_kF(Constants.ClimberTiltConstants.kSlotIdx,
@@ -137,7 +142,7 @@ public class ClimberTiltSubsystem extends SubsystemBase {
                 climberRightTiltTalonSRX.configPeakOutputReverse(-1, Constants.ClimberTiltConstants.kTimeoutMs);
 
                 /* Set Motion Magic gains in slot0 - see documentation */
-              
+
                 climberRightTiltTalonSRX.selectProfileSlot(Constants.ClimberTiltConstants.kSlotIdx,
                                 Constants.ClimberTiltConstants.kPIDLoopIdx);
                 climberRightTiltTalonSRX.config_kF(Constants.ClimberTiltConstants.kSlotIdx,
