@@ -6,6 +6,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
+
 import frc.robot.subsystems.DriveTrainSubsystem;
 
 public class ArcadeDriveCmd extends CommandBase {
@@ -30,7 +31,7 @@ public class ArcadeDriveCmd extends CommandBase {
   @Override
   public void execute() {
     double xSpeed = RobotContainer.logiFlightController.getRawAxis(1) * 0.75;
-    double zRotation = RobotContainer.logiFlightController.getRawAxis(2) * 0.75;
+    double zRotation = RobotContainer.logiFlightController.getRawAxis(2) * 0.5;
 
     // negate zRotation because we invertetd rightMotorControllerGroup
 
