@@ -30,7 +30,7 @@ public class SlowArcadeDrive extends CommandBase {
   @Override
   public void execute() {
     double xSpeed = RobotContainer.logiFlightController.getRawAxis(1) * 0.5;
-    double zRotation = RobotContainer.logiFlightController.getRawAxis(2) * 0.5;
+    double zRotation = RobotContainer.logiFlightController.getRawAxis(2) * 0.33;
 
     // negate zRotation because we invertetd rightMotorControllerGroup
 

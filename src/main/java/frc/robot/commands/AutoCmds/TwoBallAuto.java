@@ -20,7 +20,7 @@ import frc.robot.commands.*;
 public class TwoBallAuto extends SequentialCommandGroup {
   /** Creates a new TwoBallAuto. */
   public TwoBallAuto(BallCollecterSubsystem ballCollecterSubsystem, DriveTrainSubsystem driveTrainSubsystem,
-    //  Limelight limelight,
+      // Limelight limelight,
       BallCollecterArmSubsystem ballCollecterArmSubsystem, BallCollecterArmSubsystem ballcollecterarmsubsystem2,
       ShooterSubsystem shooterSubsystem) {
     // Add your commands in the addCommands() call, e.g.
@@ -30,7 +30,7 @@ public class TwoBallAuto extends SequentialCommandGroup {
         new MMCollecterArmActivate(ballCollecterArmSubsystem, 3750), new InstantCommand(() -> ballCollecterArmSubsystem
             .getBallCollecterArmTalonSRX()
             .set(ControlMode.PercentOutput, 0)),
-        new ParallelCommandGroup(new InitShoot(shooterSubsystem, 20000).withTimeout(3.5),
+        new ParallelCommandGroup(new InitShoot(shooterSubsystem, 21750).withTimeout(3.5),
             new InstantCommand(() -> shooterSubsystem.setIndexSpeed(-0.45)).beforeStarting(new WaitCommand(2))),
         new InstantCommand(() -> ballCollecterSubsystem.setSpeed(-0.5)));
 
