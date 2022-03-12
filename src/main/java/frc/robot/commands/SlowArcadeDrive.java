@@ -34,7 +34,7 @@ public class SlowArcadeDrive extends CommandBase {
 
     // negate zRotation because we invertetd rightMotorControllerGroup
 
-    driveTrainSubsystem.arcadeDrive(xSpeed, -zRotation);
+    driveTrainSubsystem.arcadeDrive(-xSpeed, -zRotation);
   }
 
   // Called once the command ends or is interrupted.

@@ -29,12 +29,12 @@ public class ArcadeDriveCmd extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double xSpeed = RobotContainer.logiFlightController.getRawAxis(1);
-    double zRotation = RobotContainer.logiFlightController.getRawAxis(2);
+    double xSpeed = RobotContainer.logiFlightController.getRawAxis(1) * 0.75;
+    double zRotation = RobotContainer.logiFlightController.getRawAxis(2) * 0.75;
 
     // negate zRotation because we invertetd rightMotorControllerGroup
 
-    driveTrainSubsystem.arcadeDrive(xSpeed, -zRotation);
+    driveTrainSubsystem.arcadeDrive(-xSpeed, -zRotation);
   }
 
   // Called once the command ends or is interrupted.
