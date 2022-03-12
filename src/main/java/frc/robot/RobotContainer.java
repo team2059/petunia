@@ -133,14 +133,14 @@ public class RobotContainer {
 
                 // GOES TO ~11-12 FT
                 new POVButton(logiGameController, 0).toggleWhenPressed(
-                                new Shoot27500(shooterSubsystem, 26500)); // GOES TO ~11-12 FT
+                                new Shoot27500(shooterSubsystem, 25250)); // GOES TO ~11-12 FT
 
                 // GOES TO ~9 FT
                 new POVButton(logiGameController, 90).toggleWhenPressed(
-                                new Shoot22500(shooterSubsystem, 24500)); // GOES TO ~9 FT
+                                new Shoot22500(shooterSubsystem, 23500)); // GOES TO ~9 FT
 
                 new POVButton(logiGameController, 180).toggleWhenPressed(
-                                new Shoot17500(shooterSubsystem, 22500));
+                                new Shoot17500(shooterSubsystem, 21500));
 
                 // LOW GOAL SHOOT
                 new POVButton(logiGameController, 270).toggleWhenPressed(
@@ -308,7 +308,7 @@ public class RobotContainer {
                                 shooterSubsystem),
                                 pathChooser.getSelected(),
                                 // new AutoAlignCmd(driveTrainSubsystem, limelight),
-                                new FinalShoot(shooterSubsystem, 27500).withTimeout(2.5));
+                                new FinalShoot(shooterSubsystem, 25000).withTimeout(2.5));
 
         }
 
