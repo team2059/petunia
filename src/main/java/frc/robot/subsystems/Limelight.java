@@ -52,6 +52,23 @@ public class Limelight extends SubsystemBase {
     return xOffset.getDouble(0.0);
   }
 
+  public double getVelocityFromDistance(double distance) {
+    double numerator = 9.8 * getXOffset() * getXOffset();
+
+    double firstPartDenominator = 2 * getXOffset() * Math.cos(limelightMountingAngleDegrees)
+        * Math.sin(limelightMountingAngleDegrees);
+
+    double secondPartDenominator = (92 - limelightHeightInches)
+        * (2 * Math.cos(limelightMountingAngleDegrees) * Math.cos(limelightMountingAngleDegrees));
+
+    double ballVelocity = Math.sqrt((numerator)
+        / firstPartDenominator + secondPartDenominator);
+
+    return Math.sqrt((numerator)
+        / firstPartDenominator + secondPartDenominator);
+
+  }
+
   public double getYOffset() {
     return yOffset.getDouble(0.0);
   }
