@@ -63,8 +63,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 public class RobotContainer {
 
         // The robot's subsystems and commands are defined here...
-        public static XboxController logiGameController = new XboxController(1);
-        public static Joystick logiFlightController = new Joystick(0);
+        public static XboxController logiGameController = new XboxController(0);
+        public static Joystick logiFlightController = new Joystick(1);
 
         private final DriveTrainSubsystem driveTrainSubsystem = new DriveTrainSubsystem();
         private final ClimberExtenderSubsystem climberExtendSubsystem = new ClimberExtenderSubsystem();
@@ -108,7 +108,7 @@ public class RobotContainer {
 
                 pathChooser.addOption("Path forward Auto",
                                 loadPathWeaverTrajectoryCommand(
-                                                "pathplanner/generatedJSON/Forward.wpilib.json",
+                                                "pathplanner/generatedJSON/ForwardAuto.wpilib.json",
                                                 isReset));
 
                 // pathChooser.addOption("Complex Auto",
@@ -133,18 +133,18 @@ public class RobotContainer {
 
                 // GOES TO ~11-12 FT
                 new POVButton(logiGameController, 0).toggleWhenPressed(
-                                new Shoot27500(shooterSubsystem, 26500)); //GOES TO ~11-12 FT
+                                new Shoot27500(shooterSubsystem, 26500)); // GOES TO ~11-12 FT
 
                 // GOES TO ~9 FT
                 new POVButton(logiGameController, 90).toggleWhenPressed(
-                                new Shoot22500(shooterSubsystem, 24500)); //GOES TO ~9 FT
+                                new Shoot22500(shooterSubsystem, 24500)); // GOES TO ~9 FT
 
                 new POVButton(logiGameController, 180).toggleWhenPressed(
-                                new Shoot17500(shooterSubsystem, 22500)); 
+                                new Shoot17500(shooterSubsystem, 22500));
 
                 // LOW GOAL SHOOT
                 new POVButton(logiGameController, 270).toggleWhenPressed(
-                                new Shoot12500(shooterSubsystem, 16500)); //LOW GOAL SHOOT
+                                new Shoot12500(shooterSubsystem, 16500)); // LOW GOAL SHOOT
 
                 // no limelight alignment - LB
                 new JoystickButton(logiGameController, Button.kLeftBumper.value)

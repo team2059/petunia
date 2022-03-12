@@ -133,14 +133,14 @@ public class DriveTrainSubsystem extends SubsystemBase {
     // m_odometry.getPoseMeters().getRotation().getDegrees());
 
     // This method will be called once per scheduler run
-    // SmartDashboard.putNumber("Left encoder value in meters",
-    // getLeftEncoderPosition());
+    SmartDashboard.putNumber("Left encoder value in meters",
+        getLeftEncoderPosition());
     // SmartDashboard.putNumber("Right encoder value in meters",
     // getRightEncoderPosition());
 
     // NEGATE RIGHT ENCODER VALUE!!!!!!!!!!!
-    // SmartDashboard.putNumber("Right encoder value in meters",
-    // getRightEncoderPosition());
+    SmartDashboard.putNumber("Right encoder value in meters",
+        getRightEncoderPosition());
     // SmartDashboard.putNumber("Gyro heading", getHeading());
 
     // NEGATE RIGHT ENCODER VALUE!!!!!!!!!!!
