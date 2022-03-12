@@ -29,8 +29,8 @@ public class SlowArcadeDrive extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double xSpeed = RobotContainer.logiFlightController.getRawAxis(1) * 0.25;
-    double zRotation = RobotContainer.logiFlightController.getRawAxis(2) * 0.25;
+    double xSpeed = RobotContainer.logiFlightController.getRawAxis(1) * 0.5;
+    double zRotation = RobotContainer.logiFlightController.getRawAxis(2) * 0.5;
 
     // negate zRotation because we invertetd rightMotorControllerGroup
 
