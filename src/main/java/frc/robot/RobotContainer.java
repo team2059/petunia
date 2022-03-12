@@ -63,8 +63,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 public class RobotContainer {
 
         // The robot's subsystems and commands are defined here...
-        public static XboxController logiGameController = new XboxController(0);
-        public static Joystick logiFlightController = new Joystick(1);
+        public static XboxController logiGameController = new XboxController(1);
+        public static Joystick logiFlightController = new Joystick(0);
 
         private final DriveTrainSubsystem driveTrainSubsystem = new DriveTrainSubsystem();
         private final ClimberExtenderSubsystem climberExtendSubsystem = new ClimberExtenderSubsystem();
@@ -133,18 +133,10 @@ public class RobotContainer {
 
                 // GOES TO ~11-12 FT
                 new POVButton(logiGameController, 0).toggleWhenPressed(
-                                new Shoot27500(shooterSubsystem, 25250)); // GOES TO ~11-12 FT
-
-                // GOES TO ~9 FT
-                new POVButton(logiGameController, 90).toggleWhenPressed(
-                                new Shoot22500(shooterSubsystem, 23500)); // GOES TO ~9 FT
+                                new Shoot27500(shooterSubsystem, 25000)); // GOES TO ~11-12 FT
 
                 new POVButton(logiGameController, 180).toggleWhenPressed(
-                                new Shoot17500(shooterSubsystem, 21500));
-
-                // LOW GOAL SHOOT
-                new POVButton(logiGameController, 270).toggleWhenPressed(
-                                new Shoot12500(shooterSubsystem, 16500)); // LOW GOAL SHOOT
+                                new Shoot17500(shooterSubsystem, 24750));
 
                 // no limelight alignment - LB
                 new JoystickButton(logiGameController, Button.kLeftBumper.value)
@@ -170,15 +162,15 @@ public class RobotContainer {
                                 .whileHeld(() -> ballCollecterSubsystem.setSpeed(-0.66))
                                 .whenReleased(() -> ballCollecterSubsystem.setSpeed(0));
 
-                // collecter arm up - Y
-                new JoystickButton(logiGameController, Button.kY.value)
+                // collecter arm down - A
+                new JoystickButton(logiGameController, Button.kA.value)
                                 .whenPressed(new MMCollecterArmActivate(ballCollecterArmSubsystem, 3750)
                                                 .andThen(new InstantCommand(() -> ballCollecterArmSubsystem
                                                                 .getBallCollecterArmTalonSRX()
                                                                 .set(ControlMode.PercentOutput, 0))));
 
-                // collecter arm down - A
-                new JoystickButton(logiGameController, Button.kA.value)
+                // collecter arm up - Y
+                new JoystickButton(logiGameController, Button.kY.value)
                                 .whenPressed(new MMCollecterArmActivate(ballCollecterArmSubsystem,
                                                 0));
 
