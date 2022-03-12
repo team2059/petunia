@@ -133,18 +133,18 @@ public class RobotContainer {
 
                 // GOES TO ~11-12 FT
                 new POVButton(logiGameController, 0).toggleWhenPressed(
-                                new Shoot27500(shooterSubsystem, 27500)); //GOES TO ~11-12 FT
+                                new Shoot27500(shooterSubsystem, 26500)); //GOES TO ~11-12 FT
 
                 // GOES TO ~9 FT
                 new POVButton(logiGameController, 90).toggleWhenPressed(
-                                new Shoot22500(shooterSubsystem, 22500)); //GOES TO ~9 FT
+                                new Shoot22500(shooterSubsystem, 24500)); //GOES TO ~9 FT
 
                 new POVButton(logiGameController, 180).toggleWhenPressed(
-                                new Shoot17500(shooterSubsystem, 17500)); 
+                                new Shoot17500(shooterSubsystem, 22500)); 
 
                 // LOW GOAL SHOOT
                 new POVButton(logiGameController, 270).toggleWhenPressed(
-                                new Shoot12500(shooterSubsystem, 12500)); //LOW GOAL SHOOT
+                                new Shoot12500(shooterSubsystem, 16500)); //LOW GOAL SHOOT
 
                 // no limelight alignment - LB
                 new JoystickButton(logiGameController, Button.kLeftBumper.value)
