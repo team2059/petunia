@@ -63,7 +63,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 public class RobotContainer {
 
         // The robot's subsystems and commands are defined here...
-        public static XboxController logiGameController = new XboxController(3);
+        public static XboxController logiGameController = new XboxController(1);
         public static Joystick logiFlightController = new Joystick(0);
 
         private final DriveTrainSubsystem driveTrainSubsystem = new DriveTrainSubsystem();
@@ -132,16 +132,16 @@ public class RobotContainer {
         private void configureButtonBindings() {
 
                 new POVButton(logiGameController, 0).toggleWhenPressed(
-                                new Shoot27500(shooterSubsystem, 27500));
+                                new Shoot27500(shooterSubsystem, 27500)); //GOES TO ~11-12 FT
 
                 new POVButton(logiGameController, 90).toggleWhenPressed(
-                                new Shoot22500(shooterSubsystem, 22500));
+                                new Shoot22500(shooterSubsystem, 22500)); //GOES TO ~9 FT
 
                 new POVButton(logiGameController, 180).toggleWhenPressed(
-                                new Shoot17500(shooterSubsystem, 17500));
+                                new Shoot17500(shooterSubsystem, 17500)); 
 
                 new POVButton(logiGameController, 270).toggleWhenPressed(
-                                new Shoot12500(shooterSubsystem, 12500));
+                                new Shoot12500(shooterSubsystem, 12500)); //LOW GOAL SHOOT
 
                 // no limelight alignment - LB
                 new JoystickButton(logiGameController, Button.kLeftBumper.value)
