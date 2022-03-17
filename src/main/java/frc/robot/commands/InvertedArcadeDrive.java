@@ -8,12 +8,12 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.DriveTrainSubsystem;
 
-public class SlowArcadeDrive extends CommandBase {
+public class InvertedArcadeDrive extends CommandBase {
 
   private final DriveTrainSubsystem driveTrainSubsystem;
 
   /** Creates a new teleopDrive. */
-  public SlowArcadeDrive(DriveTrainSubsystem subsystem) {
+  public InvertedArcadeDrive(DriveTrainSubsystem subsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.driveTrainSubsystem = subsystem;
     addRequirements(subsystem);
@@ -34,7 +34,7 @@ public class SlowArcadeDrive extends CommandBase {
 
     // negate zRotation because we invertetd rightMotorControllerGroup
 
-    driveTrainSubsystem.arcadeDrive(-xSpeed, -zRotation);
+    driveTrainSubsystem.arcadeDrive(xSpeed, zRotation);
   }
 
   // Called once the command ends or is interrupted.

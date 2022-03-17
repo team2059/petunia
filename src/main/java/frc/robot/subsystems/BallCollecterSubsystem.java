@@ -12,11 +12,17 @@ public class BallCollecterSubsystem extends SubsystemBase {
 
   WPI_TalonSRX collectorMotor = new WPI_TalonSRX(Constants.CollecterConstants.collectorMotorTalonSRX);
 
+  // TODO fill out port num
+  WPI_TalonSRX collecterIndexer = new WPI_TalonSRX(13);
+
   /** Creates a new BallCollecter. */
   public BallCollecterSubsystem() {
     // TODO figure out why we use super("BallCollecter");
     // TODO set motor inversion
     collectorMotor.setInverted(false);
+
+    // TODO set inversions
+    collecterIndexer.setInverted(false);
 
   }
 
@@ -32,6 +38,10 @@ public class BallCollecterSubsystem extends SubsystemBase {
 
   public WPI_TalonSRX getCollecterMotorTalonSRX() {
     return collectorMotor;
+  }
+
+  public WPI_TalonSRX getCollecterIndexer() {
+    return collecterIndexer;
   }
 
 }

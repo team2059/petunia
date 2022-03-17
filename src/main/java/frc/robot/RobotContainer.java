@@ -24,32 +24,16 @@ import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
-import frc.robot.Constants.AutoConstants;
-import frc.robot.Constants.DriveConstants;
-import frc.robot.commands.ArcadeDriveCmd;
-import frc.robot.commands.AutoAlignCmd;
-import frc.robot.commands.AutoRangeCmd;
-import frc.robot.commands.MMClimberExtend;
-import frc.robot.commands.MMClimberTilt;
-import frc.robot.commands.MMCollecterArmActivate;
-import frc.robot.commands.SlowArcadeDrive;
-import frc.robot.commands.AutoCmds.FinalShoot;
-import frc.robot.commands.AutoCmds.TwoBallAuto;
-import frc.robot.commands.PIDShootingCmds.Shoot12500;
-import frc.robot.commands.PIDShootingCmds.Shoot17500;
-import frc.robot.commands.PIDShootingCmds.Shoot22500;
-import frc.robot.commands.PIDShootingCmds.Shoot27500;
-import frc.robot.subsystems.DriveTrainSubsystem;
-import frc.robot.subsystems.Limelight;
-import frc.robot.subsystems.ShooterSubsystem;
-import frc.robot.subsystems.BallCollecterArmSubsystem;
-import frc.robot.subsystems.BallCollecterSubsystem;
-import frc.robot.subsystems.ClimberExtenderSubsystem;
-import frc.robot.subsystems.ClimberTiltSubsystem;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+
+import frc.robot.subsystems.*;
+import frc.robot.commands.*;
+import frc.robot.commands.AutoCmds.*;
+import frc.robot.commands.PIDShootingCmds.*;
+import frc.robot.Constants.*;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -136,7 +120,7 @@ public class RobotContainer {
                                 new Shoot27500(shooterSubsystem, 25000)); // GOES TO ~11-12 FT
 
                 new POVButton(logiGameController, 180).toggleWhenPressed(
-                                new Shoot17500(shooterSubsystem, 24750));
+                                new Shoot22500(shooterSubsystem, 24750));
 
                 // no limelight alignment - LB
                 new JoystickButton(logiGameController, Button.kLeftBumper.value)
@@ -176,7 +160,7 @@ public class RobotContainer {
 
                 // driver 2 climbing extreme 3d
 
-                new JoystickButton(logiFlightController, 1).whileHeld(new SlowArcadeDrive(driveTrainSubsystem));
+                new JoystickButton(logiFlightController, 1).whileHeld(new InvertedArcadeDrive(driveTrainSubsystem));
 
                 // before climbing, set collecter arm position upright
                 new JoystickButton(logiFlightController, 5)
