@@ -44,8 +44,8 @@ public class ClimberTiltSubsystem extends SubsystemBase {
                 climberRightTiltTalonSRX.setSelectedSensorPosition(0, Constants.ClimberTiltConstants.kPIDLoopIdx,
                                 Constants.ClimberTiltConstants.kTimeoutMs);
 
-                climberRightTiltTalonSRX.setNeutralMode(NeutralMode.Brake);
-                climberRightTiltTalonSRX.setNeutralMode(NeutralMode.Brake);
+                climberRightTiltTalonSRX.setNeutralMode(NeutralMode.Coast);
+                climberRightTiltTalonSRX.setNeutralMode(NeutralMode.Coast);
 
                 /* Factory default hardware to prevent unexpected behavior */
                 climberLeftTiltTalonSRX.configFactoryDefault();
