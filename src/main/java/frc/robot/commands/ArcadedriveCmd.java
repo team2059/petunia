@@ -31,7 +31,7 @@ public class ArcadeDriveCmd extends CommandBase {
   @Override
   public void execute() {
     double xSpeed = RobotContainer.logiFlightController.getRawAxis(1) * 0.75;
-    double zRotation = RobotContainer.logiFlightController.getRawAxis(2) * 0.425;
+    double zRotation = RobotContainer.logiFlightController.getRawAxis(2) * 0.525;
 
     // negate zRotation because we invertetd rightMotorControllerGroup
 

@@ -300,7 +300,7 @@ public class RobotContainer {
                                 shooterSubsystem),
                                 pathChooser.getSelected(),
                                 // new AutoAlignCmd(driveTrainSubsystem, limelight),
-                                new FinalShoot(shooterSubsystem, 25000).withTimeout(2.5));
+                                new FinalShoot(shooterSubsystem, 26895).withTimeout(3));
 
         }
 
