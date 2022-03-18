@@ -148,7 +148,7 @@ public class RobotContainer {
 
                 // collecter arm down - A
                 new JoystickButton(logiGameController, Button.kA.value)
-                                .whenPressed(new MMCollecterArmActivate(ballCollecterArmSubsystem, 3750)
+                                .whenPressed(new MMCollecterArmActivate(ballCollecterArmSubsystem, 1200)
                                                 .andThen(new InstantCommand(() -> ballCollecterArmSubsystem
                                                                 .getBallCollecterArmTalonSRX()
                                                                 .set(ControlMode.PercentOutput, 0))));
@@ -163,8 +163,8 @@ public class RobotContainer {
                 new JoystickButton(logiFlightController, 1).whileHeld(new InvertedArcadeDrive(driveTrainSubsystem));
 
                 // before climbing, set collecter arm position upright
-                new JoystickButton(logiFlightController, 5)
-                                .whenPressed(new MMCollecterArmActivate(ballCollecterArmSubsystem, 1500));
+                // new JoystickButton(logiFlightController, 5)
+                //                 .whenPressed(new MMCollecterArmActivate(ballCollecterArmSubsystem, 1500));
 
                 // extend up
                 new POVButton(logiFlightController, 0)
