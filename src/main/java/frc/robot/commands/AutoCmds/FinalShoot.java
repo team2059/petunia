@@ -34,6 +34,7 @@ public class FinalShoot extends CommandBase {
   @Override
   public void execute() {
     mShooter.ballShooter.set(ControlMode.Velocity, rpmVelocity);
+    mShooter.oppositeFlywheel.set(ControlMode.Velocity, rpmVelocity);
   }
 
   // Called once the command ends or is interrupted.
@@ -45,7 +46,6 @@ public class FinalShoot extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-  
 
     // if (RobotContainer.logiGameController.getLeftBumperPressed()) {
     // counter++;

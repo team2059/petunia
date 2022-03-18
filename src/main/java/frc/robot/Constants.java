@@ -73,11 +73,13 @@ public final class Constants {
         // 7:1 bag
         public static final int ballCollecterArmTalonSRX = 5; // should be 5
         public static final int collectorMotorTalonSRX = 6; // should be 6
+        public static final int collecterIndexerVictorSPX = 14;
     }
 
     public static final class ClimberTiltConstants {
         public static final int climberLeftTiltSRX = 11;
         public static final int climberRightTiltSRX = 12;
+        public static final int hookTalonSRX = 16;
 
         public static final int kSlotIdx = 0;
 
@@ -86,7 +88,6 @@ public final class Constants {
         public static final int kTimeoutMs = 0;
 
         public static final Gains gains = new Gains(5, 0.001, 50, 18.26785714, 0, 0.0);
-
     }
 
     public static final class ClimberExtendConstants {
@@ -127,6 +128,8 @@ public final class Constants {
         // 40:1 775pro
         public static final int shooterMotorTalonSRX = 8;
 
+        public static final int oppositeFlywheelTalonSRX = 13;
+
         // Characterization stuff
         public static final double ksVolts = 0;
         public static final double kvVoltSecondsPerMeter = 0;
@@ -145,6 +148,7 @@ public final class Constants {
 
         public static final int kCtreTimeoutMs = 30;
         public static int kTimeoutMs;
+
     }
 
     public static final class CollecterArmConstants {
