@@ -34,6 +34,7 @@ public class InitShoot extends CommandBase {
   @Override
   public void execute() {
     mShooter.ballShooter.set(ControlMode.Velocity, rpmVelocity);
+    mShooter.oppositeFlywheel.set(ControlMode.Velocity, rpmVelocity);
   }
 
   // Called once the command ends or is interrupted.

@@ -20,6 +20,8 @@ public class ClimberTiltSubsystem extends SubsystemBase {
         static WPI_TalonSRX climberRightTiltTalonSRX = new WPI_TalonSRX(
                         Constants.ClimberTiltConstants.climberRightTiltSRX);
 
+        static WPI_TalonSRX hookTalonSRX = new WPI_TalonSRX(Constants.ClimberTiltConstants.hookTalonSRX);
+
         public static WPI_TalonSRX getClimberLeftTiltSRX() {
                 return climberLeftTiltTalonSRX;
         }
@@ -180,8 +182,10 @@ public class ClimberTiltSubsystem extends SubsystemBase {
         public void periodic() {
                 SmartDashboard.putNumber("left tilt", climberLeftTiltTalonSRX.getSelectedSensorPosition());
                 SmartDashboard.putNumber("right tilt", climberRightTiltTalonSRX.getSelectedSensorPosition());
-                // SmartDashboard.putString("right mode", climberRightTiltTalonSRX.getControlMode().toString());
-                // SmartDashboard.putString("left mode", climberLeftTiltTalonSRX.getControlMode().toString());
+                // SmartDashboard.putString("right mode",
+                // climberRightTiltTalonSRX.getControlMode().toString());
+                // SmartDashboard.putString("left mode",
+                // climberLeftTiltTalonSRX.getControlMode().toString());
 
         }
 }

@@ -13,7 +13,7 @@ public class BallCollecterSubsystem extends SubsystemBase {
   WPI_TalonSRX collectorMotor = new WPI_TalonSRX(Constants.CollecterConstants.collectorMotorTalonSRX);
 
   // TODO fill out port num
-  WPI_TalonSRX collecterIndexer = new WPI_TalonSRX(13);
+  WPI_VictorSPX collecterIndexer = new WPI_VictorSPX(Constants.CollecterConstants.collecterIndexerVictorSPX);
 
   /** Creates a new BallCollecter. */
   public BallCollecterSubsystem() {
@@ -40,7 +40,7 @@ public class BallCollecterSubsystem extends SubsystemBase {
     return collectorMotor;
   }
 
-  public WPI_TalonSRX getCollecterIndexer() {
+  public WPI_VictorSPX getCollecterIndexer() {
     return collecterIndexer;
   }
 
