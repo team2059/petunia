@@ -48,6 +48,7 @@ public class ClimberExtenderSubsystem extends SubsystemBase {
         }
 
         public ClimberExtenderSubsystem() {
+
                 // if (leftStatus == false && rightStatus == false) {
                 /* Zero the sensor once on robot boot up */
                 climberLeftExtendSRX.setSelectedSensorPosition(0, Constants.ClimberExtendConstants.kPIDLoopIdx,
@@ -109,8 +110,8 @@ public class ClimberExtenderSubsystem extends SubsystemBase {
                                 Constants.ClimberExtendConstants.kTimeoutMs);
 
                 /* Set acceleration and vcruise velocity - see documentation */
-                climberRightExtendSRX.configMotionCruiseVelocity(1889, Constants.ClimberExtendConstants.kTimeoutMs);
-                climberRightExtendSRX.configMotionAcceleration(1889.1, Constants.ClimberExtendConstants.kTimeoutMs);
+                climberRightExtendSRX.configMotionCruiseVelocity(5000, Constants.ClimberExtendConstants.kTimeoutMs);
+                climberRightExtendSRX.configMotionAcceleration(5000.1, Constants.ClimberExtendConstants.kTimeoutMs);
 
                 climberRightExtendSRX.configFeedbackNotContinuous(true, Constants.ClimberExtendConstants.kTimeoutMs);
 
@@ -153,8 +154,8 @@ public class ClimberExtenderSubsystem extends SubsystemBase {
                                 Constants.ClimberExtendConstants.kTimeoutMs);
 
                 /* Set acceleration and vcruise velocity - see documentation */
-                climberLeftExtendSRX.configMotionCruiseVelocity(1889, Constants.ClimberExtendConstants.kTimeoutMs);
-                climberLeftExtendSRX.configMotionAcceleration(1889.1, Constants.ClimberExtendConstants.kTimeoutMs);
+                climberLeftExtendSRX.configMotionCruiseVelocity(5000, Constants.ClimberExtendConstants.kTimeoutMs);
+                climberLeftExtendSRX.configMotionAcceleration(5000.1, Constants.ClimberExtendConstants.kTimeoutMs);
 
                 climberLeftExtendSRX.configFeedbackNotContinuous(true, Constants.ClimberExtendConstants.kTimeoutMs);
 

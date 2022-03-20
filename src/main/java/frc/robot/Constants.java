@@ -71,9 +71,9 @@ public final class Constants {
 
     public static final class CollecterConstants {
         // 7:1 bag
-        public static final int ballCollecterArmTalonSRX = 5; // should be 5
-        public static final int collectorMotorTalonSRX = 6; // should be 6
-        public static final int collecterIndexerVictorSPX = 14;
+        public static final int ballCollecterArmTalonSRX = 5;
+        public static final int collectorMotorTalonSRX = 6;
+        public static final int collecterIndexerVictorSPX = 13;
     }
 
     public static final class ClimberTiltConstants {
@@ -128,7 +128,7 @@ public final class Constants {
         // 40:1 775pro
         public static final int shooterMotorTalonSRX = 8;
 
-        public static final int oppositeFlywheelTalonSRX = 13;
+        public static final int oppositeFlywheelTalonSRX = 14;
 
         // Characterization stuff
         public static final double ksVolts = 0;

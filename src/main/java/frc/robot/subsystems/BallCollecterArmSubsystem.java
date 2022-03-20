@@ -22,49 +22,6 @@ public class BallCollecterArmSubsystem extends SubsystemBase {
     ballCollecterArmTalonSRX.setSelectedSensorPosition(0);
   }
 
-  /**
-   * Change the I2C port below to match the connection of your color sensor
-   */
-  // private final static I2C.Port i2cPort = I2C.Port.kOnboard;
-
-  /**
-   * A Rev Color Sensor V3 object is constructed with an I2C port as a
-   * parameter. The device will be automatically initialized with default
-   * parameters.
-   */
-  // private final static ColorSensorV3 m_colorSensor = new
-  // ColorSensorV3(i2cPort);
-
-  /**
-   * A Rev Color Match object is used to register and detect known colors. This
-   * can
-   * be calibrated ahead of time or during operation.
-   * 
-   * This object uses a simple euclidian distance to estimate the closest match
-   * with given confidence range.
-   */
-  // private final static ColorMatch m_colorMatcher = new ColorMatch();
-
-  // public ColorMatch getColorMatcher() {
-  // return m_colorMatcher;
-  // }
-
-  /**
-   * Note: Any example colors should be calibrated as the user needs, these
-   * are here as a basic example.
-   */
-  // private final static Color kBlueTarget = new Color(0.143, 0.427, 0.429);
-  // private final static Color kGreenTarget = new Color(0.197, 0.561, 0.240);
-  // private final static Color kRedTarget = new Color(0.561, 0.232, 0.114);
-
-  // private final Color kYellowTarget = new Color(0.361, 0.524, 0.113);
-
-  /** Creates a new ColorSensorSubsystem. */
-
-  // public static ColorSensorV3 getColorSensorV3() {
-  // return m_colorSensor;
-  // }
-
   public static WPI_TalonSRX getBallCollecterArmTalonSRX() {
     return ballCollecterArmTalonSRX;
   }
@@ -75,7 +32,6 @@ public class BallCollecterArmSubsystem extends SubsystemBase {
 
   /** Creates a new BallCollecterArm. */
   public BallCollecterArmSubsystem() {
-    // m_colorMatcher.addColorMatch(kYellowTarget);
 
     ballCollecterArmTalonSRX.setSelectedSensorPosition(0);
 
@@ -149,19 +105,6 @@ public class BallCollecterArmSubsystem extends SubsystemBase {
 
     // This method will be called once per scheduler run
     SmartDashboard.putNumber("collector arm ticks", ballCollecterArmTalonSRX.getSelectedSensorPosition());
-
-    // SmartDashboard.putString("talon mode",
-    // ballCollecterArmTalonSRX.getControlMode().toString());
-    // SmartDashboard.putNumber("output",
-    // ballCollecterArmTalonSRX.getMotorOutputPercent());
-
-    // detectColor();
-
-    // // This method will be called once per scheduler run
-
-    // // if (colorString.equals("Green")) {
-    // // System.out.println("do nothing!");
-    // // } else
 
   }
 }

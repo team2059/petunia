@@ -59,6 +59,7 @@ public class Robot extends TimedRobot {
     m_robotContainer.getClimberTiltSubsystem().getClimberRightTiltSRX().set(ControlMode.PercentOutput, 0);
     m_robotContainer.getBallCollecterSubsystem().getCollecterIndexer().set(ControlMode.PercentOutput, 0);
     m_robotContainer.getShooterSubsystem().setShooterVelocity(0);
+    m_robotContainer.getBallCollecterSubsystem().setVictorSpeed(0);
   }
 
   /**
@@ -133,6 +134,7 @@ public class Robot extends TimedRobot {
     m_robotContainer.getClimberTiltSubsystem().getClimberLeftTiltSRX().set(ControlMode.PercentOutput, 0);
     m_robotContainer.getClimberTiltSubsystem().getClimberRightTiltSRX().set(ControlMode.PercentOutput, 0);
     m_robotContainer.getShooterSubsystem().setShooterVelocity(0);
+    m_robotContainer.getBallCollecterSubsystem().setVictorSpeed(0);
 
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
@@ -145,7 +147,7 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during autonomous. */
   @Override
   public void autonomousPeriodic() {
-    m_robotContainer.getBallCollecterSubsystem().getCollecterIndexer().set(ControlMode.PercentOutput, -0.66);
+    m_robotContainer.getBallCollecterSubsystem().setVictorSpeed(0.5);
 
     // if (driveTrainSubsystem.getHeading() != 0) {
     // driveTrainSubsystem.zeroHeading();
@@ -174,7 +176,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     m_robotContainer.getShooterSubsystem().autoLoader();
-    m_robotContainer.getBallCollecterSubsystem().getCollecterIndexer().set(ControlMode.PercentOutput, -0.66);
+    m_robotContainer.getBallCollecterSubsystem().setVictorSpeed(0.5);
   }
 
   @Override

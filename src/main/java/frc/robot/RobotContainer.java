@@ -138,12 +138,12 @@ public class RobotContainer {
 
                 // spit out - B
                 new JoystickButton(logiGameController, Button.kB.value)
-                                .whileHeld(() -> ballCollecterSubsystem.setSpeed(0.66))
+                                .whileHeld(() -> ballCollecterSubsystem.setSpeed(0.75))
                                 .whenReleased(() -> ballCollecterSubsystem.setSpeed(0));
 
                 // collect - X
                 new JoystickButton(logiGameController, Button.kX.value)
-                                .whileHeld(() -> ballCollecterSubsystem.setSpeed(-0.66))
+                                .whileHeld(() -> ballCollecterSubsystem.setSpeed(-0.75))
                                 .whenReleased(() -> ballCollecterSubsystem.setSpeed(0));
 
                 // collecter arm down - A
@@ -162,9 +162,12 @@ public class RobotContainer {
 
                 new JoystickButton(logiFlightController, 1).whileHeld(new InvertedArcadeDrive(driveTrainSubsystem));
 
+                new JoystickButton(logiFlightController, 5)
+                                .whenPressed(new MMClimberExtend(climberExtendSubsystem, 55000).withTimeout(4));
+
                 // before climbing, set collecter arm position upright
                 // new JoystickButton(logiFlightController, 5)
-                //                 .whenPressed(new MMCollecterArmActivate(ballCollecterArmSubsystem, 1500));
+                // .whenPressed(new MMCollecterArmActivate(ballCollecterArmSubsystem, 1500));
 
                 // extend up
                 new POVButton(logiFlightController, 0)
