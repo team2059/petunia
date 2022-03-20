@@ -131,6 +131,7 @@ public class ShooterSubsystem extends SubsystemBase {
     } else {
       setIndexSpeed(-0.66);
     }
+
   }
 
   public double getShooterVelocity() {
