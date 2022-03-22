@@ -5,19 +5,21 @@
 package frc.robot.commands;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.revrobotics.CANSparkMax.ControlType;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ClimberExtenderSubsystem;
 
-public class MMClimberExtend extends CommandBase {
+public class SMClimberExtendCmd extends CommandBase {
   private final ClimberExtenderSubsystem climberExtend;
-  private int target;
+  private int setPoint;
 
   /** Creates a new CollecterArmUp. */
-  public MMClimberExtend(ClimberExtenderSubsystem climberExtend, int target) {
+  public SMClimberExtendCmd(ClimberExtenderSubsystem climberExtend, int setPoint) {
 
     this.climberExtend = climberExtend;
-    this.target = target;
+    this.setPoint = setPoint;
     addRequirements(climberExtend);
     // Use addRequirements() here to declare subsystem dependencies.
   }
@@ -25,6 +27,7 @@ public class MMClimberExtend extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    SmartDashboard.putNumber("setpoint", setPoint);
 
   }
 
@@ -36,9 +39,8 @@ public class MMClimberExtend extends CommandBase {
     /* 4096 ticks/rev * 10 Rotations in either direction */
     // double targetPos = target;
     // * 4096 * 10.0;
-
-    ClimberExtenderSubsystem.getClimberLeftExtendSRX().set(ControlMode.MotionMagic, target);
-    ClimberExtenderSubsystem.getClimberRightExtendSRX().set(ControlMode.MotionMagic, target);
+    ClimberExtenderSubsystem.getLeftMotor().getPIDController().setReference(setPoint, ControlType.kSmartMotion);
+    ClimberExtenderSubsystem.getRightMotor().getPIDController().setReference(setPoint, ControlType.kSmartMotion);
 
   }
 
