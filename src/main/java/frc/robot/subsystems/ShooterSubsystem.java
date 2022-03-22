@@ -87,9 +87,9 @@ public class ShooterSubsystem extends SubsystemBase {
         Constants.ShooterConstants.kTimeoutMs);
 
     /* Config sensor used for Primary PID [Velocity] */
-    oppositeFlywheel.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative,
-        Constants.ShooterConstants.kPIDLoopIdx,
-        Constants.ShooterConstants.kTimeoutMs);
+    // oppositeFlywheel.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative,
+    // Constants.ShooterConstants.kPIDLoopIdx,
+    // Constants.ShooterConstants.kTimeoutMs);
 
     /**
      * Phase sensor accordingly.
@@ -102,20 +102,28 @@ public class ShooterSubsystem extends SubsystemBase {
     oppositeFlywheel.setNeutralMode(NeutralMode.Coast);
 
     /* Config the peak and nominal outputs ([-1, 1] represents [-100, 100]%) */
-    oppositeFlywheel.configNominalOutputForward(0, ShooterConstants.kCtreTimeoutMs);
-    oppositeFlywheel.configNominalOutputReverse(0, ShooterConstants.kCtreTimeoutMs);
-    oppositeFlywheel.configPeakOutputForward(1, ShooterConstants.kCtreTimeoutMs);
-    oppositeFlywheel.configPeakOutputReverse(-1, ShooterConstants.kCtreTimeoutMs);
-    oppositeFlywheel.selectProfileSlot(ShooterConstants.kSlotIdx, ShooterConstants.kPIDLoopIdx);
+    // oppositeFlywheel.configNominalOutputForward(0,
+    // ShooterConstants.kCtreTimeoutMs);
+    // oppositeFlywheel.configNominalOutputReverse(0,
+    // ShooterConstants.kCtreTimeoutMs);
+    // oppositeFlywheel.configPeakOutputForward(1, ShooterConstants.kCtreTimeoutMs);
+    // oppositeFlywheel.configPeakOutputReverse(-1,
+    // ShooterConstants.kCtreTimeoutMs);
+    // oppositeFlywheel.selectProfileSlot(ShooterConstants.kSlotIdx,
+    // ShooterConstants.kPIDLoopIdx);
 
-    oppositeFlywheel.config_kF(Constants.ShooterConstants.kPIDLoopIdx, Constants.ShooterConstants.kGains_Velocit.kF,
-        Constants.ShooterConstants.kTimeoutMs);
-    oppositeFlywheel.config_kP(Constants.ShooterConstants.kPIDLoopIdx, Constants.ShooterConstants.kGains_Velocit.kP,
-        Constants.ShooterConstants.kTimeoutMs);
-    oppositeFlywheel.config_kI(Constants.ShooterConstants.kPIDLoopIdx, Constants.ShooterConstants.kGains_Velocit.kI,
-        Constants.ShooterConstants.kTimeoutMs);
-    oppositeFlywheel.config_kD(Constants.ShooterConstants.kPIDLoopIdx, Constants.ShooterConstants.kGains_Velocit.kD,
-        Constants.ShooterConstants.kTimeoutMs);
+    // oppositeFlywheel.config_kF(Constants.ShooterConstants.kPIDLoopIdx,
+    // Constants.ShooterConstants.kGains_Velocit.kF,
+    // Constants.ShooterConstants.kTimeoutMs);
+    // oppositeFlywheel.config_kP(Constants.ShooterConstants.kPIDLoopIdx,
+    // Constants.ShooterConstants.kGains_Velocit.kP,
+    // Constants.ShooterConstants.kTimeoutMs);
+    // oppositeFlywheel.config_kI(Constants.ShooterConstants.kPIDLoopIdx,
+    // Constants.ShooterConstants.kGains_Velocit.kI,
+    // Constants.ShooterConstants.kTimeoutMs);
+    // oppositeFlywheel.config_kD(Constants.ShooterConstants.kPIDLoopIdx,
+    // Constants.ShooterConstants.kGains_Velocit.kD,
+    // Constants.ShooterConstants.kTimeoutMs);
   }
 
   @Override

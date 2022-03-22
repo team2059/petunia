@@ -53,8 +53,8 @@ public class Robot extends TimedRobot {
     m_robotContainer.getDriveTrainSubsystem().resetEncoders();
 
     m_robotContainer.getBallCollecterArmSubsystem().getBallCollecterArmTalonSRX().set(ControlMode.PercentOutput, 0);
-    m_robotContainer.getClimberExtenderSubsystem().getClimberLeftExtendSRX().set(ControlMode.PercentOutput, 0);
-    m_robotContainer.getClimberExtenderSubsystem().getClimberRightExtendSRX().set(ControlMode.PercentOutput, 0);
+    m_robotContainer.getClimberExtenderSubsystem().getRightMotor().set(0);
+    m_robotContainer.getClimberExtenderSubsystem().getLeftMotor().set(0);
     m_robotContainer.getClimberTiltSubsystem().getClimberLeftTiltSRX().set(ControlMode.PercentOutput, 0);
     m_robotContainer.getClimberTiltSubsystem().getClimberRightTiltSRX().set(ControlMode.PercentOutput, 0);
     m_robotContainer.getBallCollecterSubsystem().getCollecterIndexer().set(ControlMode.PercentOutput, 0);
@@ -129,8 +129,8 @@ public class Robot extends TimedRobot {
     m_robotContainer.getDriveTrainSubsystem().resetEncoders();
 
     m_robotContainer.getBallCollecterArmSubsystem().getBallCollecterArmTalonSRX().set(ControlMode.PercentOutput, 0);
-    m_robotContainer.getClimberExtenderSubsystem().getClimberLeftExtendSRX().set(ControlMode.PercentOutput, 0);
-    m_robotContainer.getClimberExtenderSubsystem().getClimberRightExtendSRX().set(ControlMode.PercentOutput, 0);
+    m_robotContainer.getClimberExtenderSubsystem().getRightMotor().set(0);
+    m_robotContainer.getClimberExtenderSubsystem().getLeftMotor().set(0);
     m_robotContainer.getClimberTiltSubsystem().getClimberLeftTiltSRX().set(ControlMode.PercentOutput, 0);
     m_robotContainer.getClimberTiltSubsystem().getClimberRightTiltSRX().set(ControlMode.PercentOutput, 0);
     m_robotContainer.getShooterSubsystem().setShooterVelocity(0);
@@ -160,8 +160,10 @@ public class Robot extends TimedRobot {
 
     m_robotContainer.getShooterSubsystem().autoLoader();
     m_robotContainer.getBallCollecterArmSubsystem().getBallCollecterArmTalonSRX().set(ControlMode.PercentOutput, 0);
-    m_robotContainer.getClimberExtenderSubsystem().getClimberLeftExtendSRX().set(ControlMode.PercentOutput, 0);
-    m_robotContainer.getClimberExtenderSubsystem().getClimberRightExtendSRX().set(ControlMode.PercentOutput, 0);
+
+    m_robotContainer.getClimberExtenderSubsystem().getRightMotor().set(0);
+    m_robotContainer.getClimberExtenderSubsystem().getLeftMotor().set(0);
+
     m_robotContainer.getClimberTiltSubsystem().getClimberLeftTiltSRX().set(ControlMode.PercentOutput, 0);
     m_robotContainer.getClimberTiltSubsystem().getClimberRightTiltSRX().set(ControlMode.PercentOutput, 0);
     m_robotContainer.getBallCollecterSubsystem().getCollecterMotorTalonSRX().set(ControlMode.PercentOutput, 0);
