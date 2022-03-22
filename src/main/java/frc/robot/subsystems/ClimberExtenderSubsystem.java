@@ -74,7 +74,7 @@ public class ClimberExtenderSubsystem extends SubsystemBase {
                 // Smart Motion Coefficients
                 maxVel = 5700; // rpm
                 maxAcc = 5700;
-                allowedErr = 0.01;
+                allowedErr = 0.0;
 
                 leftPidController.setP(kP);
                 leftPidController.setI(kI);
