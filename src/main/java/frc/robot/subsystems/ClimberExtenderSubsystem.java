@@ -46,6 +46,15 @@ public class ClimberExtenderSubsystem extends SubsystemBase {
                 leftEncoder.setPosition(0);
         }
 
+        public static void isAtSamePos(double leftPos, double rightPos) {
+                while (leftPos < rightPos) {
+                        rightNeo.set(0);
+                }
+                while (leftPos > rightPos) {
+                        leftNeo.set(0);
+                }
+        }
+
         /** Creates a new Drive. */
         public ClimberExtenderSubsystem() {
 

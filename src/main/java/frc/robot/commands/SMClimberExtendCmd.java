@@ -13,10 +13,10 @@ import frc.robot.subsystems.ClimberExtenderSubsystem;
 
 public class SMClimberExtendCmd extends CommandBase {
   private final ClimberExtenderSubsystem climberExtend;
-  private int setPoint;
+  private double setPoint;
 
   /** Creates a new CollecterArmUp. */
-  public SMClimberExtendCmd(ClimberExtenderSubsystem climberExtend, int setPoint) {
+  public SMClimberExtendCmd(ClimberExtenderSubsystem climberExtend, double setPoint) {
 
     this.climberExtend = climberExtend;
     this.setPoint = setPoint;
