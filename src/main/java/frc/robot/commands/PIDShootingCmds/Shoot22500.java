@@ -36,7 +36,7 @@ public class Shoot22500 extends CommandBase {
   @Override
   public void execute() {
     mShooter.ballShooter.set(ControlMode.Velocity, rpmVelocity);
-    mShooter.oppositeFlywheel.set(ControlMode.PercentOutput, -0.75);
+    // mShooter.oppositeFlywheel.set(ControlMode.PercentOutput, -0.33);
   }
 
   // Called once the command ends or is interrupted.
