@@ -161,14 +161,14 @@ public class RobotContainer {
 
                 // driver 2 climbing extreme 3d
 
-                new JoystickButton(logiFlightController, 1).whileHeld(new InvertedArcadeDrive(driveTrainSubsystem));
+                new JoystickButton(logiFlightController, 1).whileHeld(new SlowedArcadeDrive(driveTrainSubsystem));
 
                 new JoystickButton(logiFlightController, 5).whenPressed(
 
                                 new SequentialCommandGroup(
                                                 new SMClimberExtendCmd(climberExtendSubsystem, 127.5).withTimeout(2),
                                                 new MMClimberTilt(climberTiltSubsystem, 900)
-                                                                .withTimeout(2.25),
+                                                                .withTimeout(1.66),
                                                 new SMClimberExtendCmd(climberExtendSubsystem, 1).withTimeout(1.75),
                                                 new MMClimberTilt(climberTiltSubsystem, 600)
                                                                 .withTimeout(1.5),
@@ -183,17 +183,18 @@ public class RobotContainer {
                 new JoystickButton(logiFlightController, 4).whenPressed(
 
                                 new SequentialCommandGroup(
+                                                new MMClimberTilt(climberTiltSubsystem, 250).withTimeout(0.66),
                                                 new ParallelCommandGroup(
                                                                 new MMClimberTilt(climberTiltSubsystem, 550)
-                                                                                .withTimeout(2.25),
+                                                                                .withTimeout(1.75),
 
                                                                 new SMClimberExtendCmd(climberExtendSubsystem, 127.5)
-                                                                                .withTimeout(2.5)),
+                                                                                .withTimeout(1)),
                                                 new MMClimberTilt(climberTiltSubsystem, 925).withTimeout(1.5),
                                                 new SMClimberExtendCmd(climberExtendSubsystem, 1).withTimeout(1.75),
                                                 new MMClimberTilt(climberTiltSubsystem, 600)
                                                                 .withTimeout(1.5),
-                                                new SMClimberExtendCmd(climberExtendSubsystem, 127.5)
+                                                new SMClimberExtendCmd(climberExtendSubsystem, 50)
                                                                 .withTimeout(1.25)));
 
                 // before climbing, set collecter arm position upright

@@ -33,8 +33,9 @@ public class FinalShoot extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    mShooter.oppositeFlywheel.set(ControlMode.PercentOutput, 1);
     mShooter.ballShooter.set(ControlMode.Velocity, rpmVelocity);
-   // mShooter.oppositeFlywheel.set(ControlMode.PercentOutput, -0.75);
+    // mShooter.oppositeFlywheel.set(ControlMode.PercentOutput, -0.75);
   }
 
   // Called once the command ends or is interrupted.

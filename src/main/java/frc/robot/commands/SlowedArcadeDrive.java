@@ -8,12 +8,12 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.DriveTrainSubsystem;
 
-public class InvertedArcadeDrive extends CommandBase {
+public class SlowedArcadeDrive extends CommandBase {
 
   private final DriveTrainSubsystem driveTrainSubsystem;
 
   /** Creates a new teleopDrive. */
-  public InvertedArcadeDrive(DriveTrainSubsystem subsystem) {
+  public SlowedArcadeDrive(DriveTrainSubsystem subsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.driveTrainSubsystem = subsystem;
     addRequirements(subsystem);
@@ -29,12 +29,12 @@ public class InvertedArcadeDrive extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double xSpeed = RobotContainer.logiFlightController.getRawAxis(1) * 0.5;
-    double zRotation = RobotContainer.logiFlightController.getRawAxis(2) * 0.33;
+    double xSpeed = RobotContainer.logiFlightController.getRawAxis(1) * 0.33;
+    double zRotation = RobotContainer.logiFlightController.getRawAxis(2) * 0.25;
 
     // negate zRotation because we invertetd rightMotorControllerGroup
 
-    driveTrainSubsystem.arcadeDrive(xSpeed, zRotation);
+    driveTrainSubsystem.arcadeDrive(-xSpeed, -zRotation);
   }
 
   // Called once the command ends or is interrupted.
