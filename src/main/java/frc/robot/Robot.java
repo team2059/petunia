@@ -147,7 +147,7 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during autonomous. */
   @Override
   public void autonomousPeriodic() {
-    m_robotContainer.getBallCollecterSubsystem().setVictorSpeed(0.5);
+    m_robotContainer.getBallCollecterSubsystem().setVictorSpeed(0.33);
 
     // if (driveTrainSubsystem.getHeading() != 0) {
     // driveTrainSubsystem.zeroHeading();
@@ -178,7 +178,8 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     m_robotContainer.getShooterSubsystem().autoLoader();
-    m_robotContainer.getBallCollecterSubsystem().setVictorSpeed(0.5);
+    m_robotContainer.getBallCollecterSubsystem().setVictorSpeed(0.33);
+    m_robotContainer.getShooterSubsystem().oppositeFlywheel.set(ControlMode.PercentOutput, 1);
   }
 
   @Override

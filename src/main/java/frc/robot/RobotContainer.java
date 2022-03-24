@@ -115,12 +115,13 @@ public class RobotContainer {
          */
         private void configureButtonBindings() {
 
-                // GOES TO ~11-12 FT
-                new POVButton(logiGameController, 0).toggleWhenPressed(
-                                new Shoot27500(shooterSubsystem, 25000)); // GOES TO ~11-12 FT
+                // front shooter bumper at tape outer farther goal edge
+                // new POVButton(logiGameController, 0).toggleWhenPressed(
+                // new Shoot27500(shooterSubsystem, 24000));
 
-                new POVButton(logiGameController, 180).toggleWhenPressed(
-                                new Shoot22500(shooterSubsystem, 24750));
+                // front shooter bumper at tape inner closest goal edge
+                new POVButton(logiGameController, 0).toggleWhenPressed(
+                                new Shoot22500(shooterSubsystem, 23000));
 
                 // no limelight alignment - LB
                 new JoystickButton(logiGameController, Button.kLeftBumper.value)
@@ -165,35 +166,35 @@ public class RobotContainer {
                 new JoystickButton(logiFlightController, 5).whenPressed(
 
                                 new SequentialCommandGroup(
-                                                new SMClimberExtendCmd(climberExtendSubsystem, 127.5).withTimeout(2.25),
+                                                new SMClimberExtendCmd(climberExtendSubsystem, 127.5).withTimeout(2),
                                                 new MMClimberTilt(climberTiltSubsystem, 900)
-                                                                .withTimeout(2.5),
-                                                new SMClimberExtendCmd(climberExtendSubsystem, 1).withTimeout(2),
+                                                                .withTimeout(2.25),
+                                                new SMClimberExtendCmd(climberExtendSubsystem, 1).withTimeout(1.75),
                                                 new MMClimberTilt(climberTiltSubsystem, 600)
-                                                                .withTimeout(1.75),
+                                                                .withTimeout(1.5),
                                                 new SMClimberExtendCmd(climberExtendSubsystem, 127.5)
-                                                                .withTimeout(2.5),
-                                                new MMClimberTilt(climberTiltSubsystem, 0).withTimeout(2.5)));
+                                                                .withTimeout(2.25),
+                                                new MMClimberTilt(climberTiltSubsystem, 0).withTimeout(2.25)));
 
                 new JoystickButton(logiFlightController, 3).whenPressed(
                                 new SMClimberExtendCmd(climberExtendSubsystem, 190)
-                                                .withTimeout(1.5));
+                                                .withTimeout(1.25));
 
                 new JoystickButton(logiFlightController, 4).whenPressed(
 
                                 new SequentialCommandGroup(
                                                 new ParallelCommandGroup(
                                                                 new MMClimberTilt(climberTiltSubsystem, 550)
-                                                                                .withTimeout(2.5),
+                                                                                .withTimeout(2.25),
 
                                                                 new SMClimberExtendCmd(climberExtendSubsystem, 127.5)
-                                                                                .withTimeout(2.75)),
-                                                new MMClimberTilt(climberTiltSubsystem, 925).withTimeout(1.75),
-                                                new SMClimberExtendCmd(climberExtendSubsystem, 1).withTimeout(2),
+                                                                                .withTimeout(2.5)),
+                                                new MMClimberTilt(climberTiltSubsystem, 925).withTimeout(1.5),
+                                                new SMClimberExtendCmd(climberExtendSubsystem, 1).withTimeout(1.75),
                                                 new MMClimberTilt(climberTiltSubsystem, 600)
-                                                                .withTimeout(1.75),
+                                                                .withTimeout(1.5),
                                                 new SMClimberExtendCmd(climberExtendSubsystem, 127.5)
-                                                                .withTimeout(1.5)));
+                                                                .withTimeout(1.25)));
 
                 // before climbing, set collecter arm position upright
                 // new JoystickButton(logiFlightController, 5)
