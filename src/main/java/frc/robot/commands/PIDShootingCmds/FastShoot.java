@@ -10,12 +10,12 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.ShooterSubsystem;
 
-public class Shoot22500 extends CommandBase {
+public class FastShoot extends CommandBase {
   private static ShooterSubsystem mShooter;
   private static double rpmVelocity;
 
   /** Creates a new PIDShootCmd. */
-  public Shoot22500(ShooterSubsystem mShooter, double rpmVelocity) {
+  public FastShoot(ShooterSubsystem mShooter, double rpmVelocity) {
     // Use addRequirements() here to declare submShooter dependencies.
     this.mShooter = mShooter;
     // rpmVelocity in ticks/units 100ms
