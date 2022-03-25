@@ -121,7 +121,7 @@ public class RobotContainer {
 
                 // front shooter bumper at tape inner closest goal edge
                 new POVButton(logiGameController, 0).toggleWhenPressed(
-                                new Shoot22500(shooterSubsystem, 23000));
+                                new FastShoot(shooterSubsystem, 23000));
 
                 // no limelight alignment - LB
                 new JoystickButton(logiGameController, Button.kLeftBumper.value)
@@ -194,8 +194,8 @@ public class RobotContainer {
                                                 new SMClimberExtendCmd(climberExtendSubsystem, 1).withTimeout(1.75),
                                                 new MMClimberTilt(climberTiltSubsystem, 600)
                                                                 .withTimeout(1.5),
-                                                new SMClimberExtendCmd(climberExtendSubsystem, 50)
-                                                                .withTimeout(1.25)));
+                                                new SMClimberExtendCmd(climberExtendSubsystem, 127.5)
+                                                                .withTimeout(2)));
 
                 // before climbing, set collecter arm position upright
                 // new JoystickButton(logiFlightController, 5)
@@ -319,7 +319,7 @@ public class RobotContainer {
                                 shooterSubsystem),
                                 pathChooser.getSelected(),
                                 // new AutoAlignCmd(driveTrainSubsystem, limelight),
-                                new FinalShoot(shooterSubsystem, 26895).withTimeout(3));
+                                new FinalShoot(shooterSubsystem, 25000).withTimeout(3));
 
         }
 
