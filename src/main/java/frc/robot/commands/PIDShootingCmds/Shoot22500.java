@@ -44,6 +44,7 @@ public class Shoot22500 extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     mShooter.setShooterVelocity(0);
+    mShooter.oppositeFlywheel.set(ControlMode.PercentOutput, 0);
   }
 
   // Returns true when the command should end.

@@ -41,6 +41,7 @@ public class InitShoot extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    mShooter.oppositeFlywheel.set(ControlMode.PercentOutput, 0);
     mShooter.setShooterVelocity(0);
   }
 
