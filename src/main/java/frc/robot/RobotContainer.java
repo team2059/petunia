@@ -163,7 +163,7 @@ public class RobotContainer {
 
                 new JoystickButton(logiFlightController, 1).whileHeld(new SlowedArcadeDrive(driveTrainSubsystem));
 
-                new JoystickButton(logiFlightController, 5).whenPressed(
+                new JoystickButton(logiFlightController, 6).whenPressed(
 
                                 new SequentialCommandGroup(
                                                 new SMClimberExtendCmd(climberExtendSubsystem, 127.5).withTimeout(2),
@@ -176,11 +176,15 @@ public class RobotContainer {
                                                                 .withTimeout(2.25),
                                                 new MMClimberTilt(climberTiltSubsystem, 0).withTimeout(2.25)));
 
-                new JoystickButton(logiFlightController, 3).whenPressed(
+                new JoystickButton(logiFlightController, 5).whenPressed(
                                 new SMClimberExtendCmd(climberExtendSubsystem, 190)
                                                 .withTimeout(1.25));
 
                 new JoystickButton(logiFlightController, 4).whenPressed(
+                                new MMClimberTilt(climberTiltSubsystem, 0)
+                                                .withTimeout(2));
+
+                new JoystickButton(logiFlightController, 3).whenPressed(
 
                                 new SequentialCommandGroup(
                                                 new MMClimberTilt(climberTiltSubsystem, 250).withTimeout(0.66),
