@@ -147,10 +147,15 @@ public class RobotContainer {
 
                 // collecter arm down - A
                 new JoystickButton(logiGameController, Button.kA.value)
-                                .whenPressed(new MMCollecterArmActivate(ballCollecterArmSubsystem, 1145)
-                                                .andThen(new InstantCommand(() -> ballCollecterArmSubsystem
-                                                                .getBallCollecterArmTalonSRX()
-                                                                .set(ControlMode.PercentOutput, 0))));
+                                .whenPressed(new ParallelCommandGroup(
+                                                new InstantCommand(() -> ballCollecterSubsystem.setSpeed(-0.66)),
+                                                new MMCollecterArmActivate(ballCollecterArmSubsystem, 1850))
+                                                                .andThen(new InstantCommand(() -> ballCollecterSubsystem
+                                                                                .setSpeed(0)), new InstantCommand(
+                                                                                                () -> ballCollecterArmSubsystem
+                                                                                                                .getBallCollecterArmTalonSRX()
+                                                                                                                .set(ControlMode.PercentOutput,
+                                                                                                                                0))));
 
                 // collecter arm up - Y
                 new JoystickButton(logiGameController, Button.kY.value)
