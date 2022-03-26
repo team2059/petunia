@@ -61,14 +61,7 @@ public class RobotContainer {
         Command autonomousCommand;
 
         // A chooser for autonomous commands
-        static SendableChooser<Command> pathChooser = new SendableChooser<>();
-
-        // A chooser for autonomous commands
-        static SendableChooser<String> colorChooser = new SendableChooser<>();
-
-        public static String getAllianceColor() {
-                return colorChooser.getSelected().toString();
-        }
+        // static SendableChooser<Command> pathChooser = new SendableChooser<>();
 
         /**
          * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -80,7 +73,7 @@ public class RobotContainer {
 
                 // Add commands to the autonomous command chooser
 
-                boolean isReset = true;
+                // boolean isReset = true;
 
                 // String red = "Red";
                 // String blue = "Blue";
@@ -89,19 +82,13 @@ public class RobotContainer {
 
                 // colorChooser.addOption("Red alliance", red);
                 // colorChooser.addOption("Blue alliance", blue);
-                Command autoCmd = loadPathWeaverTrajectoryCommand(
-                                "pathplanner/generatedJSON/ForwardAuto.wpilib.json",
-                                isReset);
-                System.out.println("initialized auto cmd");
-                pathChooser.addOption("Path forward Auto", autoCmd);
-                System.out.println("added option");
 
                 // pathChooser.addOption("Complex Auto",
                 // loadPathWeaverTrajectoryCommand("pathplanner/generatedJSON/Turn.wpilib.json",
                 // isReset));
 
                 // Put the chooser on the dashboard
-                Shuffleboard.getTab("Autonomous").add(pathChooser);
+                // Shuffleboard.getTab("Autonomous").add(pathChooser);
                 // Shuffleboard.getTab("Autonomous").add(colorChooser);
 
         }
@@ -324,7 +311,9 @@ public class RobotContainer {
                                 // limelight,
                                 ballCollecterArmSubsystem, ballCollecterArmSubsystem,
                                 shooterSubsystem),
-                                pathChooser.getSelected(),
+                                loadPathWeaverTrajectoryCommand(
+                                                "pathplanner/generatedJSON/ForwardAuto.wpilib.json",
+                                                true),
                                 // new AutoAlignCmd(driveTrainSubsystem, limelight),
                                 new FinalShoot(shooterSubsystem, 25000).withTimeout(3));
 
