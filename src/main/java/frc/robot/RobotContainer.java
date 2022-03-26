@@ -169,11 +169,11 @@ public class RobotContainer {
                 new JoystickButton(logiFlightController, 5).whenPressed(
 
                                 new SequentialCommandGroup(
-                                                new SMClimberExtendCmd(climberExtendSubsystem, 132.5).withTimeout(2),
+                                                new SMClimberExtendCmd(climberExtendSubsystem, 137).withTimeout(2),
                                                 new MMClimberTilt(climberTiltSubsystem, 900)
                                                                 .withTimeout(1.66),
                                                 new SMClimberExtendCmd(climberExtendSubsystem, 1).withTimeout(1.75),
-                                                new MMClimberTilt(climberTiltSubsystem, 600)
+                                                new MMClimberTilt(climberTiltSubsystem, 466)
                                                                 .withTimeout(1.5),
                                                 new SMClimberExtendCmd(climberExtendSubsystem, 127.5)
                                                                 .withTimeout(2.25),
@@ -199,8 +199,8 @@ public class RobotContainer {
                                                                                 .withTimeout(1)),
                                                 new MMClimberTilt(climberTiltSubsystem, 925).withTimeout(1.5),
                                                 new SMClimberExtendCmd(climberExtendSubsystem, 1).withTimeout(1.75),
-                                                new MMClimberTilt(climberTiltSubsystem, 600)
-                                                                .withTimeout(1.5),
+                                                new MMClimberTilt(climberTiltSubsystem, 466)
+                                                                .withTimeout(1.75),
                                                 new SMClimberExtendCmd(climberExtendSubsystem, 127.5)
                                                                 .withTimeout(2)));
 
