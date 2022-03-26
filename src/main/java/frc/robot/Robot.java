@@ -119,37 +119,75 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
 
+    System.out.println("init 0");
+
     Rotation2d thetaPose = m_robotContainer.getDriveTrainSubsystem().navX.getRotation2d();
+
+    System.out.println("init 1");
     DifferentialDriveOdometry myDriveOdometry = m_robotContainer.getDriveTrainSubsystem().getOdometry();
+
+    System.out.println("init 2");
     myDriveOdometry.resetPosition(new Pose2d(), thetaPose);
 
+    System.out.println("init 3");
+
     m_robotContainer.getBallCollecterArmSubsystem().reset();
+
+    System.out.println("init 4");
     m_robotContainer.getClimberExtenderSubsystem().reset();
+
+    System.out.println("init 5");
     m_robotContainer.getClimberTiltSubsystem().reset();
+
+    System.out.println("init 6");
     m_robotContainer.getDriveTrainSubsystem().zeroHeading();
+
+    System.out.println("init 7");
     m_robotContainer.getDriveTrainSubsystem().resetEncoders();
 
+    System.out.println("init 8");
+
     m_robotContainer.getBallCollecterArmSubsystem().getBallCollecterArmTalonSRX().set(ControlMode.PercentOutput, 0);
+
+    System.out.println("init 9");
     m_robotContainer.getClimberExtenderSubsystem().getRightMotor().set(0);
+
+    System.out.println("init 10");
     m_robotContainer.getClimberExtenderSubsystem().getLeftMotor().set(0);
+
+    System.out.println("init 11");
     m_robotContainer.getClimberTiltSubsystem().getClimberLeftTiltSRX().set(ControlMode.PercentOutput, 0);
+
+    System.out.println("init 12");
     m_robotContainer.getClimberTiltSubsystem().getClimberRightTiltSRX().set(ControlMode.PercentOutput, 0);
+
+    System.out.println("init 13");
     m_robotContainer.getShooterSubsystem().setShooterVelocity(0);
+
+    System.out.println("init 14");
     m_robotContainer.getBallCollecterSubsystem().setVictorSpeed(0);
+
+    System.out.println("init 15");
 
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
+    System.out.println("init 16");
+
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
+
       m_autonomousCommand.schedule();
+      System.out.println("is  not null");
     }
   }
 
   /** This function is called periodically during autonomous. */
   @Override
   public void autonomousPeriodic() {
-    m_robotContainer.getBallCollecterSubsystem().getCollecterIndexer().set(ControlMode.PercentOutput, 0.33);
-    m_robotContainer.getBallCollecterSubsystem().getCollecterMotorTalonSRX().set(ControlMode.PercentOutput, -0.66);
+    m_robotContainer.getBallCollecterSubsystem().getCollecterIndexer().set(ControlMode.PercentOutput,
+    0.33);
+    m_robotContainer.getBallCollecterSubsystem().getCollecterMotorTalonSRX().set(ControlMode.PercentOutput,
+    -0.66);
 
     // if (driveTrainSubsystem.getHeading() != 0) {
     // driveTrainSubsystem.zeroHeading();
