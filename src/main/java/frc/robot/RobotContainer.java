@@ -89,11 +89,12 @@ public class RobotContainer {
 
                 // colorChooser.addOption("Red alliance", red);
                 // colorChooser.addOption("Blue alliance", blue);
-
-                pathChooser.addOption("Path forward Auto",
-                                loadPathWeaverTrajectoryCommand(
-                                                "pathplanner/generatedJSON/ForwardAuto.wpilib.json",
-                                                isReset));
+                Command autoCmd = loadPathWeaverTrajectoryCommand(
+                                "pathplanner/generatedJSON/ForwardAuto.wpilib.json",
+                                isReset);
+                System.out.println("initialized auto cmd");
+                pathChooser.addOption("Path forward Auto", autoCmd);
+                System.out.println("added option");
 
                 // pathChooser.addOption("Complex Auto",
                 // loadPathWeaverTrajectoryCommand("pathplanner/generatedJSON/Turn.wpilib.json",
@@ -123,17 +124,14 @@ public class RobotContainer {
                 new POVButton(logiGameController, 0).toggleWhenPressed(
                                 new FastShoot(shooterSubsystem, 23000));
 
-                // no limelight alignment - LB
+                // hold left bumper to aim/align with target
                 new JoystickButton(logiGameController, Button.kLeftBumper.value)
+                                .whileHeld(new AutoAlignCmd(driveTrainSubsystem, limelight));
+
+                // hold right bumper to fire ball by activating indexer
+                new JoystickButton(logiGameController, Button.kRightBumper.value)
                                 .whileHeld(
                                                 new InstantCommand(() -> shooterSubsystem.setIndexSpeed(-0.66)))
-                                .whenReleased(new InstantCommand(() -> shooterSubsystem
-                                                .setIndexSpeed(0)));
-
-                // align then activate indexer (shoot) - RB
-                new JoystickButton(logiGameController, Button.kRightBumper.value)
-                                .whileHeld(new SequentialCommandGroup(new AutoAlignCmd(driveTrainSubsystem, limelight),
-                                                new InstantCommand(() -> shooterSubsystem.setIndexSpeed(-0.66))))
                                 .whenReleased(new InstantCommand(() -> shooterSubsystem
                                                 .setIndexSpeed(0)));
 
