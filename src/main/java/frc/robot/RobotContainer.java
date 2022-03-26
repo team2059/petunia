@@ -169,7 +169,7 @@ public class RobotContainer {
                 new JoystickButton(logiFlightController, 5).whenPressed(
 
                                 new SequentialCommandGroup(
-                                                new SMClimberExtendCmd(climberExtendSubsystem, 127.5).withTimeout(2),
+                                                new SMClimberExtendCmd(climberExtendSubsystem, 132.5).withTimeout(2),
                                                 new MMClimberTilt(climberTiltSubsystem, 900)
                                                                 .withTimeout(1.66),
                                                 new SMClimberExtendCmd(climberExtendSubsystem, 1).withTimeout(1.75),
