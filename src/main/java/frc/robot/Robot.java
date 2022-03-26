@@ -6,6 +6,7 @@ package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
@@ -61,6 +62,8 @@ public class Robot extends TimedRobot {
     m_robotContainer.getShooterSubsystem().setShooterVelocity(0);
     m_robotContainer.getShooterSubsystem().oppositeFlywheel.set(ControlMode.PercentOutput, 0);
     m_robotContainer.getBallCollecterSubsystem().setVictorSpeed(0);
+    CameraServer.startAutomaticCapture();
+
   }
 
   /**
