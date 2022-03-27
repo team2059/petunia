@@ -137,7 +137,7 @@ public class ShooterSubsystem extends SubsystemBase {
     if (ballChamberSensor.get()) {
       setIndexSpeed(0);
     } else {
-      setIndexSpeed(-0.66);
+      setIndexSpeed(-0.75);
     }
 
   }
