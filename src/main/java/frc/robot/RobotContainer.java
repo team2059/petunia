@@ -22,6 +22,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import edu.wpi.first.wpilibj.XboxController;
@@ -124,12 +125,12 @@ public class RobotContainer {
 
                 // spit out - B
                 new JoystickButton(logiGameController, Button.kB.value)
-                                .whileHeld(() -> ballCollecterSubsystem.setSpeed(0.75))
+                                .whileHeld(() -> ballCollecterSubsystem.setSpeed(0.6))
                                 .whenReleased(() -> ballCollecterSubsystem.setSpeed(0));
 
                 // collect - X
                 new JoystickButton(logiGameController, Button.kX.value)
-                                .whileHeld(() -> ballCollecterSubsystem.setSpeed(-0.75))
+                                .whileHeld(() -> ballCollecterSubsystem.setSpeed(-0.6))
                                 .whenReleased(() -> ballCollecterSubsystem.setSpeed(0));
 
                 // collecter arm down - A
@@ -318,7 +319,7 @@ public class RobotContainer {
                                                 "pathplanner/generatedJSON/ForwardAuto.wpilib.json",
                                                 true),
                                 // new AutoAlignCmd(driveTrainSubsystem, limelight),
-                                new FinalShoot(shooterSubsystem, 25000).withTimeout(3));
+                                new FinalShoot(shooterSubsystem, 23000).withTimeout(3));
 
         }
 
