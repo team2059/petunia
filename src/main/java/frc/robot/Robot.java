@@ -165,7 +165,7 @@ public class Robot extends TimedRobot {
   public void autonomousPeriodic() {
     m_robotContainer.getBallCollecterSubsystem().setVictorSpeed(0.5);
     m_robotContainer.getBallCollecterSubsystem().getCollecterMotorTalonSRX().set(ControlMode.PercentOutput,
-        -0.66);
+        -0.6);
 
     // if (driveTrainSubsystem.getHeading() != 0) {
     // driveTrainSubsystem.zeroHeading();
