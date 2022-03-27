@@ -40,7 +40,7 @@ public class AutoAlignCmd extends CommandBase {
 
     if (tv) {
       // TODO - Check Area processing v X-Ofset / Y-Offset
-      speed = (limelight.getXOffset() * 0.075); // P gain
+      speed = ((limelight.getXOffset() - 1) * 0.075); // P gain (minus one to align to 1 degree instead of zero)
 
       if (speed > 1.5) { // set speed limits
         speed = 1.5;
