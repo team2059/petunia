@@ -30,7 +30,7 @@ public class TwoBallAuto extends SequentialCommandGroup {
         new MMCollecterArmActivate(ballCollecterArmSubsystem, 1500), new InstantCommand(() -> ballCollecterArmSubsystem
             .getBallCollecterArmTalonSRX()
             .set(ControlMode.PercentOutput, 0)),
-        new ParallelCommandGroup(new InitShoot(shooterSubsystem, 20000).withTimeout(3.5),
+        new ParallelCommandGroup(new InitShoot(shooterSubsystem, 19000).withTimeout(3.5),
             new InstantCommand(() -> shooterSubsystem.setIndexSpeed(-0.66)).beforeStarting(new WaitCommand(2))),
         new InstantCommand(() -> ballCollecterSubsystem.setSpeed(-0.5)));
 
