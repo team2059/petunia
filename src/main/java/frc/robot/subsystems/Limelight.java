@@ -5,82 +5,45 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableEntry;
-import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import java.lang.Math;
+import org.photonvision.PhotonCamera;
+import org.photonvision.PhotonUtils;
+import org.photonvision.targeting.PhotonPipelineResult;
+import org.photonvision.targeting.PhotonTrackedTarget;
 
 public class Limelight extends SubsystemBase {
+  
+  PhotonCamera camera = new PhotonCamera("hh");
 
-  private final NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
+  private boolean hasTargets = false;
+  private double targetDistance = 0.0;
+  private double targetAngle = 0.0;
 
-  private final NetworkTableEntry xOffset = table.getEntry("tx");
-  private final NetworkTableEntry yOffset = table.getEntry("ty");
-  private final NetworkTableEntry hasTargets = table.getEntry("tv");
+  final double xalignP = 0.075;
 
-  double goalHeightInches = 104.0;
+  /** Creates a new Vision. */
+  public Limelight() {}
 
-  double limelightHeightInches = 30.75;
-
-  double limelightMountingAngleDegrees = 27.0;
-
-  public double getDistance() {
-
-    double targetOffsetAngle_Vertical = getYOffset();
-    double angleToGoalDegrees = limelightMountingAngleDegrees + targetOffsetAngle_Vertical;
-    double angleToGoalRadians = angleToGoalDegrees * (3.14159 / 180.0);
-
-    double distanceFromLimelightToGoalInches = (goalHeightInches - limelightHeightInches)
-        / Math.tan(angleToGoalRadians);
-
-    return distanceFromLimelightToGoalInches;
+  public boolean hasTarget() {
+    return hasTargets;
   }
 
-  /** Creates a new Limelight. */
-  public Limelight() {
+  public double getTargetDistance() {
+    return targetDistance;
+  }
+
+  public double getTargetAngle() {
+    return targetAngle;
   }
 
   @Override
   public void periodic() {
-    double distance = getDistance();
-    SmartDashboard.putNumber("Distance Calc", distance);
+    var result = camera.getLatestResult();
+
+    if (result.hasTargets()) {
+      targetAngle = result.getBestTarget().getYaw();
+      targetDistance = 0.0;
+      hasTargets = true;
+    }
     // This method will be called once per scheduler run
   }
-
-  public double getXOffset() {
-    return xOffset.getDouble(0.0);
-  }
-
-  public double getVelocityFromDistance(double distance) {
-    double numerator = 9.8 * getXOffset() * getXOffset();
-
-    double firstPartDenominator = 2 * getXOffset() * Math.cos(limelightMountingAngleDegrees)
-        * Math.sin(limelightMountingAngleDegrees);
-
-    double secondPartDenominator = (92 - limelightHeightInches)
-        * (2 * Math.cos(limelightMountingAngleDegrees) * Math.cos(limelightMountingAngleDegrees));
-
-    double ballVelocity = Math.sqrt((numerator)
-        / firstPartDenominator + secondPartDenominator);
-
-    return Math.sqrt((numerator)
-        / firstPartDenominator + secondPartDenominator);
-
-  }
-
-  public double getYOffset() {
-    return yOffset.getDouble(0.0);
-  }
-
-  public boolean getHasTargets() {
-    double tv = hasTargets.getDouble(0.0);
-    if (tv < 1.0) {
-      return false;
-    } else {
-      return true;
-    }
-
-  }
-
 }

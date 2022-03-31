@@ -114,7 +114,7 @@ public class RobotContainer {
 
                 // hold left bumper to aim/align with target
                 new JoystickButton(logiGameController, Button.kLeftBumper.value)
-                                .whileHeld(new AutoAlignCmd(driveTrainSubsystem, limelight));
+                                .whileHeld(new AutoAlignCmd(limelight, driveTrainSubsystem));
 
                 // hold right bumper to fire ball by activating indexer
                 new JoystickButton(logiGameController, Button.kRightBumper.value)
