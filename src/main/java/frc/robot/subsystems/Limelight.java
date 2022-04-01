@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.photonvision.PhotonCamera;
 import org.photonvision.PhotonUtils;
@@ -17,6 +18,10 @@ public class Limelight extends SubsystemBase {
   private boolean hasTargets = false;
   private double targetDistance = 0.0;
   private double targetAngle = 0.0;
+
+  private double CAMERA_HEIGHT_METERS = Units.feetToMeters(13.75);
+  private double TARGET_HEIGHT_METERS = Units.feetToMeters(75);
+  private double CAMERA_PITCH_RADIANS = Units.degreesToRadians(28.5);
 
   final double xalignP = 0.075;
 
@@ -41,7 +46,9 @@ public class Limelight extends SubsystemBase {
 
     if (result.hasTargets()) {
       targetAngle = result.getBestTarget().getYaw();
-      targetDistance = 0.0;
+      targetDistance = Units.metersToFeet(PhotonUtils.calculateDistanceToTargetMeters(
+        CAMERA_HEIGHT_METERS, TARGET_HEIGHT_METERS, CAMERA_PITCH_RADIANS, 
+        Units.degreesToRadians(result.getBestTarget().getPitch())));
       hasTargets = true;
     }
     // This method will be called once per scheduler run
