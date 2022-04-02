@@ -135,18 +135,15 @@ public class RobotContainer {
 
                 // collecter arm down - A
                 new JoystickButton(logiGameController, Button.kA.value)
-                                .whenPressed(// new ParallelCommandGroup(
-                                             // new InstantCommand(() -> ballCollecterSubsystem.setSpeed(-0.66)),
-                                             new MMCollecterArmActivate(ballCollecterArmSubsystem, 905).andThen(new WaitCommand(1),   new MMCollecterArmActivate(ballCollecterArmSubsystem, 1850),
-                                                        
-                                                                                // new InstantCommand(() ->
-                                                                                // ballCollecterSubsystem
-                                                                                // .setSpeed(0)),
-                                                                                new InstantCommand(
-                                                                                                () -> ballCollecterArmSubsystem
-                                                                                                                .getBallCollecterArmTalonSRX()
-                                                                                                                .set(ControlMode.PercentOutput,
-                                                                                                                                0))));
+                                .whenPressed(new SequentialCommandGroup(
+                                                new MMCollecterArmActivate(ballCollecterArmSubsystem, 905),
+                                                new WaitCommand(1),
+                                                new MMCollecterArmActivate(ballCollecterArmSubsystem, 1850),
+                                                new InstantCommand(
+                                                                () -> ballCollecterArmSubsystem
+                                                                                .getBallCollecterArmTalonSRX()
+                                                                                .set(ControlMode.PercentOutput,
+                                                                                                0))));
 
                 // collecter arm up - Y
                 new JoystickButton(logiGameController, Button.kY.value)
