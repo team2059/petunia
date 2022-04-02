@@ -130,15 +130,16 @@ public class RobotContainer {
 
                 // collect - X
                 new JoystickButton(logiGameController, Button.kX.value)
-                                .whileHeld(() -> ballCollecterSubsystem.setSpeed(-0.6))
+                                .whileHeld(() -> ballCollecterSubsystem.setSpeed(-0.9))
                                 .whenReleased(() -> ballCollecterSubsystem.setSpeed(0));
 
                 // collecter arm down - A
                 new JoystickButton(logiGameController, Button.kA.value)
                                 .whenPressed(new SequentialCommandGroup(
-                                                new MMCollecterArmActivate(ballCollecterArmSubsystem, 905),
-                                                new WaitCommand(1),
+
                                                 new MMCollecterArmActivate(ballCollecterArmSubsystem, 1850),
+
+                                               // new WaitCommand(0.33),
                                                 new InstantCommand(
                                                                 () -> ballCollecterArmSubsystem
                                                                                 .getBallCollecterArmTalonSRX()
