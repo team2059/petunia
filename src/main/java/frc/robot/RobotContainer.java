@@ -110,7 +110,7 @@ public class RobotContainer {
 
                 // front shooter bumper at tape inner closest goal edge
                 new POVButton(logiGameController, 0).toggleWhenPressed(
-                                new FastShoot(shooterSubsystem, 23000));
+                                new ShootCmd(shooterSubsystem,limelight));
 
                 // hold left bumper to aim/align with target
                 new JoystickButton(logiGameController, Button.kLeftBumper.value)
@@ -133,13 +133,17 @@ public class RobotContainer {
                                 .whileHeld(() -> ballCollecterSubsystem.setSpeed(-0.9))
                                 .whenReleased(() -> ballCollecterSubsystem.setSpeed(0));
 
+               // new JoystickButton(logiGameController, 8)
+                //                .whileHeld(new InstantCommand(() -> shooterSubsystem.setIndexSpeed(-1)))
+                  //              .whenReleased(() -> shooterSubsystem.setIndexSpeed(0));
+
                 // collecter arm down - A
                 new JoystickButton(logiGameController, Button.kA.value)
                                 .whenPressed(new SequentialCommandGroup(
 
                                                 new MMCollecterArmActivate(ballCollecterArmSubsystem, 1850),
 
-                                               // new WaitCommand(0.33),
+                                                // new WaitCommand(0.33),
                                                 new InstantCommand(
                                                                 () -> ballCollecterArmSubsystem
                                                                                 .getBallCollecterArmTalonSRX()

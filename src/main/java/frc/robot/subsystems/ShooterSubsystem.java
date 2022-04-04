@@ -53,6 +53,7 @@ public class ShooterSubsystem extends SubsystemBase {
   public ShooterSubsystem() {
     indexMotor.configFactoryDefault();
     indexMotor.setNeutralMode(NeutralMode.Brake);
+    indexMotor.configFactoryDefault();
 
     /* Config sensor used for Primary PID [Velocity] */
     ballShooter.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative,
@@ -76,7 +77,7 @@ public class ShooterSubsystem extends SubsystemBase {
     ballShooter.configPeakOutputReverse(-1, ShooterConstants.kCtreTimeoutMs);
     ballShooter.selectProfileSlot(ShooterConstants.kSlotIdx, ShooterConstants.kPIDLoopIdx);
 
-    indexMotor.configFactoryDefault();
+    
     ballShooter.config_kF(Constants.ShooterConstants.kPIDLoopIdx, Constants.ShooterConstants.kGains_Velocit.kF,
         Constants.ShooterConstants.kTimeoutMs);
     ballShooter.config_kP(Constants.ShooterConstants.kPIDLoopIdx, Constants.ShooterConstants.kGains_Velocit.kP,
@@ -86,10 +87,38 @@ public class ShooterSubsystem extends SubsystemBase {
     ballShooter.config_kD(Constants.ShooterConstants.kPIDLoopIdx, Constants.ShooterConstants.kGains_Velocit.kD,
         Constants.ShooterConstants.kTimeoutMs);
 
-    /* Config sensor used for Primary PID [Velocity] */
-    // oppositeFlywheel.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative,
-    // Constants.ShooterConstants.kPIDLoopIdx,
-    // Constants.ShooterConstants.kTimeoutMs);
+
+
+
+
+
+        /* Config sensor used for Primary PID [Velocity] */
+    oppositeFlywheel.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative,
+    Constants.ShooterConstants.kPIDLoopIdx,
+    Constants.ShooterConstants.kTimeoutMs);
+
+
+
+// Resets all values to default
+oppositeFlywheel.configFactoryDefault();
+oppositeFlywheel.setNeutralMode(NeutralMode.Coast);
+
+/* Config the peak and nominal outputs ([-1, 1] represents [-100, 100]%) */
+oppositeFlywheel.configNominalOutputForward(0, ShooterConstants.kCtreTimeoutMs);
+oppositeFlywheel.configNominalOutputReverse(0, ShooterConstants.kCtreTimeoutMs);
+oppositeFlywheel.configPeakOutputForward(1, ShooterConstants.kCtreTimeoutMs);
+oppositeFlywheel.configPeakOutputReverse(-1, ShooterConstants.kCtreTimeoutMs);
+oppositeFlywheel.selectProfileSlot(ShooterConstants.kSlotIdx, ShooterConstants.kPIDLoopIdx);
+
+
+oppositeFlywheel.config_kF(Constants.ShooterConstants.kPIDLoopIdx, Constants.ShooterConstants.kGains_Velocit.kF,
+    Constants.ShooterConstants.kTimeoutMs);
+    oppositeFlywheel.config_kP(Constants.ShooterConstants.kPIDLoopIdx, Constants.ShooterConstants.kGains_Velocit.kP,
+    Constants.ShooterConstants.kTimeoutMs);
+    oppositeFlywheel.config_kI(Constants.ShooterConstants.kPIDLoopIdx, Constants.ShooterConstants.kGains_Velocit.kI,
+    Constants.ShooterConstants.kTimeoutMs);
+    oppositeFlywheel.config_kD(Constants.ShooterConstants.kPIDLoopIdx, Constants.ShooterConstants.kGains_Velocit.kD,
+    Constants.ShooterConstants.kTimeoutMs);
 
     /**
      * Phase sensor accordingly.
@@ -97,39 +126,15 @@ public class ShooterSubsystem extends SubsystemBase {
      */
     oppositeFlywheel.setSensorPhase(false);
 
-    // Resets all values to default
-    oppositeFlywheel.configFactoryDefault();
-    oppositeFlywheel.setNeutralMode(NeutralMode.Coast);
 
-    /* Config the peak and nominal outputs ([-1, 1] represents [-100, 100]%) */
-    // oppositeFlywheel.configNominalOutputForward(0,
-    // ShooterConstants.kCtreTimeoutMs);
-    // oppositeFlywheel.configNominalOutputReverse(0,
-    // ShooterConstants.kCtreTimeoutMs);
-    // oppositeFlywheel.configPeakOutputForward(1, ShooterConstants.kCtreTimeoutMs);
-    // oppositeFlywheel.configPeakOutputReverse(-1,
-    // ShooterConstants.kCtreTimeoutMs);
-    // oppositeFlywheel.selectProfileSlot(ShooterConstants.kSlotIdx,
-    // ShooterConstants.kPIDLoopIdx);
-
-    // oppositeFlywheel.config_kF(Constants.ShooterConstants.kPIDLoopIdx,
-    // Constants.ShooterConstants.kGains_Velocit.kF,
-    // Constants.ShooterConstants.kTimeoutMs);
-    // oppositeFlywheel.config_kP(Constants.ShooterConstants.kPIDLoopIdx,
-    // Constants.ShooterConstants.kGains_Velocit.kP,
-    // Constants.ShooterConstants.kTimeoutMs);
-    // oppositeFlywheel.config_kI(Constants.ShooterConstants.kPIDLoopIdx,
-    // Constants.ShooterConstants.kGains_Velocit.kI,
-    // Constants.ShooterConstants.kTimeoutMs);
-    // oppositeFlywheel.config_kD(Constants.ShooterConstants.kPIDLoopIdx,
-    // Constants.ShooterConstants.kGains_Velocit.kD,
-    // Constants.ShooterConstants.kTimeoutMs);
+    
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
     SmartDashboard.putNumber("Ball Shooter Velocity", ballShooter.getSelectedSensorVelocity());
+    SmartDashboard.putNumber("secondary velocity", oppositeFlywheel.getSelectedSensorVelocity());
     SmartDashboard.putBoolean("Is Ball in chamber", ballChamberSensor.get());
   }
 
@@ -137,7 +142,7 @@ public class ShooterSubsystem extends SubsystemBase {
     if (ballChamberSensor.get()) {
       setIndexSpeed(0);
     } else {
-      setIndexSpeed(-0.75);
+      setIndexSpeed(-1);
     }
 
   }
