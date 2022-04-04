@@ -113,10 +113,7 @@ public class ClimberExtenderSubsystem extends SubsystemBase {
 
         @Override
         public void periodic() {
-
-                SmartDashboard.putNumber("current left pos", leftEncoder.getPosition());
-                SmartDashboard.putNumber("current right pos", rightEncoder.getPosition());
-                SmartDashboard.putNumber("Left Output", leftNeo.getAppliedOutput());
-                SmartDashboard.putNumber("Right Output", rightNeo.getAppliedOutput());
+                SmartDashboard.putNumber("left extend", leftEncoder.getPosition());
+                SmartDashboard.putNumber("right extend", rightEncoder.getPosition());
         }
 }

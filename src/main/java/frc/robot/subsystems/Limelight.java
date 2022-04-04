@@ -5,6 +5,7 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.photonvision.PhotonCamera;
 import org.photonvision.PhotonUtils;
@@ -12,7 +13,7 @@ import org.photonvision.targeting.PhotonPipelineResult;
 import org.photonvision.targeting.PhotonTrackedTarget;
 
 public class Limelight extends SubsystemBase {
-  
+
   PhotonCamera camera = new PhotonCamera("hh");
 
   private boolean hasTargets = false;
@@ -26,31 +27,43 @@ public class Limelight extends SubsystemBase {
   final double xalignP = 0.075;
 
   /** Creates a new Vision. */
-  public Limelight() {}
+  public Limelight() {
+  }
 
   public boolean hasTarget() {
-    return hasTargets;
+    var result = camera.getLatestResult();
+    if (result.hasTargets()) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   public double getTargetDistance() {
+    var result = camera.getLatestResult();
+
+    if (result.hasTargets()) {
+      targetDistance = Units.metersToInches(PhotonUtils.calculateDistanceToTargetMeters(
+          CAMERA_HEIGHT_METERS, TARGET_HEIGHT_METERS, CAMERA_PITCH_RADIANS,
+          Units.degreesToRadians(result.getBestTarget().getPitch())));
+    }
     return targetDistance;
   }
 
   public double getTargetAngle() {
-    return targetAngle;
-  }
-
-  @Override
-  public void periodic() {
     var result = camera.getLatestResult();
 
     if (result.hasTargets()) {
       targetAngle = result.getBestTarget().getYaw();
-      targetDistance = Units.metersToFeet(PhotonUtils.calculateDistanceToTargetMeters(
-        CAMERA_HEIGHT_METERS, TARGET_HEIGHT_METERS, CAMERA_PITCH_RADIANS, 
-        Units.degreesToRadians(result.getBestTarget().getPitch())));
-      hasTargets = true;
     }
-    // This method will be called once per scheduler run
+    return targetAngle;
+
+  }
+
+  @Override
+  public void periodic() {
+    SmartDashboard.putNumber("Target distance inches", getTargetDistance());
+    SmartDashboard.putNumber("Target angle", getTargetAngle());
+    SmartDashboard.putBoolean("Has target: ", hasTarget());
   }
 }
