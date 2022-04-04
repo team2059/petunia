@@ -133,8 +133,8 @@ oppositeFlywheel.config_kF(Constants.ShooterConstants.kPIDLoopIdx, Constants.Sho
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    SmartDashboard.putNumber("Ball Shooter Velocity", ballShooter.getSelectedSensorVelocity());
-    SmartDashboard.putNumber("secondary velocity", oppositeFlywheel.getSelectedSensorVelocity());
+    SmartDashboard.putNumber("Primary ticks", ballShooter.getSelectedSensorVelocity());
+    SmartDashboard.putNumber("Secondary velocity", oppositeFlywheel.getSelectedSensorVelocity());
     SmartDashboard.putBoolean("Is Ball in chamber", ballChamberSensor.get());
   }
 

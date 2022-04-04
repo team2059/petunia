@@ -28,13 +28,13 @@ public class ShootCmd extends CommandBase {
   public double setPrimary() {
     double distance = limelight.getTargetDistance();
     double primaryTicks = 0;
-    if (distance > 7 && distance < 8) {
+    if (distance > 7*12 && distance < 8*12) {
       primaryTicks = 10550 + (100 * distance);
     }
-    if (distance > 8 && distance < 9) {
+    if (distance > 8*12 && distance < 9*12) {
       primaryTicks = 10150 + (150 * distance);
     }
-    if (distance > 9 && distance < 10) {
+    if (distance > 9*12 && distance < 10*12) {
       primaryTicks = 7000 + (500 * distance);
     }
 
@@ -44,13 +44,13 @@ public class ShootCmd extends CommandBase {
   public double setSecondary() {
     double distance = limelight.getTargetDistance();
     double secondaryTicks = 0;
-    if (distance > 7 && distance < 8) {
+    if (distance > 7*12 && distance < 8*12) {
       secondaryTicks = 7000 + (500 * distance);
     }
-    if (distance > 8 && distance < 9) {
+    if (distance > 8*12 && distance < 9*12) {
       secondaryTicks = 11000;
     }
-    if (distance > 9 && distance < 10) {
+    if (distance > 9*12 && distance < 10*12) {
       secondaryTicks = 3872 + (792 * distance);
     }
 
