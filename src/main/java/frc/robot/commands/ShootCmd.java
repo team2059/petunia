@@ -2,10 +2,11 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.PIDShootingCmds;
+package frc.robot.commands;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.Limelight;
@@ -26,12 +27,33 @@ public class ShootCmd extends CommandBase {
 
   public double setPrimary() {
     double distance = limelight.getTargetDistance();
-    double primaryTicks = 9485 + (240 * distance);
+    double primaryTicks = 0;
+    if (distance > 7 && distance < 8) {
+      primaryTicks = 10550 + (100 * distance);
+    }
+    if (distance > 8 && distance < 9) {
+      primaryTicks = 10150 + (150 * distance);
+    }
+    if (distance > 9 && distance < 10) {
+      primaryTicks = 7000 + (500 * distance);
+    }
+
     return primaryTicks;
   }
+
   public double setSecondary() {
     double distance = limelight.getTargetDistance();
-    double secondaryTicks = 7778.4 + (387.6 * distance);
+    double secondaryTicks = 0;
+    if (distance > 7 && distance < 8) {
+      secondaryTicks = 7000 + (500 * distance);
+    }
+    if (distance > 8 && distance < 9) {
+      secondaryTicks = 11000;
+    }
+    if (distance > 9 && distance < 10) {
+      secondaryTicks = 3872 + (792 * distance);
+    }
+
     return secondaryTicks;
   }
 

@@ -33,7 +33,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import frc.robot.subsystems.*;
 import frc.robot.commands.*;
 import frc.robot.commands.AutoCmds.*;
-import frc.robot.commands.PIDShootingCmds.*;
 import frc.robot.Constants.*;
 
 /**
