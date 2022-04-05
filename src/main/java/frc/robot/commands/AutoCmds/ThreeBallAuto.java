@@ -90,9 +90,9 @@ public class ThreeBallAuto extends SequentialCommandGroup {
         new ParallelCommandGroup(
             new VisionShootCmd(shooterSubsystem, limelight).withTimeout(3),
             new InstantCommand(() -> shooterSubsystem.setIndexSpeed(-0.75)).beforeStarting(new WaitCommand(1))),
-        loadPathWeaverTrajectoryCommand("pathplanner/generatedJSON/ThirdBallTwo.wpilib.json", false),
+        loadPathWeaverTrajectoryCommand("pathplanner/generatedJSON/ThreeBallTwo.wpilib.json", false),
         loadPathWeaverTrajectoryCommand(
-            "src/main/deploy/pathplanner/generatedJSON/ThirdBallPartThree.wpilib.json", false),
+            "src/main/deploy/pathplanner/generatedJSON/ThreeBallThree.wpilib.json", false),
         new AutoAlignCmd(limelight, driveTrainSubsystem).withTimeout(1),
         new ParallelCommandGroup(
             new VisionShootCmd(shooterSubsystem, limelight),
