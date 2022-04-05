@@ -21,7 +21,7 @@ public class TwoBallAuto extends SequentialCommandGroup {
   /** Creates a new TwoBallAuto. */
   public TwoBallAuto(BallCollecterSubsystem ballCollecterSubsystem, DriveTrainSubsystem driveTrainSubsystem,
       // Limelight limelight,
-      BallCollecterArmSubsystem ballCollecterArmSubsystem, BallCollecterArmSubsystem ballcollecterarmsubsystem2,
+      BallCollecterArmSubsystem ballCollecterArmSubsystem,
       ShooterSubsystem shooterSubsystem) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
