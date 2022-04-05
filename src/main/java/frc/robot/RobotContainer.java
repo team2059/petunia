@@ -50,7 +50,7 @@ public class RobotContainer {
         public static XboxController logiGameController = new XboxController(1);
         public static Joystick logiFlightController = new Joystick(0);
 
-        private final DriveTrainSubsystem driveTrainSubsystem = new DriveTrainSubsystem();
+        private final static DriveTrainSubsystem driveTrainSubsystem = new DriveTrainSubsystem();
         private final ClimberExtenderSubsystem climberExtendSubsystem = new ClimberExtenderSubsystem();
         private final ClimberTiltSubsystem climberTiltSubsystem = new ClimberTiltSubsystem();
         private final static BallCollecterSubsystem ballCollecterSubsystem = new BallCollecterSubsystem();
@@ -258,47 +258,6 @@ public class RobotContainer {
 
         }
 
-        public Command loadPathWeaverTrajectoryCommand(String filename, boolean resetOdometry) {
-
-                Trajectory trajectory;
-                try {
-                        Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(filename);
-                        trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
-                } catch (IOException ex) {
-                        DriverStation.reportError("Unable to open trajectory: " + filename, ex.getStackTrace());
-                        System.out.println("Unable to read from file " + filename);
-                        return new InstantCommand();
-                }
-
-                Command ramseteCommand = new RamseteCommand(
-                                trajectory,
-                                driveTrainSubsystem::getPose,
-                                new RamseteController(AutoConstants.kRamseteB, AutoConstants.kRamseteZeta),
-                                new SimpleMotorFeedforward(
-                                                DriveConstants.ksVolts,
-                                                DriveConstants.kvVoltSecondsPerMeter,
-                                                DriveConstants.kaVoltSecondsSquaredPerMeter),
-                                DriveConstants.kDriveKinematics,
-                                driveTrainSubsystem::getWheelSpeeds,
-                                new PIDController(DriveConstants.kPDriveVel, 0, 0),
-                                new PIDController(DriveConstants.kPDriveVel, 0, 0),
-                                // RamseteCommand passes volts to the callback
-                                driveTrainSubsystem::tankDriveVolts,
-                                driveTrainSubsystem);
-
-                // Run path following command, then stop at the end.
-                // If told to reset odometry, reset odometry before running path.
-                if (resetOdometry) {
-                        return new SequentialCommandGroup(
-                                        new InstantCommand(() -> driveTrainSubsystem
-                                                        .resetOdometry(trajectory.getInitialPose())),
-                                        ramseteCommand);
-                } else {
-                        return ramseteCommand;
-                }
-
-        }
-
         /**
          * Use this to pass the autonomous command to the main {@link Robot} class.
          *
@@ -307,22 +266,14 @@ public class RobotContainer {
          */
 
         public Command getAutonomousCommand() {
-
-                // return pathChooser.getSelected();
-                // TODO 3 ball auto
-                return new SequentialCommandGroup(new TwoBallAuto(ballCollecterSubsystem, driveTrainSubsystem,
-                                // limelight,
+                return new ThreeBallAuto(ballCollecterSubsystem, driveTrainSubsystem,
+                                limelight,
                                 ballCollecterArmSubsystem,
-                                shooterSubsystem),
-                                loadPathWeaverTrajectoryCommand(
-                                                "pathplanner/generatedJSON/ForwardAuto.wpilib.json",
-                                                true),
-                                // new AutoAlignCmd(driveTrainSubsystem, limelight),
-                                new FinalShoot(shooterSubsystem, 23000).withTimeout(3));
+                                shooterSubsystem);
 
         }
 
-        public DriveTrainSubsystem getDriveTrainSubsystem() {
+        public static DriveTrainSubsystem getDriveTrainSubsystem() {
                 return driveTrainSubsystem;
         }
 
