@@ -79,20 +79,23 @@ public class ThreeBallAuto extends SequentialCommandGroup {
       Limelight limelight,
       BallCollecterArmSubsystem ballCollecterArmSubsystem,
       ShooterSubsystem shooterSubsystem) {
+    // Find the heading error; setpoint is 90
 
     addCommands(
+
         new MMCollecterArmActivate(ballCollecterArmSubsystem, 1850),
         new InstantCommand(
-            () -> ballCollecterArmSubsystem.getBallCollecterArmTalonSRX().set(ControlMode.PercentOutput, 0)),
+            () -> ballCollecterArmSubsystem.getBallCollecterArmTalonSRX().set(ControlMode.PercentOutput,
+                0)),
         loadPathWeaverTrajectoryCommand("pathplanner/generatedJSON/ThreeBallOne.wpilib.json", true),
-
         new AutoAlignCmd(limelight, driveTrainSubsystem).withTimeout(1),
         new ParallelCommandGroup(
             new VisionShootCmd(shooterSubsystem, limelight).withTimeout(3),
             new InstantCommand(() -> shooterSubsystem.setIndexSpeed(-0.75)).beforeStarting(new WaitCommand(1))),
-        loadPathWeaverTrajectoryCommand("pathplanner/generatedJSON/ThreeBallTwo.wpilib.json", false),
+        loadPathWeaverTrajectoryCommand("pathplanner/generatedJSON/ThreeBallTwo.wpilib.json", true),
         loadPathWeaverTrajectoryCommand(
-            "src/main/deploy/pathplanner/generatedJSON/ThreeBallThree.wpilib.json", false),
+            "src/main/deploy/pathplanner/generatedJSON/ThreeBallThree.wpilib.json",
+            false),
         new AutoAlignCmd(limelight, driveTrainSubsystem).withTimeout(1),
         new ParallelCommandGroup(
             new VisionShootCmd(shooterSubsystem, limelight),

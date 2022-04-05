@@ -64,6 +64,10 @@ public class DriveTrainSubsystem extends SubsystemBase {
 
   /** Creates a new DriveTrain. */
   public DriveTrainSubsystem() {
+    leftBackCANSparkMax.setIdleMode(IdleMode.kBrake);
+    rightBackCANSparkMax.setIdleMode(IdleMode.kBrake);
+    leftFrontCANSparkMax.setIdleMode(IdleMode.kBrake);
+    rightFrontCANSparkMax.setIdleMode(IdleMode.kBrake);
 
     // SmartDashboard.putData("Field", m_field);
 
@@ -76,6 +80,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
     // Inverted
     rightMotorControllerGroup.setInverted(false);
     leftMotorControllerGroup.setInverted(true);
+
     // leftMotorControllerGroup.setInverted(true);
     // leftMotorControllerGroup.setInverted(true);
 
@@ -115,6 +120,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
+    SmartDashboard.putNumber("heading", navX.getAngle());
 
     m_field.setRobotPose(m_odometry.getPoseMeters());
 
@@ -148,13 +154,9 @@ public class DriveTrainSubsystem extends SubsystemBase {
 
   }
 
-  
-
   public DifferentialDriveOdometry getOdometry() {
     return m_odometry;
   }
-
- 
 
   public double getRightEncoderPosition() {
     return -rightRelativeEncoder.getPosition();
