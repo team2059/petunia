@@ -15,6 +15,7 @@ import frc.robot.subsystems.ShooterSubsystem;
 public class ShootCmd extends CommandBase {
   private static ShooterSubsystem shooterSubsystem;
   private static Limelight limelight;
+  double distance;
 
   /** Creates a new PIDShootCmd. */
   public ShootCmd(ShooterSubsystem shooterSubsystem, Limelight limelight) {
@@ -25,33 +26,33 @@ public class ShootCmd extends CommandBase {
     addRequirements(shooterSubsystem);
   }
 
-  public double setPrimary() {
-    double distance = limelight.getTargetDistance();
+  public double setPrimary(double distance) {
+    System.out.println("shoot cmd activated distance: " + distance);
     double primaryTicks = 0;
-    if (distance > 7*12 && distance < 8*12) {
-      primaryTicks = 10550 + (100 * distance);
+    if (distance > 7 * 12 && distance < 8 * 12) {
+      primaryTicks = 10550 + (8.333 * distance);
     }
-    if (distance > 8*12 && distance < 9*12) {
-      primaryTicks = 10150 + (150 * distance);
+    if (distance > 8 * 12 && distance < 9 * 12) {
+      primaryTicks = 10150 + (12.5 * distance);
     }
-    if (distance > 9*12 && distance < 10*12) {
-      primaryTicks = 7000 + (500 * distance);
+    if (distance > 9 * 12 && distance < 10 * 12) {
+      primaryTicks = 7000 + (41.666 * distance);
     }
 
     return primaryTicks;
   }
 
-  public double setSecondary() {
-    double distance = limelight.getTargetDistance();
+  public double setSecondary(double distance) {
+    System.out.println("shoot cmd activated distance: " + distance);
     double secondaryTicks = 0;
-    if (distance > 7*12 && distance < 8*12) {
-      secondaryTicks = 7000 + (500 * distance);
+    if (distance > 7 * 12 && distance < 8 * 12) {
+      secondaryTicks = 7000 + (41.666 * distance);
     }
-    if (distance > 8*12 && distance < 9*12) {
+    if (distance > 8 * 12 && distance < 9 * 12) {
       secondaryTicks = 11000;
     }
-    if (distance > 9*12 && distance < 10*12) {
-      secondaryTicks = 3872 + (792 * distance);
+    if (distance > 9 * 12 && distance < 10 * 12) {
+      secondaryTicks = 3872 + (66 * distance);
     }
 
     return secondaryTicks;
@@ -60,6 +61,7 @@ public class ShootCmd extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    distance = limelight.getTargetDistance();
 
     // 500 rpm
     // max unit/100ms = ~
@@ -69,8 +71,8 @@ public class ShootCmd extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    shooterSubsystem.ballShooter.set(ControlMode.Velocity, setPrimary());
-    shooterSubsystem.oppositeFlywheel.set(ControlMode.Velocity, setSecondary());
+    shooterSubsystem.ballShooter.set(ControlMode.Velocity, setPrimary(distance));
+    shooterSubsystem.oppositeFlywheel.set(ControlMode.Velocity, setSecondary(distance));
     // shooterSubsystem.oppositeFlywheel.set(ControlMode.PercentOutput, -0.33);
   }
 
