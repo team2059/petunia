@@ -20,9 +20,9 @@ public class Limelight extends SubsystemBase {
   private double targetDistance = 0.0;
   private double targetAngle = 0.0;
 
-  private double CAMERA_HEIGHT_METERS = Units.feetToMeters(13.75);
-  private double TARGET_HEIGHT_METERS = Units.feetToMeters(75);
-  private double CAMERA_PITCH_RADIANS = Units.degreesToRadians(28.5);
+  private double CAMERA_HEIGHT_METERS = Units.inchesToMeters(30.675);
+  private double TARGET_HEIGHT_METERS = Units.inchesToMeters(73.5);
+  private double CAMERA_PITCH_RADIANS = Units.degreesToRadians(22.51);
 
   final double xalignP = 0.075;
 
