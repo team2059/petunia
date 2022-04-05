@@ -34,7 +34,7 @@ public class TestSequenceCmd extends SequentialCommandGroup {
         new InstantCommand(
             () -> ballCollecterArmSubsystem.getBallCollecterArmTalonSRX().set(ControlMode.PercentOutput, 0)),
         new InstantCommand(() -> ballCollecterSubsystem.setSpeed(-0.66)).withTimeout(2),
-        new ShootAtTicksCmd(shooterSubsystem, 28000).withTimeout(5),
+        new ShootAtTicksCmd(shooterSubsystem, 28000, 28000).withTimeout(5),
         new MMClimberTilt(climberTiltSubsystem, 900).withTimeout(5),
         new SMClimberExtendCmd(climberExtenderSubsystem, 190));
   }

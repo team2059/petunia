@@ -9,16 +9,18 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ShooterSubsystem;
 
 public class ShootAtTicksCmd extends CommandBase {
-  private static ShooterSubsystem mShooter;
-  private static double rpmVelocity;
+  private static ShooterSubsystem shooterSubsystem;
+  private static double primaryTicks;
+  private static double secondaryTicks;
 
   /** Creates a new PIDShootCmd. */
-  public ShootAtTicksCmd(ShooterSubsystem mShooter, double rpmVelocity) {
+  public ShootAtTicksCmd(ShooterSubsystem shooterSubsystem, double primaryTicks, double secondaryTicks) {
     // Use addRequirements() here to declare submShooter dependencies.
-    this.mShooter = mShooter;
+    this.shooterSubsystem = shooterSubsystem;
     // rpmVelocity in ticks/units 100ms
-    this.rpmVelocity = rpmVelocity;
-    addRequirements(mShooter);
+    this.primaryTicks = primaryTicks;
+    this.secondaryTicks = secondaryTicks;
+    addRequirements(shooterSubsystem);
   }
 
   // Called when the command is initially scheduled.
@@ -33,16 +35,16 @@ public class ShootAtTicksCmd extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    mShooter.oppositeFlywheel.set(ControlMode.PercentOutput, 1);
-    mShooter.ballShooter.set(ControlMode.Velocity, rpmVelocity);
+    shooterSubsystem.oppositeFlywheel.set(ControlMode.PercentOutput, secondaryTicks);
+    shooterSubsystem.ballShooter.set(ControlMode.Velocity, primaryTicks);
     // mShooter.oppositeFlywheel.set(ControlMode.PercentOutput, -0.75);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    mShooter.oppositeFlywheel.set(ControlMode.PercentOutput, 0);
-    mShooter.setShooterVelocity(0);
+    shooterSubsystem.oppositeFlywheel.set(ControlMode.PercentOutput, 0);
+    shooterSubsystem.setShooterVelocity(0);
   }
 
   // Returns true when the command should end.

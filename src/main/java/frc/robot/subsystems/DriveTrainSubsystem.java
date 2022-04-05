@@ -148,21 +148,13 @@ public class DriveTrainSubsystem extends SubsystemBase {
 
   }
 
-  public static void driveToDistanceMeters(double meters) {
-    if (leftRelativeEncoder.getPosition() < meters) {
-      differentialDrive.tankDrive(-.5, -.5);
-    } else {
-      differentialDrive.tankDrive(0, 0);
-    }
-  }
+  
 
   public DifferentialDriveOdometry getOdometry() {
     return m_odometry;
   }
 
-  public MotorControllerGroup getLeftMotorControllerGroup() {
-    return leftMotorControllerGroup;
-  }
+ 
 
   public double getRightEncoderPosition() {
     return -rightRelativeEncoder.getPosition();

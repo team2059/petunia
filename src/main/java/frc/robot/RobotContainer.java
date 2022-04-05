@@ -107,9 +107,21 @@ public class RobotContainer {
                 // new POVButton(logiGameController, 0).toggleWhenPressed(
                 // new Shoot27500(shooterSubsystem, 24000));
 
-                // front shooter bumper at tape inner closest goal edge
+                // auto shoot
                 new POVButton(logiGameController, 0).toggleWhenPressed(
-                                new ShootCmd(shooterSubsystem, limelight));
+                                new VisionShootCmd(shooterSubsystem, limelight));
+
+                // 7 feet manual shoot
+                new POVButton(logiGameController, 90).toggleWhenPressed(
+                                new ShootAtTicksCmd(shooterSubsystem, 11250, 10500));
+
+                // 8 feet manual shoot
+                new POVButton(logiGameController, 180).toggleWhenPressed(
+                                new ShootAtTicksCmd(shooterSubsystem, 11350, 11000));
+
+                // 9 feet manual shoot
+                new POVButton(logiGameController, 270).toggleWhenPressed(
+                                new ShootAtTicksCmd(shooterSubsystem, 11500, 11000));
 
                 // hold left bumper to aim/align with target
                 new JoystickButton(logiGameController, Button.kLeftBumper.value)
@@ -139,7 +151,6 @@ public class RobotContainer {
                 // collecter arm down - A
                 new JoystickButton(logiGameController, Button.kA.value)
                                 .whenPressed(new SequentialCommandGroup(
-
                                                 new MMCollecterArmActivate(ballCollecterArmSubsystem, 1850),
                                                 new InstantCommand(
                                                                 () -> ballCollecterArmSubsystem
@@ -193,10 +204,6 @@ public class RobotContainer {
                                                                 .withTimeout(1.75),
                                                 new SMClimberExtendCmd(climberExtendSubsystem, 127.5)
                                                                 .withTimeout(2)));
-
-                // before climbing, set collecter arm position upright
-                // new JoystickButton(logiFlightController, 5)
-                // .whenPressed(new MMCollecterArmActivate(ballCollecterArmSubsystem, 1500));
 
                 // extend up
                 new POVButton(logiFlightController, 0)

@@ -84,17 +84,18 @@ public class ThreeBallAuto extends SequentialCommandGroup {
         new MMCollecterArmActivate(ballCollecterArmSubsystem, 1850),
         new InstantCommand(
             () -> ballCollecterArmSubsystem.getBallCollecterArmTalonSRX().set(ControlMode.PercentOutput, 0)),
-        loadPathWeaverTrajectoryCommand("pathplanner/generatedJSON/SecondBall.wpilib.json", true),
+        loadPathWeaverTrajectoryCommand("pathplanner/generatedJSON/ThreeBallOne.wpilib.json", true),
+
         new AutoAlignCmd(limelight, driveTrainSubsystem).withTimeout(1),
         new ParallelCommandGroup(
-            new ShootCmd(shooterSubsystem, limelight).withTimeout(3),
+            new VisionShootCmd(shooterSubsystem, limelight).withTimeout(3),
             new InstantCommand(() -> shooterSubsystem.setIndexSpeed(-0.75)).beforeStarting(new WaitCommand(1))),
-        loadPathWeaverTrajectoryCommand("pathplanner/generatedJSON/ThirdBallPartOne.wpilib.json", false),
+        loadPathWeaverTrajectoryCommand("pathplanner/generatedJSON/ThirdBallTwo.wpilib.json", false),
         loadPathWeaverTrajectoryCommand(
-            "src/main/deploy/pathplanner/generatedJSON/ThirdBallPartTwo.wpilib.json", false),
+            "src/main/deploy/pathplanner/generatedJSON/ThirdBallPartThree.wpilib.json", false),
         new AutoAlignCmd(limelight, driveTrainSubsystem).withTimeout(1),
         new ParallelCommandGroup(
-            new ShootCmd(shooterSubsystem, limelight),
+            new VisionShootCmd(shooterSubsystem, limelight),
             new InstantCommand(() -> shooterSubsystem.setIndexSpeed(-0.75)).beforeStarting(new WaitCommand(1)))
 
     );
