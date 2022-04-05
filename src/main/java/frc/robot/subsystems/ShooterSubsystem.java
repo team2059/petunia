@@ -28,23 +28,8 @@ public class ShooterSubsystem extends SubsystemBase {
 
   public static DigitalInput ballChamberSensor = new DigitalInput(0);
 
-  // TODO change port
-  // DigitalInput chamberPhotoElectricSensor = new DigitalInput(1);
-
-  public DigitalInput getBallChamberSensor() {
-    return ballChamberSensor;
-  }
-
   public static void setIndexSpeed(double speed) {
     indexMotor.set(speed);
-  }
-
-  public static BooleanSupplier getBallStatus() {
-    return () -> ballChamberSensor.get();
-  }
-
-  public static BooleanSupplier isAtTargetVelocity(double ticks) {
-    return () -> ballShooter.getSelectedSensorVelocity() >= ticks;
   }
 
   /*
@@ -77,7 +62,6 @@ public class ShooterSubsystem extends SubsystemBase {
     ballShooter.configPeakOutputReverse(-1, ShooterConstants.kCtreTimeoutMs);
     ballShooter.selectProfileSlot(ShooterConstants.kSlotIdx, ShooterConstants.kPIDLoopIdx);
 
-    
     ballShooter.config_kF(Constants.ShooterConstants.kPIDLoopIdx, Constants.ShooterConstants.kGains_Velocit.kF,
         Constants.ShooterConstants.kTimeoutMs);
     ballShooter.config_kP(Constants.ShooterConstants.kPIDLoopIdx, Constants.ShooterConstants.kGains_Velocit.kP,
@@ -87,38 +71,30 @@ public class ShooterSubsystem extends SubsystemBase {
     ballShooter.config_kD(Constants.ShooterConstants.kPIDLoopIdx, Constants.ShooterConstants.kGains_Velocit.kD,
         Constants.ShooterConstants.kTimeoutMs);
 
-
-
-
-
-
-        /* Config sensor used for Primary PID [Velocity] */
+    /* Config sensor used for Primary PID [Velocity] */
     oppositeFlywheel.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative,
-    Constants.ShooterConstants.kPIDLoopIdx,
-    Constants.ShooterConstants.kTimeoutMs);
+        Constants.ShooterConstants.kPIDLoopIdx,
+        Constants.ShooterConstants.kTimeoutMs);
 
+    // Resets all values to default
+    oppositeFlywheel.configFactoryDefault();
+    oppositeFlywheel.setNeutralMode(NeutralMode.Coast);
 
+    /* Config the peak and nominal outputs ([-1, 1] represents [-100, 100]%) */
+    oppositeFlywheel.configNominalOutputForward(0, ShooterConstants.kCtreTimeoutMs);
+    oppositeFlywheel.configNominalOutputReverse(0, ShooterConstants.kCtreTimeoutMs);
+    oppositeFlywheel.configPeakOutputForward(1, ShooterConstants.kCtreTimeoutMs);
+    oppositeFlywheel.configPeakOutputReverse(-1, ShooterConstants.kCtreTimeoutMs);
+    oppositeFlywheel.selectProfileSlot(ShooterConstants.kSlotIdx, ShooterConstants.kPIDLoopIdx);
 
-// Resets all values to default
-oppositeFlywheel.configFactoryDefault();
-oppositeFlywheel.setNeutralMode(NeutralMode.Coast);
-
-/* Config the peak and nominal outputs ([-1, 1] represents [-100, 100]%) */
-oppositeFlywheel.configNominalOutputForward(0, ShooterConstants.kCtreTimeoutMs);
-oppositeFlywheel.configNominalOutputReverse(0, ShooterConstants.kCtreTimeoutMs);
-oppositeFlywheel.configPeakOutputForward(1, ShooterConstants.kCtreTimeoutMs);
-oppositeFlywheel.configPeakOutputReverse(-1, ShooterConstants.kCtreTimeoutMs);
-oppositeFlywheel.selectProfileSlot(ShooterConstants.kSlotIdx, ShooterConstants.kPIDLoopIdx);
-
-
-oppositeFlywheel.config_kF(Constants.ShooterConstants.kPIDLoopIdx, Constants.ShooterConstants.kGains_Velocit.kF,
-    Constants.ShooterConstants.kTimeoutMs);
+    oppositeFlywheel.config_kF(Constants.ShooterConstants.kPIDLoopIdx, Constants.ShooterConstants.kGains_Velocit.kF,
+        Constants.ShooterConstants.kTimeoutMs);
     oppositeFlywheel.config_kP(Constants.ShooterConstants.kPIDLoopIdx, Constants.ShooterConstants.kGains_Velocit.kP,
-    Constants.ShooterConstants.kTimeoutMs);
+        Constants.ShooterConstants.kTimeoutMs);
     oppositeFlywheel.config_kI(Constants.ShooterConstants.kPIDLoopIdx, Constants.ShooterConstants.kGains_Velocit.kI,
-    Constants.ShooterConstants.kTimeoutMs);
+        Constants.ShooterConstants.kTimeoutMs);
     oppositeFlywheel.config_kD(Constants.ShooterConstants.kPIDLoopIdx, Constants.ShooterConstants.kGains_Velocit.kD,
-    Constants.ShooterConstants.kTimeoutMs);
+        Constants.ShooterConstants.kTimeoutMs);
 
     /**
      * Phase sensor accordingly.
@@ -126,8 +102,6 @@ oppositeFlywheel.config_kF(Constants.ShooterConstants.kPIDLoopIdx, Constants.Sho
      */
     oppositeFlywheel.setSensorPhase(false);
 
-
-    
   }
 
   @Override
@@ -145,10 +119,6 @@ oppositeFlywheel.config_kF(Constants.ShooterConstants.kPIDLoopIdx, Constants.Sho
       setIndexSpeed(-1);
     }
 
-  }
-
-  public double getShooterVelocity() {
-    return ballShooter.getSelectedSensorVelocity();
   }
 
   public void setShooterVelocity(double velocity) {

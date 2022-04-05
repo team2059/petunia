@@ -12,13 +12,13 @@ import frc.robot.RobotContainer;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.ShooterSubsystem;
 
-public class ShootCmd extends CommandBase {
+public class VisionShootCmd extends CommandBase {
   private static ShooterSubsystem shooterSubsystem;
   private static Limelight limelight;
   double distance;
 
   /** Creates a new PIDShootCmd. */
-  public ShootCmd(ShooterSubsystem shooterSubsystem, Limelight limelight) {
+  public VisionShootCmd(ShooterSubsystem shooterSubsystem, Limelight limelight) {
     // Use addRequirements() here to declare subshooterSubsystem dependencies.
     this.shooterSubsystem = shooterSubsystem;
     this.limelight = limelight;
