@@ -23,7 +23,7 @@ public class VisionShootCmd extends CommandBase {
     this.shooterSubsystem = shooterSubsystem;
     this.limelight = limelight;
 
-    addRequirements(shooterSubsystem);
+    addRequirements(shooterSubsystem,limelight);
   }
 
   public double setPrimary(double distance) {
