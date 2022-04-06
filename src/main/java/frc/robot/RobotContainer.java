@@ -136,7 +136,7 @@ public class RobotContainer {
 
                 // spit out - B
                 new JoystickButton(logiGameController, Button.kB.value)
-                                .whileHeld(() -> ballCollecterSubsystem.setSpeed(0.6))
+                                .whileHeld(() -> ballCollecterSubsystem.setSpeed(0.9))
                                 .whenReleased(() -> ballCollecterSubsystem.setSpeed(0));
 
                 // collect - X
