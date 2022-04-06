@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
+import frc.robot.commands.ShootAtTicksCmds.ShootAtTicksCmdOne;
 import frc.robot.subsystems.*;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
@@ -34,7 +35,7 @@ public class TestSequenceCmd extends SequentialCommandGroup {
         new InstantCommand(
             () -> ballCollecterArmSubsystem.getBallCollecterArmTalonSRX().set(ControlMode.PercentOutput, 0)),
         new InstantCommand(() -> ballCollecterSubsystem.setSpeed(-0.66)).withTimeout(2),
-        new ShootAtTicksCmd(shooterSubsystem, 28000, 28000).withTimeout(5),
+        new ShootAtTicksCmdOne(shooterSubsystem, 28000, 28000).withTimeout(5),
         new MMClimberTilt(climberTiltSubsystem, 900).withTimeout(5),
         new SMClimberExtendCmd(climberExtenderSubsystem, 190));
   }

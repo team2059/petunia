@@ -5,22 +5,76 @@
 package frc.robot.commands.AutoCmds;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-
+import java.io.IOException;
+import java.nio.file.Path;
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.RamseteController;
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
+import edu.wpi.first.math.trajectory.Trajectory;
+import edu.wpi.first.math.trajectory.TrajectoryUtil;
+import edu.wpi.first.wpilibj2.command.RamseteCommand;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Filesystem;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.subsystems.*;
-
+import frc.robot.RobotContainer;
+import frc.robot.Constants.AutoConstants;
+import frc.robot.Constants.DriveConstants;
 import frc.robot.commands.*;
+import frc.robot.commands.ShootAtTicksCmds.ShootAtTicksCmdOne;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class TwoBallAuto extends SequentialCommandGroup {
+  public Command loadPathWeaverTrajectoryCommand(String filename, boolean resetOdometry) {
+
+    Trajectory trajectory;
+    try {
+      Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(filename);
+      trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
+    } catch (IOException ex) {
+      DriverStation.reportError("Unable to open trajectory: " + filename, ex.getStackTrace());
+      System.out.println("Unable to read from file " + filename);
+      return new InstantCommand();
+    }
+
+    Command ramseteCommand = new RamseteCommand(
+        trajectory,
+        RobotContainer.getDriveTrainSubsystem()::getPose,
+        new RamseteController(AutoConstants.kRamseteB, AutoConstants.kRamseteZeta),
+        new SimpleMotorFeedforward(
+            DriveConstants.ksVolts,
+            DriveConstants.kvVoltSecondsPerMeter,
+            DriveConstants.kaVoltSecondsSquaredPerMeter),
+        DriveConstants.kDriveKinematics,
+        RobotContainer.getDriveTrainSubsystem()::getWheelSpeeds,
+        new PIDController(DriveConstants.kPDriveVel, 0, 0),
+        new PIDController(DriveConstants.kPDriveVel, 0, 0),
+        // RamseteCommand passes volts to the callback
+        RobotContainer.getDriveTrainSubsystem()::tankDriveVolts,
+        RobotContainer.getDriveTrainSubsystem());
+
+    // Run path following command, then stop at the end.
+    // If told to reset odometry, reset odometry before running path.
+    if (resetOdometry) {
+      return new SequentialCommandGroup(
+          new InstantCommand(() -> RobotContainer.getDriveTrainSubsystem()
+              .resetOdometry(trajectory.getInitialPose())),
+          ramseteCommand);
+    } else {
+      return ramseteCommand;
+    }
+
+  }
+
   /** Creates a new TwoBallAuto. */
   public TwoBallAuto(BallCollecterSubsystem ballCollecterSubsystem, DriveTrainSubsystem driveTrainSubsystem,
-      // Limelight limelight,
+      Limelight limelight,
       BallCollecterArmSubsystem ballCollecterArmSubsystem,
       ShooterSubsystem shooterSubsystem) {
     // Add your commands in the addCommands() call, e.g.
@@ -30,9 +84,18 @@ public class TwoBallAuto extends SequentialCommandGroup {
         new MMCollecterArmActivate(ballCollecterArmSubsystem, 1850), new InstantCommand(() -> ballCollecterArmSubsystem
             .getBallCollecterArmTalonSRX()
             .set(ControlMode.PercentOutput, 0)),
-        new ParallelCommandGroup(new InitShoot(shooterSubsystem, 19000).withTimeout(2.5),
-            new InstantCommand(() -> shooterSubsystem.setIndexSpeed(-0.66)).beforeStarting(new WaitCommand(2))),
-        new InstantCommand(() -> ballCollecterSubsystem.setSpeed(-0.5)));
+        loadPathWeaverTrajectoryCommand(
+            "pathplanner/generatedJSON/TwoBallPath.wpilib.json",
+            true),
+        new AutoAlignCmd(limelight, driveTrainSubsystem).withTimeout(1),
+        new ParallelCommandGroup(
+            new VisionShootCmd(shooterSubsystem, limelight),
+            new SequentialCommandGroup(new WaitCommand(1)),
+            new InstantCommand(() -> shooterSubsystem.setIndexSpeed(-1)),
+            new InstantCommand(() -> shooterSubsystem
+                .setIndexSpeed(0)))
+
+    );
 
   }
 
