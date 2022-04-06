@@ -33,6 +33,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import frc.robot.subsystems.*;
 import frc.robot.commands.*;
 import frc.robot.commands.AutoCmds.*;
+import frc.robot.commands.ShootAtTicksCmds.ShootAtTicksCmdFour;
+import frc.robot.commands.ShootAtTicksCmds.ShootAtTicksCmdOne;
+import frc.robot.commands.ShootAtTicksCmds.ShootAtTicksCmdThree;
+import frc.robot.commands.ShootAtTicksCmds.ShootAtTicksCmdTwo;
 import frc.robot.Constants.*;
 
 /**
@@ -59,6 +63,7 @@ public class RobotContainer {
         private final Limelight limelight = new Limelight();
 
         Command autonomousCommand;
+        SendableChooser<Command> autoChooser = new SendableChooser<>();
 
         // A chooser for autonomous commands
         // static SendableChooser<Command> pathChooser = new SendableChooser<>();
@@ -73,11 +78,6 @@ public class RobotContainer {
 
                 // Add commands to the autonomous command chooser
 
-                // boolean isReset = true;
-
-                // String red = "Red";
-                // String blue = "Blue";
-
                 // colorChooser.setDefaultOption("Red alliance", red);
 
                 // colorChooser.addOption("Red alliance", red);
@@ -90,6 +90,16 @@ public class RobotContainer {
                 // Put the chooser on the dashboard
                 // Shuffleboard.getTab("Autonomous").add(pathChooser);
                 // Shuffleboard.getTab("Autonomous").add(colorChooser);
+
+                autoChooser.setDefaultOption("2 ball", new TwoBallAuto(ballCollecterSubsystem, driveTrainSubsystem,
+                                limelight,
+                                ballCollecterArmSubsystem,
+                                shooterSubsystem));
+
+                autoChooser.addOption("4 ball", new FourBallAuto(ballCollecterSubsystem, driveTrainSubsystem,
+                                limelight, ballCollecterArmSubsystem, shooterSubsystem));
+
+                Shuffleboard.getTab("Autonomous").add(autoChooser);
 
         }
 
@@ -113,15 +123,15 @@ public class RobotContainer {
 
                 // 7 feet manual shoot
                 new POVButton(logiGameController, 90).toggleWhenPressed(
-                                new ShootAtTicksCmd(shooterSubsystem, 11250, 10500));
+                                new ShootAtTicksCmdTwo(shooterSubsystem, 11250, 10500));
 
                 // 8 feet manual shoot
                 new POVButton(logiGameController, 180).toggleWhenPressed(
-                                new ShootAtTicksCmd(shooterSubsystem, 11350, 11000));
+                                new ShootAtTicksCmdThree(shooterSubsystem, 11350, 11000));
 
                 // 9 feet manual shoot
                 new POVButton(logiGameController, 270).toggleWhenPressed(
-                                new ShootAtTicksCmd(shooterSubsystem, 11500, 11000));
+                                new ShootAtTicksCmdFour(shooterSubsystem, 11500, 11000));
 
                 // hold left bumper to aim/align with target
                 new JoystickButton(logiGameController, Button.kLeftBumper.value)
@@ -273,10 +283,7 @@ public class RobotContainer {
          */
 
         public Command getAutonomousCommand() {
-                return new ThreeBallAuto(ballCollecterSubsystem, driveTrainSubsystem,
-                                limelight,
-                                ballCollecterArmSubsystem,
-                                shooterSubsystem);
+                return autoChooser.getSelected();
 
         }
 

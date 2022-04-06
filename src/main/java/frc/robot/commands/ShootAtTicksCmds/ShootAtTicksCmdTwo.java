@@ -2,19 +2,19 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands;
+package frc.robot.commands.ShootAtTicksCmds;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ShooterSubsystem;
 
-public class ShootAtTicksCmd extends CommandBase {
+public class ShootAtTicksCmdTwo extends CommandBase {
   private static ShooterSubsystem shooterSubsystem;
   private static double primaryTicks;
   private static double secondaryTicks;
 
   /** Creates a new PIDShootCmd. */
-  public ShootAtTicksCmd(ShooterSubsystem shooterSubsystem, double primaryTicks, double secondaryTicks) {
+  public ShootAtTicksCmdTwo(ShooterSubsystem shooterSubsystem, double primaryTicks, double secondaryTicks) {
     // Use addRequirements() here to declare submShooter dependencies.
     this.shooterSubsystem = shooterSubsystem;
     // rpmVelocity in ticks/units 100ms

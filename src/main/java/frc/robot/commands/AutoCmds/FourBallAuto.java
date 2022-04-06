@@ -31,7 +31,7 @@ import frc.robot.commands.*;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class ThreeBallAuto extends SequentialCommandGroup {
+public class FourBallAuto extends SequentialCommandGroup {
 
   public Command loadPathWeaverTrajectoryCommand(String filename, boolean resetOdometry) {
 
@@ -75,7 +75,7 @@ public class ThreeBallAuto extends SequentialCommandGroup {
   }
 
   /** Creates a new TwoBallAuto. */
-  public ThreeBallAuto(BallCollecterSubsystem ballCollecterSubsystem, DriveTrainSubsystem driveTrainSubsystem,
+  public FourBallAuto(BallCollecterSubsystem ballCollecterSubsystem, DriveTrainSubsystem driveTrainSubsystem,
       Limelight limelight,
       BallCollecterArmSubsystem ballCollecterArmSubsystem,
       ShooterSubsystem shooterSubsystem) {
@@ -87,7 +87,7 @@ public class ThreeBallAuto extends SequentialCommandGroup {
         new InstantCommand(
             () -> ballCollecterArmSubsystem.getBallCollecterArmTalonSRX().set(ControlMode.PercentOutput,
                 0)),
-        loadPathWeaverTrajectoryCommand("pathplanner/generatedJSON/ThreeBallOne.wpilib.json", true),
+        loadPathWeaverTrajectoryCommand("pathplanner/generatedJSON/FourBallOne.wpilib.json", true),
         new AutoAlignCmd(limelight, driveTrainSubsystem).withTimeout(1),
         new ParallelCommandGroup(
             new VisionShootCmd(shooterSubsystem, limelight).withTimeout(3.5),
@@ -95,10 +95,13 @@ public class ThreeBallAuto extends SequentialCommandGroup {
             new InstantCommand(() -> shooterSubsystem.setIndexSpeed(-1)),
             new InstantCommand(() -> shooterSubsystem
                 .setIndexSpeed(0))),
-        new TurnToAngleCmd(driveTrainSubsystem, 21.038),
-        loadPathWeaverTrajectoryCommand("pathplanner/generatedJSON/ThreeBallTwo.wpilib.json", true),
+
+        // 160 or 21
+        new TurnToAngleCmd(driveTrainSubsystem, 160),
+
+        loadPathWeaverTrajectoryCommand("pathplanner/generatedJSON/FourBallTwo.wpilib.json", true),
         loadPathWeaverTrajectoryCommand(
-            "src/main/deploy/pathplanner/generatedJSON/ThreeBallThree.wpilib.json",
+            "src/main/deploy/pathplanner/generatedJSON/FourBallThree.wpilib.json",
             true),
         new AutoAlignCmd(limelight, driveTrainSubsystem).withTimeout(1),
         new ParallelCommandGroup(
