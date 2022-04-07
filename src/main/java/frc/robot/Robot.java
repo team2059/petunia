@@ -92,7 +92,7 @@ public class Robot extends TimedRobot {
   /** This function is called once each time the robot enters Disabled mode. */
   @Override
   public void disabledInit() {
-    
+
   }
 
   @Override
@@ -105,6 +105,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
+    m_robotContainer.getDriveTrainSubsystem().setBreakMode();
 
     Rotation2d thetaPose = m_robotContainer.getDriveTrainSubsystem().navX.getRotation2d();
     DifferentialDriveOdometry myDriveOdometry = m_robotContainer.getDriveTrainSubsystem().getOdometry();
@@ -160,6 +161,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
+    m_robotContainer.getDriveTrainSubsystem().setIdleMode();
 
     m_robotContainer.getShooterSubsystem().autoLoader();
     m_robotContainer.getBallCollecterArmSubsystem().getBallCollecterArmTalonSRX().set(ControlMode.PercentOutput, 0);
@@ -180,8 +182,9 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
-  m_robotContainer.getShooterSubsystem().autoLoader();
-  m_robotContainer.getBallCollecterSubsystem().setVictorSpeed(0.66);
+    m_robotContainer.getShooterSubsystem().autoLoader();
+
+    // m_robotContainer.getBallCollecterSubsystem().setVictorSpeed(0.66);
 
   }
 

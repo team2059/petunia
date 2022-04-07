@@ -178,53 +178,34 @@ public class RobotContainer {
                 new JoystickButton(logiFlightController, 1).whileHeld(new SlowedArcadeDrive(driveTrainSubsystem));
 
                 new JoystickButton(logiFlightController, 5).whenPressed(
-
                                 new SequentialCommandGroup(
-                                                new SMClimberExtendCmd(climberExtendSubsystem, 137).withTimeout(2),
-                                                new MMClimberTilt(climberTiltSubsystem, 900)
-                                                                .withTimeout(1.66),
-                                                new SMClimberExtendCmd(climberExtendSubsystem, 1).withTimeout(1.75),
-                                                new MMClimberTilt(climberTiltSubsystem, 466)
-                                                                .withTimeout(1.5),
-                                                new SMClimberExtendCmd(climberExtendSubsystem, 127.5)
-                                                                .withTimeout(2.25),
-                                                new MMClimberTilt(climberTiltSubsystem, 0).withTimeout(2.25)));
+                                                new SMClimberExtendCmd(climberExtendSubsystem, 25).withTimeout(1),
+                                                new MMClimberTilt(climberTiltSubsystem, -240)
+                                                                .withTimeout(1),
+                                                new SMClimberExtendCmd(climberExtendSubsystem, 141).withTimeout(2.5),
+                                                new MMClimberTilt(climberTiltSubsystem, 50).withTimeout(1.5),
+                                                new SMClimberExtendCmd(climberExtendSubsystem, 1).withTimeout(2),
+                                                new SMClimberExtendCmd(climberExtendSubsystem, 141).withTimeout(2.5)));
 
                 new JoystickButton(logiFlightController, 6).whenPressed(
-                                new SMClimberExtendCmd(climberExtendSubsystem, 190)
-                                                .withTimeout(1.25));
-
-                new JoystickButton(logiFlightController, 4).whenPressed(
-                                new MMClimberTilt(climberTiltSubsystem, 0)
-                                                .withTimeout(2));
-
-                new JoystickButton(logiFlightController, 3).whenPressed(
-
-                                new SequentialCommandGroup(
-                                                new MMClimberTilt(climberTiltSubsystem, 250).withTimeout(0.66),
-                                                new ParallelCommandGroup(
-                                                                new MMClimberTilt(climberTiltSubsystem, 550)
-                                                                                .withTimeout(1.75),
-
-                                                                new SMClimberExtendCmd(climberExtendSubsystem, 127.5)
-                                                                                .withTimeout(1)),
-                                                new MMClimberTilt(climberTiltSubsystem, 925).withTimeout(1.5),
-                                                new SMClimberExtendCmd(climberExtendSubsystem, 1).withTimeout(1.75),
-                                                new MMClimberTilt(climberTiltSubsystem, 466)
-                                                                .withTimeout(1.75),
-                                                new SMClimberExtendCmd(climberExtendSubsystem, 127.5)
-                                                                .withTimeout(2)));
+                                new SequentialCommandGroup(new MMClimberTilt(climberTiltSubsystem, -700).withTimeout(2),
+                                                new SMClimberExtendCmd(climberExtendSubsystem, 200).withTimeout(1.5),
+                                                new MMClimberTilt(climberTiltSubsystem, -500).withTimeout(1.5),
+                                                new SMClimberExtendCmd(climberExtendSubsystem, 100).withTimeout(1),
+                                                new MMClimberTilt(climberTiltSubsystem, 50).withTimeout(1.5),
+                                                new SMClimberExtendCmd(climberExtendSubsystem, 1).withTimeout(2),
+                                                new SMClimberExtendCmd(climberExtendSubsystem, 50)));
 
                 // extend up
                 new POVButton(logiFlightController, 0)
-                                .whileHeld(new SMClimberExtendCmd(climberExtendSubsystem, 190))
+                                .whileHeld(new SMClimberExtendCmd(climberExtendSubsystem, 200))
                                 .whenReleased(() -> climberExtendSubsystem
                                                 .stopMotors());
 
                 // extend up while tilting forward
                 new POVButton(logiFlightController, 45)
-                                .whileHeld(new ParallelCommandGroup(new MMClimberTilt(climberTiltSubsystem, 800),
-                                                new SMClimberExtendCmd(climberExtendSubsystem, 147.5)))
+                                .whileHeld(new ParallelCommandGroup(new MMClimberTilt(climberTiltSubsystem, 50),
+                                                new SMClimberExtendCmd(climberExtendSubsystem, 156)))
                                 .whenReleased(new ParallelCommandGroup(
                                                 new InstantCommand(() -> climberTiltSubsystem.stopMotors()),
                                                 new InstantCommand(() -> climberExtendSubsystem
@@ -233,12 +214,12 @@ public class RobotContainer {
                 // tilt forward
                 new POVButton(logiFlightController, 90)
                                 .whileHeld(new MMClimberTilt(climberTiltSubsystem,
-                                                800))
+                                                50))
                                 .whenReleased(() -> climberTiltSubsystem.stopMotors());
 
                 // extend down while tilting forward
                 new POVButton(logiFlightController, 135)
-                                .whileHeld(new ParallelCommandGroup(new MMClimberTilt(climberTiltSubsystem, 800),
+                                .whileHeld(new ParallelCommandGroup(new MMClimberTilt(climberTiltSubsystem, 50),
                                                 new SMClimberExtendCmd(climberExtendSubsystem, 1)))
                                 .whenReleased(new ParallelCommandGroup(
                                                 new InstantCommand(() -> climberTiltSubsystem.stopMotors()),
@@ -252,7 +233,7 @@ public class RobotContainer {
 
                 // extend down while tilting back
                 new POVButton(logiFlightController, 225)
-                                .whileHeld(new ParallelCommandGroup(new MMClimberTilt(climberTiltSubsystem, 0),
+                                .whileHeld(new ParallelCommandGroup(new MMClimberTilt(climberTiltSubsystem, -700),
                                                 new SMClimberExtendCmd(climberExtendSubsystem, 1)))
                                 .whenReleased(new ParallelCommandGroup(
                                                 new InstantCommand(() -> climberTiltSubsystem.stopMotors()),
@@ -261,13 +242,13 @@ public class RobotContainer {
 
                 // tilt back
                 new POVButton(logiFlightController, 270)
-                                .whileHeld(new MMClimberTilt(climberTiltSubsystem, 0))
+                                .whileHeld(new MMClimberTilt(climberTiltSubsystem, -700))
                                 .whenReleased(() -> climberTiltSubsystem.stopMotors());
 
                 // extend up while tilting back
                 new POVButton(logiFlightController, 315)
-                                .whileHeld(new ParallelCommandGroup(new MMClimberTilt(climberTiltSubsystem, 0),
-                                                new SMClimberExtendCmd(climberExtendSubsystem, 147.5)))
+                                .whileHeld(new ParallelCommandGroup(new MMClimberTilt(climberTiltSubsystem, -700),
+                                                new SMClimberExtendCmd(climberExtendSubsystem, 156)))
                                 .whenReleased(new ParallelCommandGroup(
                                                 new InstantCommand(() -> climberTiltSubsystem.stopMotors()),
                                                 new InstantCommand(() -> climberExtendSubsystem

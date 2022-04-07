@@ -64,10 +64,10 @@ public class DriveTrainSubsystem extends SubsystemBase {
 
   /** Creates a new DriveTrain. */
   public DriveTrainSubsystem() {
-    leftBackCANSparkMax.setIdleMode(IdleMode.kBrake);
-    rightBackCANSparkMax.setIdleMode(IdleMode.kBrake);
-    leftFrontCANSparkMax.setIdleMode(IdleMode.kBrake);
-    rightFrontCANSparkMax.setIdleMode(IdleMode.kBrake);
+    // leftBackCANSparkMax.setIdleMode(IdleMode.kBrake);
+    // rightBackCANSparkMax.setIdleMode(IdleMode.kBrake);
+    // leftFrontCANSparkMax.setIdleMode(IdleMode.kBrake);
+    // rightFrontCANSparkMax.setIdleMode(IdleMode.kBrake);
 
     // SmartDashboard.putData("Field", m_field);
 
