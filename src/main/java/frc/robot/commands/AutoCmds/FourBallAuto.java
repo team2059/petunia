@@ -113,7 +113,7 @@ public class FourBallAuto extends SequentialCommandGroup {
             new SequentialCommandGroup(new WaitCommand(1),
                 new RunCommand(() -> shooterSubsystem.setIndexSpeed(-1)).withTimeout(2),
                 new InstantCommand(() -> shooterSubsystem
-                    .setIndexSpeed(0)))), new TurnToAngleCmd(driveTrainSubsystem angle)
+                    .setIndexSpeed(0))))
 
     );
 
