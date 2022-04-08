@@ -88,9 +88,10 @@ public class FourBallAuto extends SequentialCommandGroup {
         new InstantCommand(
             () -> ballCollecterArmSubsystem.getBallCollecterArmTalonSRX().set(ControlMode.PercentOutput,
                 0)),
-        loadPathWeaverTrajectoryCommand("pathplanner/generatedJSON/FourBallOne.wpilib.json",
+        loadPathWeaverTrajectoryCommand("pathplanner/generatedJSON/TwoBallPath.wpilib.json",
             true),
-        new AutoAlignCmd(limelight, driveTrainSubsystem).withTimeout(1),
+
+        new AutoAlignCmd(limelight, driveTrainSubsystem).withTimeout(0.5),
         new ParallelCommandGroup(
             new VisionShootCmd(shooterSubsystem, limelight).withTimeout(3.5),
             new SequentialCommandGroup(new WaitCommand(1),
@@ -100,20 +101,19 @@ public class FourBallAuto extends SequentialCommandGroup {
 
         // 160 or 21
         // positive clockwise
-        new TurnToAngleCmd(driveTrainSubsystem, 160),
+        new TurnToAngleCmd(driveTrainSubsystem, 120).withTimeout(1),
 
-        loadPathWeaverTrajectoryCommand("pathplanner/generatedJSON/FourBallTwo.wpilib.json",
+        loadPathWeaverTrajectoryCommand("pathplanner/generatedJSON/ThirdBall.wpilib.json",
             true),
-        loadPathWeaverTrajectoryCommand(
-            "src/main/deploy/pathplanner/generatedJSON/FourBallThree.wpilib.json",
-            true),
+        new TurnToAngleCmd(driveTrainSubsystem, 55).withTimeout(1),
+
         new AutoAlignCmd(limelight, driveTrainSubsystem).withTimeout(1),
         new ParallelCommandGroup(
             new VisionShootCmd(shooterSubsystem, limelight).withTimeout(3.5),
             new SequentialCommandGroup(new WaitCommand(1),
                 new RunCommand(() -> shooterSubsystem.setIndexSpeed(-1)).withTimeout(2),
                 new InstantCommand(() -> shooterSubsystem
-                    .setIndexSpeed(0))))
+                    .setIndexSpeed(0)))), new TurnToAngleCmd(driveTrainSubsystem angle)
 
     );
 
