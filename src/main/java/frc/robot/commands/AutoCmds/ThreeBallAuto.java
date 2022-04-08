@@ -4,9 +4,11 @@
 
 package frc.robot.commands.AutoCmds;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
 import java.io.IOException;
 import java.nio.file.Path;
+
+import com.ctre.phoenix.motorcontrol.ControlMode;
+
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.RamseteController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
@@ -26,12 +28,12 @@ import frc.robot.RobotContainer;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.commands.*;
-import frc.robot.commands.ShootAtTicksCmds.ShootAtTicksCmdOne;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class TwoBallAuto extends SequentialCommandGroup {
+public class ThreeBallAuto extends SequentialCommandGroup {
+
   public Command loadPathWeaverTrajectoryCommand(String filename, boolean resetOdometry) {
 
     Trajectory trajectory;
@@ -74,21 +76,38 @@ public class TwoBallAuto extends SequentialCommandGroup {
   }
 
   /** Creates a new TwoBallAuto. */
-  public TwoBallAuto(BallCollecterSubsystem ballCollecterSubsystem, DriveTrainSubsystem driveTrainSubsystem,
+  public ThreeBallAuto(BallCollecterSubsystem ballCollecterSubsystem, DriveTrainSubsystem driveTrainSubsystem,
       Limelight limelight,
       BallCollecterArmSubsystem ballCollecterArmSubsystem,
       ShooterSubsystem shooterSubsystem) {
-    // Add your commands in the addCommands() call, e.g.
-    // addCommands(new FooCommand(), new BarCommand());
+    // Find the heading error; setpoint is 90
 
     addCommands(
-        new MMCollecterArmActivate(ballCollecterArmSubsystem, 1850), new InstantCommand(() -> ballCollecterArmSubsystem
-            .getBallCollecterArmTalonSRX()
-            .set(ControlMode.PercentOutput, 0)),
-        loadPathWeaverTrajectoryCommand(
-            "pathplanner/generatedJSON/TwoBallPath.wpilib.json",
+
+        new MMCollecterArmActivate(ballCollecterArmSubsystem, 1850),
+        new InstantCommand(
+            () -> ballCollecterArmSubsystem.getBallCollecterArmTalonSRX().set(ControlMode.PercentOutput,
+                0)),
+        loadPathWeaverTrajectoryCommand("pathplanner/generatedJSON/TwoBallPath.wpilib.json",
             true),
+
         new AutoAlignCmd(limelight, driveTrainSubsystem).withTimeout(0.5),
+        new ParallelCommandGroup(
+            new VisionShootCmd(shooterSubsystem, limelight).withTimeout(3.5),
+            new SequentialCommandGroup(new WaitCommand(1),
+                new RunCommand(() -> shooterSubsystem.setIndexSpeed(-1)).withTimeout(2),
+                new InstantCommand(() -> shooterSubsystem
+                    .setIndexSpeed(0)))),
+
+        // 160 or 21
+        // positive clockwise
+        new TurnToAngleCmd(driveTrainSubsystem, 120).withTimeout(1),
+
+        loadPathWeaverTrajectoryCommand("pathplanner/generatedJSON/ThirdBall.wpilib.json",
+            true),
+        new TurnToAngleCmd(driveTrainSubsystem, 55).withTimeout(1),
+
+        new AutoAlignCmd(limelight, driveTrainSubsystem).withTimeout(1),
         new ParallelCommandGroup(
             new VisionShootCmd(shooterSubsystem, limelight).withTimeout(3.5),
             new SequentialCommandGroup(new WaitCommand(1),

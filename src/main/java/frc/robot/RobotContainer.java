@@ -88,13 +88,16 @@ public class RobotContainer {
                 // isReset));
 
                 // Put the chooser on the dashboard
-                // Shuffleboard.getTab("Autonomous").add(pathChooser);
+                // Shuffleboard.getTab("Autonomou s").add(pathChooser);
                 // Shuffleboard.getTab("Autonomous").add(colorChooser);
 
                 autoChooser.setDefaultOption("2 ball", new TwoBallAuto(ballCollecterSubsystem, driveTrainSubsystem,
                                 limelight,
                                 ballCollecterArmSubsystem,
                                 shooterSubsystem));
+
+                autoChooser.addOption("3 ball", new ThreeBallAuto(ballCollecterSubsystem, driveTrainSubsystem,
+                                limelight, ballCollecterArmSubsystem, shooterSubsystem));
 
                 autoChooser.addOption("4 ball", new FourBallAuto(ballCollecterSubsystem, driveTrainSubsystem,
                                 limelight, ballCollecterArmSubsystem, shooterSubsystem));
@@ -180,8 +183,7 @@ public class RobotContainer {
                 new JoystickButton(logiFlightController, 5).whenPressed(
                                 new SequentialCommandGroup(
                                                 new SMClimberExtendCmd(climberExtendSubsystem, 25).withTimeout(1),
-                                                new MMClimberTilt(climberTiltSubsystem, -240)
-                                                                .withTimeout(1),
+                                                new MMClimberTilt(climberTiltSubsystem, -240).withTimeout(1),
                                                 new SMClimberExtendCmd(climberExtendSubsystem, 141).withTimeout(2.5),
                                                 new MMClimberTilt(climberTiltSubsystem, 50).withTimeout(1.5),
                                                 new SMClimberExtendCmd(climberExtendSubsystem, 1).withTimeout(2),

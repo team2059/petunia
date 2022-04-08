@@ -35,7 +35,7 @@ public class ShootAtTicksCmdTwo extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    shooterSubsystem.oppositeFlywheel.set(ControlMode.PercentOutput, secondaryTicks);
+    shooterSubsystem.oppositeFlywheel.set(ControlMode.Velocity, secondaryTicks);
     shooterSubsystem.ballShooter.set(ControlMode.Velocity, primaryTicks);
     // mShooter.oppositeFlywheel.set(ControlMode.PercentOutput, -0.75);
   }
