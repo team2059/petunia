@@ -99,9 +99,6 @@ public class RobotContainer {
                 autoChooser.addOption("3 ball", new ThreeBallAuto(ballCollecterSubsystem, driveTrainSubsystem,
                                 limelight, ballCollecterArmSubsystem, shooterSubsystem));
 
-                autoChooser.addOption("4 ball", new FourBallAuto(ballCollecterSubsystem, driveTrainSubsystem,
-                                limelight, ballCollecterArmSubsystem, shooterSubsystem));
-
                 Shuffleboard.getTab("Autonomous").add(autoChooser);
 
         }
@@ -184,16 +181,17 @@ public class RobotContainer {
                                 new SequentialCommandGroup(
                                                 new SMClimberExtendCmd(climberExtendSubsystem, 25).withTimeout(1),
                                                 new MMClimberTilt(climberTiltSubsystem, -240).withTimeout(1),
-                                                new SMClimberExtendCmd(climberExtendSubsystem, 141).withTimeout(2.5),
+                                                new SMClimberExtendCmd(climberExtendSubsystem, 145).withTimeout(2.5),
                                                 new MMClimberTilt(climberTiltSubsystem, 50).withTimeout(1.5),
-                                                new SMClimberExtendCmd(climberExtendSubsystem, 1).withTimeout(2),
-                                                new SMClimberExtendCmd(climberExtendSubsystem, 141).withTimeout(2.5)));
+                                                new SMClimberExtendCmd(climberExtendSubsystem, 1).withTimeout(1.5),
+                                                new SMClimberExtendCmd(climberExtendSubsystem, 145).withTimeout(2.5)));
 
                 new JoystickButton(logiFlightController, 6).whenPressed(
-                                new SequentialCommandGroup(new MMClimberTilt(climberTiltSubsystem, -700).withTimeout(2),
-                                                new SMClimberExtendCmd(climberExtendSubsystem, 200).withTimeout(1.5),
-                                                new MMClimberTilt(climberTiltSubsystem, -500).withTimeout(1.5),
-                                                new SMClimberExtendCmd(climberExtendSubsystem, 100).withTimeout(1),
+                                new SequentialCommandGroup(
+                                                new MMClimberTilt(climberTiltSubsystem, -700).withTimeout(2),
+                                                new SMClimberExtendCmd(climberExtendSubsystem, 200).withTimeout(2.5),
+                                                new MMClimberTilt(climberTiltSubsystem, -400).withTimeout(1.5),
+                                                new SMClimberExtendCmd(climberExtendSubsystem, 100).withTimeout(2),
                                                 new MMClimberTilt(climberTiltSubsystem, 50).withTimeout(1.5),
                                                 new SMClimberExtendCmd(climberExtendSubsystem, 1).withTimeout(2),
                                                 new SMClimberExtendCmd(climberExtendSubsystem, 50)));

@@ -88,9 +88,9 @@ public class TwoBallAuto extends SequentialCommandGroup {
         loadPathWeaverTrajectoryCommand(
             "pathplanner/generatedJSON/TwoBallPath.wpilib.json",
             true),
-        new AutoAlignCmd(limelight, driveTrainSubsystem).withTimeout(0.5),
+        new TurnToAngleCmd(driveTrainSubsystem, 14),
         new ParallelCommandGroup(
-            new VisionShootCmd(shooterSubsystem, limelight).withTimeout(3.5),
+            new ShootAtTicksCmdOne(shooterSubsystem, 11300,10550).withTimeout(3.5),
             new SequentialCommandGroup(new WaitCommand(1),
                 new RunCommand(() -> shooterSubsystem.setIndexSpeed(-1)).withTimeout(2),
                 new InstantCommand(() -> shooterSubsystem

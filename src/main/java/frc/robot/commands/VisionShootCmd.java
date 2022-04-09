@@ -43,7 +43,7 @@ public class VisionShootCmd extends CommandBase {
     }
     System.out.println("primary ticks "+primaryTicks);
 
-    return primaryTicks;
+    return primaryTicks+50;
   }
 
   public double setSecondary(double distance) {
@@ -64,7 +64,7 @@ public class VisionShootCmd extends CommandBase {
 
     System.out.println("secondary ticks "+secondaryTicks);
 
-    return secondaryTicks;
+    return secondaryTicks+50;
   }
 
   // Called when the command is initially scheduled.

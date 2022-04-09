@@ -62,7 +62,7 @@ public class Robot extends TimedRobot {
     m_robotContainer.getShooterSubsystem().setShooterVelocity(0);
     m_robotContainer.getShooterSubsystem().oppositeFlywheel.set(ControlMode.PercentOutput, 0);
     m_robotContainer.getBallCollecterSubsystem().setVictorSpeed(0);
-    CameraServer.startAutomaticCapture();
+  
 
   }
 

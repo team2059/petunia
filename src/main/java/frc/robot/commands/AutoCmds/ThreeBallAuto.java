@@ -28,6 +28,8 @@ import frc.robot.RobotContainer;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.commands.*;
+import frc.robot.commands.ShootAtTicksCmds.ShootAtTicksCmdOne;
+import frc.robot.commands.ShootAtTicksCmds.ShootAtTicksCmdTwo;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -84,32 +86,29 @@ public class ThreeBallAuto extends SequentialCommandGroup {
 
     addCommands(
 
-        new MMCollecterArmActivate(ballCollecterArmSubsystem, 1850),
-        new InstantCommand(
-            () -> ballCollecterArmSubsystem.getBallCollecterArmTalonSRX().set(ControlMode.PercentOutput,
-                0)),
-        loadPathWeaverTrajectoryCommand("pathplanner/generatedJSON/TwoBallPath.wpilib.json",
+        new MMCollecterArmActivate(ballCollecterArmSubsystem, 1850), new InstantCommand(() -> ballCollecterArmSubsystem
+            .getBallCollecterArmTalonSRX()
+            .set(ControlMode.PercentOutput, 0)),
+        loadPathWeaverTrajectoryCommand(
+            "pathplanner/generatedJSON/TwoBallPath.wpilib.json",
             true),
-
-        new AutoAlignCmd(limelight, driveTrainSubsystem).withTimeout(0.5),
+        new TurnToAngleCmd(driveTrainSubsystem, 14),
         new ParallelCommandGroup(
-            new VisionShootCmd(shooterSubsystem, limelight).withTimeout(3.5),
+            new ShootAtTicksCmdOne(shooterSubsystem, 11300, 10550).withTimeout(3.5),
             new SequentialCommandGroup(new WaitCommand(1),
                 new RunCommand(() -> shooterSubsystem.setIndexSpeed(-1)).withTimeout(2),
                 new InstantCommand(() -> shooterSubsystem
                     .setIndexSpeed(0)))),
 
-        // 160 or 21
+        // 110-120
         // positive clockwise
-        new TurnToAngleCmd(driveTrainSubsystem, 120).withTimeout(1),
+        new TurnToAngleCmd(driveTrainSubsystem, 115).withTimeout(1),
 
         loadPathWeaverTrajectoryCommand("pathplanner/generatedJSON/ThirdBall.wpilib.json",
             true),
-        new TurnToAngleCmd(driveTrainSubsystem, 55).withTimeout(1),
-
-        new AutoAlignCmd(limelight, driveTrainSubsystem).withTimeout(1),
+        new TurnToAngleCmd(driveTrainSubsystem, 50).withTimeout(1),
         new ParallelCommandGroup(
-            new VisionShootCmd(shooterSubsystem, limelight).withTimeout(3.5),
+            new ShootAtTicksCmdTwo(shooterSubsystem, 11400, 11050).withTimeout(3.5),
             new SequentialCommandGroup(new WaitCommand(1),
                 new RunCommand(() -> shooterSubsystem.setIndexSpeed(-1)).withTimeout(2),
                 new InstantCommand(() -> shooterSubsystem
