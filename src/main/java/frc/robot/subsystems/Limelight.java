@@ -21,7 +21,7 @@ public class Limelight extends SubsystemBase {
   private double targetAngle = 0.0;
 
   private double CAMERA_HEIGHT_METERS = Units.inchesToMeters(30.5);
-  private double TARGET_HEIGHT_METERS = Units.inchesToMeters(101);
+  private double TARGET_HEIGHT_METERS = Units.inchesToMeters(104);
   private double CAMERA_PITCH_RADIANS = Units.degreesToRadians(21.42);
 
   final double xalignP = 0.075;
@@ -62,7 +62,7 @@ public class Limelight extends SubsystemBase {
 
   @Override
   public void periodic() {
-    SmartDashboard.putNumber("Target distance inches", getTargetDistance());
+    SmartDashboard.putNumber("Target feet", getTargetDistance()/12);
     SmartDashboard.putNumber("Target angle", getTargetAngle());
     SmartDashboard.putBoolean("Has target: ", hasTarget());
   }
