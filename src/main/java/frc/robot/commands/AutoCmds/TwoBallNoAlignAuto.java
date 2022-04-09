@@ -90,7 +90,7 @@ public class TwoBallNoAlignAuto extends SequentialCommandGroup {
             true),
 
         new ParallelCommandGroup(
-            new ShootAtTicksCmdOne(shooterSubsystem, 11300, 10550).withTimeout(4.5),
+            new ShootAtTicksCmdOne(shooterSubsystem, 11375, 10625).withTimeout(4.5),
             new SequentialCommandGroup(new WaitCommand(1),
                 new RunCommand(() -> shooterSubsystem.setIndexSpeed(-1)).withTimeout(2),
                 new InstantCommand(() -> shooterSubsystem
