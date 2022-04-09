@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
@@ -60,8 +61,7 @@ public class RobotContainer {
         private final static BallCollecterSubsystem ballCollecterSubsystem = new BallCollecterSubsystem();
         private final static ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
         private final static BallCollecterArmSubsystem ballCollecterArmSubsystem = new BallCollecterArmSubsystem();
-        private final Limelight limelight = new Limelight();
-
+        private final static Limelight limelight = new Limelight();
         Command autonomousCommand;
         SendableChooser<Command> autoChooser = new SendableChooser<>();
 
@@ -141,6 +141,7 @@ public class RobotContainer {
                 new JoystickButton(logiGameController, Button.kRightBumper.value)
                                 .whileHeld(
                                                 new InstantCommand(() -> shooterSubsystem.setIndexSpeed(-0.66)))
+
                                 .whenReleased(new InstantCommand(() -> shooterSubsystem
                                                 .setIndexSpeed(0)));
 
@@ -194,7 +195,7 @@ public class RobotContainer {
                                                 new SMClimberExtendCmd(climberExtendSubsystem, 100).withTimeout(2),
                                                 new MMClimberTilt(climberTiltSubsystem, 50).withTimeout(1.5),
                                                 new SMClimberExtendCmd(climberExtendSubsystem, 1).withTimeout(2),
-                                                new SMClimberExtendCmd(climberExtendSubsystem, 50)));
+                                                new SMClimberExtendCmd(climberExtendSubsystem, 145).withTimeout(2.5)));
 
                 // extend up
                 new POVButton(logiFlightController, 0)
@@ -290,6 +291,9 @@ public class RobotContainer {
 
         public static ShooterSubsystem getShooterSubsystem() {
                 return shooterSubsystem;
+        }
+        public static Limelight getLimelight() {
+                return limelight;
         }
 
 }

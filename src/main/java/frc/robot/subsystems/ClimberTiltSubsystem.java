@@ -180,8 +180,8 @@ public class ClimberTiltSubsystem extends SubsystemBase {
 
         @Override
         public void periodic() {
-                SmartDashboard.putNumber("left tilt", climberLeftTiltTalonSRX.getSelectedSensorPosition());
-                SmartDashboard.putNumber("right tilt", climberRightTiltTalonSRX.getSelectedSensorPosition());
+              //  SmartDashboard.putNumber("left tilt", climberLeftTiltTalonSRX.getSelectedSensorPosition());
+                //SmartDashboard.putNumber("right tilt", climberRightTiltTalonSRX.getSelectedSensorPosition());
                 // SmartDashboard.putString("right mode",
                 // climberRightTiltTalonSRX.getControlMode().toString());
                 // SmartDashboard.putString("left mode",
