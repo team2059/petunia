@@ -34,8 +34,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import frc.robot.subsystems.*;
 import frc.robot.commands.*;
 import frc.robot.commands.AutoCmds.*;
+import frc.robot.commands.ShootAtTicksCmds.ShootAtTicksCmdFive;
 import frc.robot.commands.ShootAtTicksCmds.ShootAtTicksCmdFour;
 import frc.robot.commands.ShootAtTicksCmds.ShootAtTicksCmdOne;
+import frc.robot.commands.ShootAtTicksCmds.ShootAtTicksCmdSix;
 import frc.robot.commands.ShootAtTicksCmds.ShootAtTicksCmdThree;
 import frc.robot.commands.ShootAtTicksCmds.ShootAtTicksCmdTwo;
 import frc.robot.Constants.*;
@@ -121,20 +123,20 @@ public class RobotContainer {
                 // new Shoot27500(shooterSubsystem, 24000));
 
                 // auto shoot
-                new POVButton(logiGameController, 0).toggleWhenPressed(
-                                new VisionShootCmd(shooterSubsystem, limelight));
+             //   new POVButton(logiGameController, 0).toggleWhenPressed(
+               //                 new VisionShootCmd(shooterSubsystem, limelight));
 
                 // 7 feet manual shoot
-                new POVButton(logiGameController, 90).toggleWhenPressed(
-                                new ShootAtTicksCmdTwo(shooterSubsystem, 11325, 10575));
+                new POVButton(logiGameController, 0).toggleWhenPressed(
+                                new ShootAtTicksCmdFour(shooterSubsystem, 12400, 11975));
 
                 // 8 feet manual shoot
-                new POVButton(logiGameController, 180).toggleWhenPressed(
-                                new ShootAtTicksCmdThree(shooterSubsystem, 11425, 11075));
+                new POVButton(logiGameController, 90).toggleWhenPressed(
+                                new ShootAtTicksCmdFive(shooterSubsystem, 12950, 12475));
 
                 // 9 feet manual shoot
-                new POVButton(logiGameController, 270).toggleWhenPressed(
-                                new ShootAtTicksCmdFour(shooterSubsystem, 11575, 11075));
+                new POVButton(logiGameController, 180).toggleWhenPressed(
+                                new ShootAtTicksCmdSix(shooterSubsystem, 13250, 13075));
 
                 // hold left bumper to aim/align with target
                 new JoystickButton(logiGameController, Button.kLeftBumper.value)
@@ -184,25 +186,25 @@ public class RobotContainer {
                 new JoystickButton(logiFlightController, 5).whenPressed(new SequentialCommandGroup(
                                 new SMClimberExtendCmd(climberExtendSubsystem, 25).withTimeout(1),
                                 new MMClimberTilt(climberTiltSubsystem, -240).withTimeout(1),
-                                new SMClimberExtendCmd(climberExtendSubsystem, 147.5).withTimeout(2.5),
-                                new MMClimberTilt(climberTiltSubsystem, 50).withTimeout(1.5)));
+                                new SMClimberExtendCmd(climberExtendSubsystem, 147.5).withTimeout(2),
+                                new MMClimberTilt(climberTiltSubsystem, 50).withTimeout(1.25)));
 
                                 
 
                 new JoystickButton(logiFlightController, 3).whenPressed(
                                 new SequentialCommandGroup(
                                                 new SMClimberExtendCmd(climberExtendSubsystem, 1).withTimeout(1.5),
-                                                new SMClimberExtendCmd(climberExtendSubsystem, 147.5).withTimeout(2.5)));
+                                                new SMClimberExtendCmd(climberExtendSubsystem, 147.5).withTimeout(2)));
 
                 new JoystickButton(logiFlightController, 6).whenPressed(
                                 new SequentialCommandGroup(
-                                                new MMClimberTilt(climberTiltSubsystem, -700).withTimeout(2),
-                                                new SMClimberExtendCmd(climberExtendSubsystem, 200).withTimeout(2.5),
-                                                new MMClimberTilt(climberTiltSubsystem, -400).withTimeout(1.5),
+                                                new MMClimberTilt(climberTiltSubsystem, -700).withTimeout(1.75),
+                                                new SMClimberExtendCmd(climberExtendSubsystem, 200).withTimeout(2),
+                                                new MMClimberTilt(climberTiltSubsystem, -300).withTimeout(1.5),
                                                 new SMClimberExtendCmd(climberExtendSubsystem, 100).withTimeout(2),
-                                                new MMClimberTilt(climberTiltSubsystem, 50).withTimeout(1.5),
-                                                new SMClimberExtendCmd(climberExtendSubsystem, 1).withTimeout(2),
-                                                new SMClimberExtendCmd(climberExtendSubsystem, 147.5).withTimeout(2.5)));
+                                                new MMClimberTilt(climberTiltSubsystem, 100).withTimeout(1.75),
+                                                new SMClimberExtendCmd(climberExtendSubsystem, 1).withTimeout(1.75),
+                                                new SMClimberExtendCmd(climberExtendSubsystem, 147.5).withTimeout(2)));
 
                 // extend up
                 new POVButton(logiFlightController, 0)

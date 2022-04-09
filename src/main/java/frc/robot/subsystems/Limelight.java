@@ -55,19 +55,18 @@ public class Limelight extends SubsystemBase {
       varDistance = Units.metersToInches(PhotonUtils.calculateDistanceToTargetMeters(
           CAMERA_HEIGHT_METERS, TARGET_HEIGHT_METERS, CAMERA_PITCH_RADIANS,
           Units.degreesToRadians(result.getBestTarget().getPitch())));
-  
-          targetAngle = result.getBestTarget().getYaw();
+
+      targetAngle = result.getBestTarget().getYaw();
       if (varDistance < 120 && varDistance > 60) {
         targetDistance = varDistance;
-        
+
       }
 
     }
-      hasTargets = result.hasTargets();
-      SmartDashboard.putNumber("Target feet", getTargetDistance() / 12);
-      SmartDashboard.putNumber("Target angle", getTargetAngle());
-      SmartDashboard.putBoolean("Has target: ", hasTarget());
-    }
-
+    hasTargets = result.hasTargets();
+    SmartDashboard.putNumber("Target feet", getTargetDistance() / 12);
+    SmartDashboard.putNumber("Target angle", getTargetAngle());
+    SmartDashboard.putBoolean("Has target: ", hasTarget());
   }
 
+}
