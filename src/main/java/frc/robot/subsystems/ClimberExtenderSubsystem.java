@@ -74,8 +74,9 @@ public class ClimberExtenderSubsystem extends SubsystemBase {
                 kP = 5e-5;
                 kI = 1e-6;
                 kD = 0;
+
                 kIz = 0;
-                kFF = 0.000156;
+               kFF = 0.000156;
                 kMaxOutput = 1;
                 kMinOutput = -1;
                 maxRPM = 5700;

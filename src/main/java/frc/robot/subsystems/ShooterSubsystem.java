@@ -9,6 +9,8 @@ import java.util.function.BooleanSupplier;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.*;
+import com.revrobotics.CANSparkMax.IdleMode;
+
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
 import frc.robot.Constants.ShooterConstants;
@@ -49,6 +51,7 @@ public class ShooterSubsystem extends SubsystemBase {
   public ShooterSubsystem() {
     indexMotor.configFactoryDefault();
     indexMotor.setNeutralMode(NeutralMode.Brake);
+    
     indexMotor.configFactoryDefault();
 
     /* Config sensor used for Primary PID [Velocity] */
@@ -64,7 +67,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
     // Resets all values to default
     ballShooter.configFactoryDefault();
-    ballShooter.setNeutralMode(NeutralMode.Coast);
+    ballShooter.setNeutralMode(NeutralMode.Brake);
 
     /* Config the peak and nominal outputs ([-1, 1] represents [-100, 100]%) */
     ballShooter.configNominalOutputForward(0, ShooterConstants.kCtreTimeoutMs);
@@ -112,6 +115,7 @@ public class ShooterSubsystem extends SubsystemBase {
      * Positive Sensor Reading should match Green (blinking) Leds on Talon
      */
     oppositeFlywheel.setSensorPhase(false);
+    oppositeFlywheel.setNeutralMode(NeutralMode.Brake);
 
   }
 
