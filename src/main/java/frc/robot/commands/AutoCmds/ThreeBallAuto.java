@@ -94,7 +94,7 @@ public class ThreeBallAuto extends SequentialCommandGroup {
             true),
         new TurnToAngleCmd(driveTrainSubsystem, 14).withTimeout(1),
         new ParallelCommandGroup(
-            new ShootAtTicksCmdOne(shooterSubsystem, 11300, 10550).withTimeout(3.5),
+            new ShootAtTicksCmdOne(shooterSubsystem, 11300, 10550).withTimeout(4.5),
             new SequentialCommandGroup(new WaitCommand(1),
                 new RunCommand(() -> shooterSubsystem.setIndexSpeed(-1)).withTimeout(2),
                 new InstantCommand(() -> shooterSubsystem
@@ -108,7 +108,7 @@ public class ThreeBallAuto extends SequentialCommandGroup {
             true),
         new TurnToAngleCmd(driveTrainSubsystem, 50).withTimeout(1),
         new ParallelCommandGroup(
-            new ShootAtTicksCmdTwo(shooterSubsystem, 11400, 11050).withTimeout(3.5),
+            new ShootAtTicksCmdTwo(shooterSubsystem, 11400, 11050).withTimeout(4.5),
             new SequentialCommandGroup(new WaitCommand(1),
                 new RunCommand(() -> shooterSubsystem.setIndexSpeed(-1)).withTimeout(2),
                 new InstantCommand(() -> shooterSubsystem

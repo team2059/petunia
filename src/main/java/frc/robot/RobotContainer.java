@@ -121,19 +121,19 @@ public class RobotContainer {
                 // new Shoot27500(shooterSubsystem, 24000));
 
                 // auto shoot
-                // new POVButton(logiGameController, 0).toggleWhenPressed(
-                // new VisionShootCmd(shooterSubsystem, limelight));
+                new POVButton(logiGameController, 0).toggleWhenPressed(
+                new VisionShootCmd(shooterSubsystem, limelight));
 
                 // 7 feet manual shoot
-                new POVButton(logiGameController, 0).toggleWhenPressed(
+                new POVButton(logiGameController, 90).toggleWhenPressed(
                                 new ShootAtTicksCmdTwo(shooterSubsystem, 11325, 10575));
 
                 // 8 feet manual shoot
-                new POVButton(logiGameController, 90).toggleWhenPressed(
+                new POVButton(logiGameController, 180).toggleWhenPressed(
                                 new ShootAtTicksCmdThree(shooterSubsystem, 11425, 11075));
 
                 // 9 feet manual shoot
-                new POVButton(logiGameController, 180).toggleWhenPressed(
+                new POVButton(logiGameController, 270).toggleWhenPressed(
                                 new ShootAtTicksCmdFour(shooterSubsystem, 11575, 11075));
 
                 // hold left bumper to aim/align with target

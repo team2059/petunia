@@ -113,7 +113,7 @@ public class ClimberExtenderSubsystem extends SubsystemBase {
 
         @Override
         public void periodic() {
-             //   SmartDashboard.putNumber("left extend", leftEncoder.getPosition());
-               // SmartDashboard.putNumber("right extend", rightEncoder.getPosition());
+                SmartDashboard.putNumber("left extend", leftEncoder.getPosition());
+                SmartDashboard.putNumber("right extend", rightEncoder.getPosition());
         }
 }

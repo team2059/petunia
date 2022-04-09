@@ -7,6 +7,9 @@ package frc.robot.subsystems;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+
+import javax.print.attribute.standard.RequestingUserName;
+
 import org.photonvision.PhotonCamera;
 import org.photonvision.PhotonUtils;
 import org.photonvision.targeting.PhotonPipelineResult;
@@ -19,7 +22,7 @@ public class Limelight extends SubsystemBase {
   private boolean hasTargets = false;
   private double targetDistance = 0.0;
   private double targetAngle = 0.0;
-
+private double varDistance = 0;
   private double CAMERA_HEIGHT_METERS = Units.inchesToMeters(30.5);
   private double TARGET_HEIGHT_METERS = Units.inchesToMeters(104);
   private double CAMERA_PITCH_RADIANS = Units.degreesToRadians(21.42);
@@ -31,39 +34,36 @@ public class Limelight extends SubsystemBase {
   }
 
   public boolean hasTarget() {
-    var result = camera.getLatestResult();
-    if (result.hasTargets()) {
-      return true;
-    } else {
-      return false;
-    }
+    return hasTargets;
   }
 
   public double getTargetDistance() {
-    var result = camera.getLatestResult();
-
-    if (result.hasTargets()) {
-      targetDistance = Units.metersToInches(PhotonUtils.calculateDistanceToTargetMeters(
-          CAMERA_HEIGHT_METERS, TARGET_HEIGHT_METERS, CAMERA_PITCH_RADIANS,
-          Units.degreesToRadians(result.getBestTarget().getPitch())));
-    }
     return targetDistance;
   }
 
   public double getTargetAngle() {
-    var result = camera.getLatestResult();
-
-    if (result.hasTargets()) {
-      targetAngle = result.getBestTarget().getYaw();
-    }
     return targetAngle;
 
   }
 
   @Override
   public void periodic() {
-    SmartDashboard.putNumber("Target feet", getTargetDistance()/12);
-    SmartDashboard.putNumber("Target angle", getTargetAngle());
-    SmartDashboard.putBoolean("Has target: ", hasTarget());
+
+    var result = camera.getLatestResult();
+
+    if (result.hasTargets()) {
+      varDistance = Units.metersToInches(PhotonUtils.calculateDistanceToTargetMeters(
+          CAMERA_HEIGHT_METERS, TARGET_HEIGHT_METERS, CAMERA_PITCH_RADIANS,
+          Units.degreesToRadians(result.getBestTarget().getPitch())));
+      if(varDistance < 120 && varDistance > 60){
+        targetDistance = varDistance;
+      }
+      hasTargets = result.hasTargets();
+      targetAngle = result.getBestTarget().getYaw();
+      SmartDashboard.putNumber("Target feet", getTargetDistance() / 12);
+      SmartDashboard.putNumber("Target angle", getTargetAngle());
+      SmartDashboard.putBoolean("Has target: ", hasTarget());
+    }
+
   }
 }

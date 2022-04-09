@@ -121,11 +121,13 @@ public class ShooterSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Primary ticks", ballShooter.getSelectedSensorVelocity());
     SmartDashboard.putNumber("Secondary velocity", oppositeFlywheel.getSelectedSensorVelocity());
     SmartDashboard.putBoolean("Is Ball in chamber", ballChamberSensor.get());
+    SmartDashboard.putBoolean("Is spinning", ballShooter.getSelectedSensorVelocity() > 0);
   }
 
   public void autoLoader() {
     if (ballChamberSensor.get()) {
-      indexMotor.set(0);;
+      indexMotor.set(0);
+      ;
     } else {
       indexMotor.set(-1);
     }
