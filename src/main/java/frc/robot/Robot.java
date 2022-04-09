@@ -161,7 +161,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
-    m_robotContainer.getDriveTrainSubsystem().setIdleMode();
+    m_robotContainer.getDriveTrainSubsystem().setBreakMode();
 
     m_robotContainer.getShooterSubsystem().autoLoader();
     m_robotContainer.getBallCollecterArmSubsystem().getBallCollecterArmTalonSRX().set(ControlMode.PercentOutput, 0);

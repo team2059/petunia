@@ -29,6 +29,9 @@ public class VisionShootCmd extends CommandBase {
   public double setPrimary(double distance) {
     
     double primaryTicks = 0;
+    if(distance<=7*12){
+      primaryTicks = 10250;
+    }
     if (distance > 7 * 12 && distance < 8 * 12) {
     
       primaryTicks = 10550 + (8.333 * distance);
@@ -51,6 +54,9 @@ public class VisionShootCmd extends CommandBase {
   public double setSecondary(double distance) {
     
     double secondaryTicks = 0;
+    if(distance<=7*12){
+      secondaryTicks = 6750;
+    }
     if (distance > 7 * 12 && distance < 8 * 12) {
 
       secondaryTicks = 7000 + (41.666 * distance);
