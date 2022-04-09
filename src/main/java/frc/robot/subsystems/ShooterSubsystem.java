@@ -12,8 +12,10 @@ import com.ctre.phoenix.motorcontrol.can.*;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
 import frc.robot.Constants.ShooterConstants;
+import frc.robot.commands.VisionShootCmd;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj.DigitalInput;
 
 public class ShooterSubsystem extends SubsystemBase {
@@ -29,7 +31,16 @@ public class ShooterSubsystem extends SubsystemBase {
   public static DigitalInput ballChamberSensor = new DigitalInput(0);
 
   public static void setIndexSpeed(double speed) {
-    indexMotor.set(speed);
+    if (ballShooter.getSelectedSensorVelocity() != 0) {
+      new WaitCommand(1.25);
+      indexMotor.set(speed);
+    } else {
+      indexMotor.set(0);
+    }
+  }
+
+  public static WPI_TalonSRX getPrimary() {
+    return ballShooter;
   }
 
   /*
@@ -114,9 +125,9 @@ public class ShooterSubsystem extends SubsystemBase {
 
   public void autoLoader() {
     if (ballChamberSensor.get()) {
-      setIndexSpeed(0);
+      indexMotor.set(0);;
     } else {
-      setIndexSpeed(-1);
+      indexMotor.set(-1);
     }
 
   }

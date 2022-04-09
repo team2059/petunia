@@ -104,7 +104,7 @@ public class BallCollecterArmSubsystem extends SubsystemBase {
   public void periodic() {
 
     // This method will be called once per scheduler run
-    SmartDashboard.putNumber("collector arm ticks", ballCollecterArmTalonSRX.getSelectedSensorPosition());
+    //SmartDashboard.putNumber("collector arm ticks", ballCollecterArmTalonSRX.getSelectedSensorPosition());
 
   }
 }
