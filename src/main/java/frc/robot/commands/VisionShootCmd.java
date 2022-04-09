@@ -48,7 +48,7 @@ public class VisionShootCmd extends CommandBase {
     }
     
 
-    return primaryTicks+40;
+    return (primaryTicks+50);
   }
 
   public double setSecondary(double distance) {
@@ -73,7 +73,7 @@ public class VisionShootCmd extends CommandBase {
     }
 
 
-    return secondaryTicks+40;
+    return (secondaryTicks+50);
   }
 
   // Called when the command is initially scheduled.
