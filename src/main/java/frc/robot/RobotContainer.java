@@ -122,7 +122,7 @@ public class RobotContainer {
 
                 // auto shoot
                 new POVButton(logiGameController, 0).toggleWhenPressed(
-                new VisionShootCmd(shooterSubsystem, limelight));
+                                new VisionShootCmd(shooterSubsystem, limelight));
 
                 // 7 feet manual shoot
                 new POVButton(logiGameController, 90).toggleWhenPressed(
@@ -181,14 +181,18 @@ public class RobotContainer {
 
                 new JoystickButton(logiFlightController, 1).whileHeld(new SlowedArcadeDrive(driveTrainSubsystem));
 
-                new JoystickButton(logiFlightController, 5).whenPressed(
+                new JoystickButton(logiFlightController, 5).whenPressed(new SequentialCommandGroup(
+                                new SMClimberExtendCmd(climberExtendSubsystem, 25).withTimeout(1),
+                                new MMClimberTilt(climberTiltSubsystem, -240).withTimeout(1),
+                                new SMClimberExtendCmd(climberExtendSubsystem, 147.5).withTimeout(2.5),
+                                new MMClimberTilt(climberTiltSubsystem, 50).withTimeout(1.5)));
+
+                                
+
+                new JoystickButton(logiFlightController, 3).whenPressed(
                                 new SequentialCommandGroup(
-                                                new SMClimberExtendCmd(climberExtendSubsystem, 25).withTimeout(1),
-                                                new MMClimberTilt(climberTiltSubsystem, -240).withTimeout(1),
-                                                new SMClimberExtendCmd(climberExtendSubsystem, 145).withTimeout(2.5),
-                                                new MMClimberTilt(climberTiltSubsystem, 50).withTimeout(1.5),
                                                 new SMClimberExtendCmd(climberExtendSubsystem, 1).withTimeout(1.5),
-                                                new SMClimberExtendCmd(climberExtendSubsystem, 145).withTimeout(2.5)));
+                                                new SMClimberExtendCmd(climberExtendSubsystem, 147.5).withTimeout(2.5)));
 
                 new JoystickButton(logiFlightController, 6).whenPressed(
                                 new SequentialCommandGroup(
@@ -198,7 +202,7 @@ public class RobotContainer {
                                                 new SMClimberExtendCmd(climberExtendSubsystem, 100).withTimeout(2),
                                                 new MMClimberTilt(climberTiltSubsystem, 50).withTimeout(1.5),
                                                 new SMClimberExtendCmd(climberExtendSubsystem, 1).withTimeout(2),
-                                                new SMClimberExtendCmd(climberExtendSubsystem, 145).withTimeout(2.5)));
+                                                new SMClimberExtendCmd(climberExtendSubsystem, 147.5).withTimeout(2.5)));
 
                 // extend up
                 new POVButton(logiFlightController, 0)
