@@ -96,6 +96,9 @@ public class RobotContainer {
                                 ballCollecterArmSubsystem,
                                 shooterSubsystem));
 
+                autoChooser.addOption("no align 2 ball", new TwoBallNoAlignAuto(ballCollecterSubsystem,
+                                driveTrainSubsystem, limelight, ballCollecterArmSubsystem, shooterSubsystem));
+
                 autoChooser.addOption("3 ball", new ThreeBallAuto(ballCollecterSubsystem, driveTrainSubsystem,
                                 limelight, ballCollecterArmSubsystem, shooterSubsystem));
 
@@ -118,20 +121,20 @@ public class RobotContainer {
                 // new Shoot27500(shooterSubsystem, 24000));
 
                 // auto shoot
-                new POVButton(logiGameController, 0).toggleWhenPressed(
-                                new VisionShootCmd(shooterSubsystem, limelight));
+                // new POVButton(logiGameController, 0).toggleWhenPressed(
+                // new VisionShootCmd(shooterSubsystem, limelight));
 
                 // 7 feet manual shoot
-                new POVButton(logiGameController, 90).toggleWhenPressed(
-                                new ShootAtTicksCmdTwo(shooterSubsystem, 11250, 10500));
+                new POVButton(logiGameController, 0).toggleWhenPressed(
+                                new ShootAtTicksCmdTwo(shooterSubsystem, 11325, 10575));
 
                 // 8 feet manual shoot
-                new POVButton(logiGameController, 180).toggleWhenPressed(
-                                new ShootAtTicksCmdThree(shooterSubsystem, 11350, 11000));
+                new POVButton(logiGameController, 90).toggleWhenPressed(
+                                new ShootAtTicksCmdThree(shooterSubsystem, 11425, 11075));
 
                 // 9 feet manual shoot
-                new POVButton(logiGameController, 270).toggleWhenPressed(
-                                new ShootAtTicksCmdFour(shooterSubsystem, 11500, 11000));
+                new POVButton(logiGameController, 180).toggleWhenPressed(
+                                new ShootAtTicksCmdFour(shooterSubsystem, 11575, 11075));
 
                 // hold left bumper to aim/align with target
                 new JoystickButton(logiGameController, Button.kLeftBumper.value)
@@ -292,6 +295,7 @@ public class RobotContainer {
         public static ShooterSubsystem getShooterSubsystem() {
                 return shooterSubsystem;
         }
+
         public static Limelight getLimelight() {
                 return limelight;
         }
