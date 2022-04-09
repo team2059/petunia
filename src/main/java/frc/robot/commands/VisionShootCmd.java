@@ -27,44 +27,47 @@ public class VisionShootCmd extends CommandBase {
   }
 
   public double setPrimary(double distance) {
-    System.out.println("primary activated distance: " + distance);
+    
     double primaryTicks = 0;
     if (distance > 7 * 12 && distance < 8 * 12) {
-      System.out.println("activated");
+    
       primaryTicks = 10550 + (8.333 * distance);
     }
     if (distance > 8 * 12 && distance < 9 * 12) {
-      System.out.println("activated 2");
+
       primaryTicks = 10150 + (12.5 * distance);
+      primaryTicks += 25;
     }
     if (distance > 9 * 12 && distance < 10 * 12) {
-      System.out.println("activated 3");
+   
       primaryTicks = 7000 + (41.666 * distance);
+      primaryTicks += 25;
     }
-    System.out.println("primary ticks "+primaryTicks);
+    
 
-    return primaryTicks+50;
+    return primaryTicks+40;
   }
 
   public double setSecondary(double distance) {
-    System.out.println("secondary activated distance: " + distance);
+    
     double secondaryTicks = 0;
     if (distance > 7 * 12 && distance < 8 * 12) {
-      System.out.println("activated");
+
       secondaryTicks = 7000 + (41.666 * distance);
     }
     if (distance > 8 * 12 && distance < 9 * 12) {
-      System.out.println("activated2");
+
       secondaryTicks = 11000;
+      secondaryTicks += 25;
     }
     if (distance > 9 * 12 && distance < 10 * 12) {
-      System.out.println("activated3");
+      
       secondaryTicks = 3872 + (66 * distance);
+      secondaryTicks += 25;
     }
 
-    System.out.println("secondary ticks "+secondaryTicks);
 
-    return secondaryTicks+50;
+    return secondaryTicks+40;
   }
 
   // Called when the command is initially scheduled.
