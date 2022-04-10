@@ -123,8 +123,8 @@ public class RobotContainer {
                 // new Shoot27500(shooterSubsystem, 24000));
 
                 // auto shoot
-             //   new POVButton(logiGameController, 0).toggleWhenPressed(
-               //                 new VisionShootCmd(shooterSubsystem, limelight));
+                // new POVButton(logiGameController, 0).toggleWhenPressed(
+                // new VisionShootCmd(shooterSubsystem, limelight));
 
                 // 7 feet manual shoot
                 new POVButton(logiGameController, 0).toggleWhenPressed(
@@ -189,8 +189,6 @@ public class RobotContainer {
                                 new SMClimberExtendCmd(climberExtendSubsystem, 147.5).withTimeout(2),
                                 new MMClimberTilt(climberTiltSubsystem, 50).withTimeout(1.25)));
 
-                                
-
                 new JoystickButton(logiFlightController, 3).whenPressed(
                                 new SequentialCommandGroup(
                                                 new SMClimberExtendCmd(climberExtendSubsystem, 1).withTimeout(1.5),
@@ -200,7 +198,10 @@ public class RobotContainer {
                                 new SequentialCommandGroup(
                                                 new MMClimberTilt(climberTiltSubsystem, -700).withTimeout(1.75),
                                                 new SMClimberExtendCmd(climberExtendSubsystem, 200).withTimeout(2),
-                                                new MMClimberTilt(climberTiltSubsystem, -300).withTimeout(1.5),
+                                                new MMClimberTilt(climberTiltSubsystem, -300).withTimeout(1.5)));
+
+                new JoystickButton(logiFlightController, 4).whenPressed(
+                                new SequentialCommandGroup(
                                                 new SMClimberExtendCmd(climberExtendSubsystem, 100).withTimeout(2),
                                                 new MMClimberTilt(climberTiltSubsystem, 100).withTimeout(1.75),
                                                 new SMClimberExtendCmd(climberExtendSubsystem, 1).withTimeout(1.75),

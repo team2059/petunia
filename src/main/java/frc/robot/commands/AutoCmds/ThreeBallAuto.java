@@ -92,7 +92,7 @@ public class ThreeBallAuto extends SequentialCommandGroup {
         loadPathWeaverTrajectoryCommand(
             "pathplanner/generatedJSON/TwoBallPath.wpilib.json",
             true),
-        new TurnToAngleCmd(driveTrainSubsystem, 14).withTimeout(1),
+        new TurnToAngleCmd(driveTrainSubsystem, 19).withTimeout(1),
         new ParallelCommandGroup(
             new ShootAtTicksCmdOne(shooterSubsystem, 13250, 13075).withTimeout(4),
             new SequentialCommandGroup(new WaitCommand(1),
@@ -102,7 +102,7 @@ public class ThreeBallAuto extends SequentialCommandGroup {
 
         // 110-120
         // positive clockwise
-        new TurnToAngleCmd(driveTrainSubsystem, 115).withTimeout(1),
+        new TurnToAngleCmd(driveTrainSubsystem, 120).withTimeout(1),
 
         loadPathWeaverTrajectoryCommand("pathplanner/generatedJSON/ThirdBall.wpilib.json",
             true),
