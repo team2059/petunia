@@ -39,16 +39,16 @@ public class VisionShootCmd extends CommandBase {
     if (distance > 8 * 12 && distance < 9 * 12) {
 
       primaryTicks = 10150 + (12.5 * distance);
-      primaryTicks += 25;
+      primaryTicks += 250;
     }
     if (distance > 9 * 12 && distance < 10 * 12) {
    
       primaryTicks = 7000 + (41.666 * distance);
-      primaryTicks += 25;
+      primaryTicks += 250;
     }
     
 
-    return (primaryTicks+50);
+    return (primaryTicks+1150);
   }
 
   public double setSecondary(double distance) {
@@ -64,16 +64,16 @@ public class VisionShootCmd extends CommandBase {
     if (distance > 8 * 12 && distance < 9 * 12) {
 
       secondaryTicks = 11000;
-      secondaryTicks += 25;
+      secondaryTicks += 250;
     }
     if (distance > 9 * 12 && distance < 10 * 12) {
       
       secondaryTicks = 3872 + (66 * distance);
-      secondaryTicks += 25;
+      secondaryTicks += 250;
     }
 
 
-    return (secondaryTicks+50);
+    return (secondaryTicks+1150);
   }
 
   // Called when the command is initially scheduled.
