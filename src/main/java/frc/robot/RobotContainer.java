@@ -128,15 +128,15 @@ public class RobotContainer {
 
                 // 7 feet manual shoot
                 new POVButton(logiGameController, 0).toggleWhenPressed(
-                                new ShootAtTicksCmdFour(shooterSubsystem, 12400, 11975));
+                                new ShootAtTicksCmdFour(shooterSubsystem, 6250, 6250));
 
                 // 8 feet manual shoot
                 new POVButton(logiGameController, 90).toggleWhenPressed(
-                                new ShootAtTicksCmdFive(shooterSubsystem, 12950, 12475));
+                                new ShootAtTicksCmdFive(shooterSubsystem, 7500, 7500));
 
                 // 9 feet manual shoot
                 new POVButton(logiGameController, 180).toggleWhenPressed(
-                                new ShootAtTicksCmdSix(shooterSubsystem, 13250, 13075));
+                                new ShootAtTicksCmdSix(shooterSubsystem, 8750, 8750));
 
                 // hold left bumper to aim/align with target
                 new JoystickButton(logiGameController, Button.kLeftBumper.value)
@@ -152,12 +152,12 @@ public class RobotContainer {
 
                 // spit out - B
                 new JoystickButton(logiGameController, Button.kB.value)
-                                .whileHeld(() -> ballCollecterSubsystem.setSpeed(0.9))
+                                .whileHeld(() -> ballCollecterSubsystem.setSpeed(0.66))
                                 .whenReleased(() -> ballCollecterSubsystem.setSpeed(0));
 
                 // collect - X
                 new JoystickButton(logiGameController, Button.kX.value)
-                                .whileHeld(() -> ballCollecterSubsystem.setSpeed(-0.9))
+                                .whileHeld(() -> ballCollecterSubsystem.setSpeed(-0.66))
                                 .whenReleased(() -> ballCollecterSubsystem.setSpeed(0));
 
                 // new JoystickButton(logiGameController, 8)
@@ -182,6 +182,12 @@ public class RobotContainer {
                 // driver 2 climbing extreme 3d
 
                 new JoystickButton(logiFlightController, 1).whileHeld(new SlowedArcadeDrive(driveTrainSubsystem));
+
+                new JoystickButton(logiFlightController, 2).whenPressed(
+                                new SequentialCommandGroup(new SMClimberExtendCmd(climberExtendSubsystem, 25)
+                                                .withTimeout(1),
+                                                new MMClimberTilt(climberTiltSubsystem, 50).withTimeout(1),
+                                                new SMClimberExtendCmd(climberExtendSubsystem, 0).withTimeout(1)));
 
                 new JoystickButton(logiFlightController, 5).whenPressed(new SequentialCommandGroup(
                                 new SMClimberExtendCmd(climberExtendSubsystem, 25).withTimeout(1),
