@@ -183,7 +183,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     m_robotContainer.getShooterSubsystem().autoLoader();
-    m_robotContainer.getBallCollecterSubsystem().setVictorSpeed(0.66);
+    m_robotContainer.getBallCollecterSubsystem().setVictorSpeed(0.33);
 
   }
 
